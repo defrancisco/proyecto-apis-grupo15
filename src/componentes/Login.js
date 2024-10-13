@@ -1,9 +1,9 @@
 import React from 'react';
 import '../styles/iniciosesion.css';
-import Header from '../componentes/Header';
-import Footer from '../componentes/Footer';
+import Header from './Header';
+import Footer from './Footer';
 
-function InicioSesion(){
+function Login(){
     return (
         <div>
           <Header />
@@ -24,4 +24,4 @@ function InicioSesion(){
       );
 }
 
-export default InicioSesion;
+export default Login;
