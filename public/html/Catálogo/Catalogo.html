@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/headeryfooter.css">
+    <link rel="stylesheet" href="../../css/catalogo.css"> 
+
+</head>
+<body>
+
+     <!-- HEADER -->
+     <header>
+        <div class="header-container">
+            <div class="container-left">
+                <a href="#" class="logo"><img src="../imagenes/logo.png" alt="Nintendo Logo"></a>
+                <nav>
+                    <ul>
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Catálogo</a></li>
+                        <li><a href="#">Wishlist</a></li>
+                        <li><a href="#">Consolas</a></li>
+                        <li><a href="#">Quienes somos</a></li>
+                        <li><a href="#">Perfil</a></li>
+                        <li><a href="#">Ayuda</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="auth-buttons">
+                <a href="Usuario/IniciodeSasionUsuario.html"><button id="login-btn">Iniciar sesión</button></a>
+                <a href="Usuario/RegistroUsuario.html"><button id="register-btn">Registrarse</button></a>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- BARRA DE BUSQUEDA -->
+     <div class="search-bar">
+        <input type="text" placeholder="Buscar"> 
+     </div>
+    
+    <!-- CONTENEDOR PRINCIPAL -->
+     <div class="main-container">
+
+        <!-- BARRA DE FILTROS -->
+        <div class="filter-bar">
+            <button class="filter-btn">Eliminar Filtros</button>
+            <div class="filters">
+                <div class="filter-item">Categoría</div>
+                <div class="filter-item">Precio</div>
+                <div class="filter-item">Sistema Operativo</div>
+                <div class="filter-item">Idioma</div>
+                <div class="filter-item">Cantidad de jugadores</div>
+                <div class="filter-item">Calificación</div>
+            </div>
+        </div>
+
+        <!-- VIDEOJUEGOS -->
+         <div class="videogames">
+            <div class="videogame">
+                <img src="../imagenes/zeldaEoW.png" alt="Videojuego The Legend of Zelda> Echoes of Wisdom">
+                <p>The Legend of Zelda Echoes of Wisdom</p>
+                <p>60$</p>
+            </div>
+            <div class="videogame">
+                <img src="../imagenes/pokemonScarlet.png" alt="Videojuego Pokemon Scarlet">
+                <p>Pokemon Scarlet</p>
+                <p>60$</p>
+            </div>
+            <div class="videogame">
+                <img src="../imagenes/pokemonViolet.png" alt="Videojuego Pokemon Violet">
+                <p>Pokemon Violet</p>
+                <p>60$</p>
+            </div><div class="videogame">
+                <img src="../imagenes/mariokart2.png" alt="Videojuego Mario Kart 8 Deluxe">
+                <p>Mario Kart 8 Deluxe</p>
+                <p>60$</p>
+            </div>
+         </div>
+     </div>
+</body>
+</html>

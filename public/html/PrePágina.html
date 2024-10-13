@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre Página</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/headeryfooter.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery y Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <div class="container-left">
+                <a href="PrePágina.html" class="logo"><img src="imagenes/logo.png" alt="Nintendo Logo"></a>
+                <nav>
+                    <ul>
+                        <li><a href="PrePágina.html">Inicio</a></li>
+                        <li><a href="Catálogo/Catalogo.html">Catálogo</a></li>
+                        <li><a href="Usuario/CuentaUsuario/UserTab.html#wishlist">Wishlist</a></li>
+                        <li><a href="extras/Consolas.html">Consolas</a></li>
+                        <li><a href="extras/QuienesSomos.html">Quienes somos</a></li>
+                        <li><a href="InicioSesion.html">Perfil</a></li>
+                        <li><a href="extras/Ayuda.html">Ayuda</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="auth-buttons">
+                <a href="Usuario/IniciodeSasionUsuario.html"><button id="login-btn">Iniciar sesión</button></a>
+                <a href="Usuario/RegistroUsuario.html"><button id="register-btn">Registrarse</button></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CAROUSEL -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="imagenes/animalcrossing.jpg" class="d-block w-100" alt="Imagen de Animal Crossing">
+            </div>
+            <div class="carousel-item">
+                <img src="imagenes/zelda.jpg" class="d-block w-100" alt="Imagen de Zelda">
+            </div>
+            <div class="carousel-item">
+                <img src="imagenes/mariokart.jpg" class="d-block w-100" alt="Imagen de Mario Kart">
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previo</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Siguiente</span>
+        </a>
+    </div>
+
+    <!-- FOOTER -->
+    <!-- Footer Template -->
+    <footer>
+        <div class="footer-links">
+            <ul>
+                <li><a href="#">Padres y control parental</a></li>
+                <li><a href="#">Ayuda</a></li>
+                <li><a href="#">Política de privacidad</a></li>
+                <li><a href="#">Eliminación del servicio</a></li>
+                <li><a href="#">RSC</a></li>
+            </ul>
+        </div>
+        <div class="footer-info">
+            <p>Nintendo. 2024</p>
+            <ul>
+                <li><a href="#">Empleo</a></li>
+                <li><a href="#">Información de la empresa</a></li>
+                <li><a href="#">Cookies</a></li>
+                <li><a href="#">Contactar</a></li>
+                <li><a href="#">Información legal</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="../js/headerscript.js"></script>
+
+</body>
+</html>

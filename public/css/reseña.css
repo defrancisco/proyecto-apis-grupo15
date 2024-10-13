@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.game-info {
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #eaeaea;
+    text-align: center;
+}
+
+.game-image {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 15px;
+}
+
+.game-info h5 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.game-info p {
+    color: #888;
+}
+
+.review-box {
+    background-color: #eaeaea;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.review-box h6 {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.rating span {
+    font-size: 24px;
+    color: #ffc107;
+}
+
+textarea {
+    resize: none;
+    border-radius: 5px;
+}
+
+.btn-danger {
+    background-color: #ff0000;
+    border: none;
+    border-radius: 5px;
+}

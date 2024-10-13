@@ -1,0 +1,83 @@
+<html lang="es"></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creación de Videojuegos</title>
+    <link rel="stylesheet" href="../css/headeryfooter.css">
+</head>
+
+<body>
+    <!--HEADER EMPRESARIAL-->
+     <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="../PrePágina.html"><img src="imagenes/logo.png" alt="Nintendo Logo"></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Catálogo</a></li>
+                    <li><a href="#">Quienes somos</a></li>
+                </ul>
+            </nav>
+            <div class="icons">
+                <a href="#">Perfil</a> 
+                <img src="../imagenes/profile.png" alt="Logo-Perfil">
+            </div>
+        </div>
+    </header>
+
+    <!--CREACIÓN DE VIDEOJUEGO-->
+    <form action="/enviar-juego" method="post">
+        <label for="nombreJuego">Nombre del Videojuego:</label><br>
+        <input type="text" id="nombreJuego" name="nombreJuego"><br>
+      
+        <label for="categoria">Categoría:</label><br>
+        <input type="text" id="categoria" name="categoria"><br>
+      
+        <label for="precio">Precio:</label><br>
+        <input type="text" id="precio" name="precio"><br>
+      
+        <label for="idioma">Idioma:</label><br>
+        <input type="text" id="idioma" name="idioma"><br>
+      
+        <label for="descripcion">Descripción:</label><br>
+        <textarea id="descripcion" name="descripcion"></textarea><br>
+      
+        <label for="requisitosMinimos">Requisitos mínimos del sistema:</label><br>
+        <textarea id="requisitosMinimos" name="requisitosMinimos"></textarea><br>
+      
+        <label for="requisitosRecomendados">Requisitos recomendados del sistema:</label><br>
+        <textarea id="requisitosRecomendados" name="requisitosRecomendados"></textarea><br>
+      
+        <input type="submit" value="Publicar">
+      </form>
+
+
+
+<!-- FOOTER -->
+    <!-- Footer Template -->
+    <footer>
+        <div class="footer-links">
+            <ul>
+                <li><a href="#">Padres y control parental</a></li>
+                <li><a href="#">Ayuda</a></li>
+                <li><a href="#">Política de privacidad</a></li>
+                <li><a href="#">Eliminación del servicio</a></li>
+                <li><a href="#">RSC</a></li>
+            </ul>
+        </div>
+        <div class="footer-info">
+            <p>Nintendo. 2024</p>
+            <ul>
+                <li><a href="#">Empleo</a></li>
+                <li><a href="#">Información de la empresa</a></li>
+                <li><a href="#">Cookies</a></li>
+                <li><a href="#">Contactar</a></li>
+                <li><a href="#">Información legal</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>
+

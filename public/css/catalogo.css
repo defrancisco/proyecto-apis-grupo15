@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+.search-bar {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar input {
+    width: 500px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.filter-bar {
+    width: 200px;
+    padding: 20px;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+}
+
+.filter-btn {
+    display: block;
+    margin: 0 auto 20px;
+    padding: 10px 20px;
+    background-color: #e60012;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.main-container {
+    display: flex;
+}
+
+.filters {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.filter-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.videogames {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    padding: 10px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.videogame {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    width: 250px;
+    height: 310px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.videogame img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.videogame p {
+    font-size: 14px;
+    margin: 5px 0;
+}
