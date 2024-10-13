@@ -1,0 +1,31 @@
+/* Estilos para la notificación */
+.notification-dialog {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 16px;
+    background-color: #f8f8f8;
+   
+  }
+  
+  .notification-dialog header {
+    display: flex;
+    align-items: center;
+  }
+  
+  .notification-icon {
+    color: #ffc107; /* Color amarillo para la atención */
+   
+  }
+  
+  .notification-text {
+    margin-left: 8px; /* Espaciado entre el icono y el texto */
+  }
+  
+  .unpublish-button {
+    background-color: #000; /* Botón negro */
+    color: #fff; /* Texto blanco en el botón */
+    border-radius: 4px;
+    padding: 10px;
+   
+  }
+  
