@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de usuario</title>
+    <!-- Importa Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css"> 
     <!--CSS-->
     <link rel="stylesheet" href="../../css/registroUsuario.css">
     <link rel="stylesheet" href="../../css/headeryfooter.css">
@@ -32,27 +34,39 @@
         </div>
     </header>
 
+    <!--FORM EMPRESA-->
     <main>
         <div class="registration-form">
             <h2>Registro de Usuario</h2>
-            <form>
+            <form class="needs-validation" novalidate>
                 <div class="form-group">
                     <label for="mail">Mail Empresarial</label>
                     <input type="email" id="mail" name="mail" required>
+                    <div class="invalid-feedback">
+                        Por favor, ingresa un correo válido.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="nombre">Nombre de Usuario</label>
                     <input type="text" id="nombre" name="nombre" required>
+                    <div class="invalid-feedback">
+                        Por favor, ingresa un nombre de usuario.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="contrasena">Contraseña</label>
                     <input type="password" id="contrasena" name="contrasena" required>
+                    <div class="invalid-feedback">
+                        Por favor, ingresa una contraseña.
+                    </div>
                 </div>
                 <button type="submit" class="submit-btn">Registrarse</button>
             </form>
         </div>
     </main>
-
+    
+   
+    
    <!-- FOOTER -->
     <!-- Footer Template -->
     <footer>
@@ -76,6 +90,7 @@
             </ul>
         </div>
     </footer>
-
+     
+     <script src="../../js/formValidation.js"></script>
     </body>
 </html>

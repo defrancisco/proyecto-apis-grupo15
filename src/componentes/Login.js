@@ -1,5 +1,6 @@
 import React from 'react';
-import '../styles/iniciosesion.css';
+import '../styles/inicioSesion'
+import '../styles/headeryfooter';
 import Header from './Header';
 import Footer from './Footer';
 

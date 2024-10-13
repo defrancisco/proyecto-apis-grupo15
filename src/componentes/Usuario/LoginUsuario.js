@@ -1,6 +1,10 @@
 import React from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Importa Bootstrap CSS
+import '../../styles/headeryfooter.css';
+import '../../styles/inicioSesion.css';
+
 
 export const LoginUsuario = () => {
   return (

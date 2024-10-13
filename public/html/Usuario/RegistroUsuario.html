@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de usuario</title>
+    <!-- Importa Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css"> 
     <!--CSS-->
     <link rel="stylesheet" href="../../css/headeryfooter.css">
     <link rel="stylesheet" href="../../css/form.css">
@@ -32,35 +34,56 @@
         </div>
     </header>
 
+    <!--REGISTRO DE USUARIO-->
     <main>
         <div class="form">
             <h2>Registro de Usuario</h2>
-            <form>
-                <div class="form-group">
-                    <label for="mail">Mail</label>
-                    <input type="email" id="mail" name="mail" required>
+            <form class="row g-3 needs-validation" novalidate>
+                <div class="col-md-6 position-relative">
+                    <label for="mail" class="form-label">Mail</label>
+                    <input type="email" class="form-control" id="mail" name="mail" required>
+                    <div class="invalid-tooltip">
+                        Por favor, proporciona un correo electrónico válido.
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="nombre">Nombre de Usuario</label>
-                    <input type="text" id="nombre" name="nombre" required>
+                <div class="col-md-6 position-relative">
+                    <label for="nombre" class="form-label">Nombre de Usuario</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                    <div class="invalid-tooltip">
+                        Por favor, proporciona un nombre de usuario válido.
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="apellido">Apellido</label>
-                    <input type="text" id="apellido" name="apellido" required>
+                <div class="col-md-6 position-relative">
+                    <label for="apellido" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="apellido" name="apellido" required>
+                    <div class="invalid-tooltip">
+                        Por favor, proporciona un apellido válido.
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="fecha-nacimiento">Fecha de nacimiento</label>
-                    <input type="date" id="fecha-nacimiento" name="fecha-nacimiento" required>
+                <div class="col-md-6 position-relative">
+                    <label for="fecha-nacimiento" class="form-label">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" id="fecha-nacimiento" name="fecha-nacimiento" required>
+                    <div class="invalid-tooltip">
+                        Por favor, selecciona una fecha de nacimiento válida.
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="contrasena">Contraseña</label>
-                    <input type="password" id="contrasena" name="contrasena" required>
+                <div class="col-md-6 position-relative">
+                    <label for="contrasena" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="contrasena" name="contrasena" required>
+                    <div class="invalid-tooltip">
+                        Por favor, proporciona una contraseña.
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="confirmar-contrasena">Confirmar Contraseña</label>
-                    <input type="password" id="confirmar-contrasena" name="confirmar-contrasena" required>
+                <div class="col-md-6 position-relative">
+                    <label for="confirmar-contrasena" class="form-label">Confirmar Contraseña</label>
+                    <input type="password" class="form-control" id="confirmar-contrasena" name="confirmar-contrasena" required>
+                    <div class="invalid-tooltip">
+                        Las contraseñas no coinciden.
+                    </div>
                 </div>
-                <button type="submit" class="submit-btn">Registrarse</button>
+                <div class="col-12">
+                    <button class="btn btn-primary" type="submit">Registrarse</button>
+                </div>
             </form>
         </div>
     </main>
@@ -88,6 +111,6 @@
             </ul>
         </div>
     </footer>
-
+    <script src="../../js/formValidation.js"></script>
     </body>
 </html>
