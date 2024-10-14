@@ -6,7 +6,7 @@ import '../../styles/headeryfooter.css';
 import '../../styles/inicioSesion';
 import { formValidation } from '../formValdiation';
 
-const LoginEmpresa = () => {
+const RegistroEmpresa = () => {
     useEffect(() => {
         formValidation();
     }, []); // Se ejecuta al montar el componente
@@ -67,4 +67,4 @@ const LoginEmpresa = () => {
     );
 };
 
-export default LoginEmpresa;
+export default RegistroEmpresa;
