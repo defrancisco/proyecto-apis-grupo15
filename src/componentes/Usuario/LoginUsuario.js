@@ -4,9 +4,13 @@ import Footer from '../Footer';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Importa Bootstrap CSS
 import '../../styles/headeryfooter.css';
 import '../../styles/inicioSesion.css';
+import { formValidation } from '../formValdiation';
 
 
 export const LoginUsuario = () => {
+    useEffect(() => {
+        formValidation();
+    }, []); // Se ejecuta al montar el componente
   return (
     <div>
         <Header />
