@@ -37,8 +37,9 @@
         </div>
 
         <div class="content">
+
+            <!--MIS DATOS-->
             <div id="perfil" class="perfil">
-                <section id="profile-section">
                     <h2>Mis Datos</h2>
                     <form>
                         <div class="input-group">
@@ -63,7 +64,7 @@
                     </form>
             </div>
         
-
+            <!--AUTENTICACIÓN-->
             <div id="autenticacion" class="section">
             <h2>Cambio de Contraseña</h2>
                 <form>
@@ -78,39 +79,92 @@
                     
                     <button type="submit">Confirmar Contraseña</button>
                 </form>
-       
 
+            <!--ANÁLISIS DE VIDEOJUEGOS-->
+            <div id="analisisdevideojuegos" class="analisisdevideojuegos">
+                <h2>Análisis de Videojuegos</h2>
+                <div>
+                    <h2>Nombre del juego 1</h2>
+                    <p>Visualizaciones: 3</p>
+                    <p>Compras: 1</p>
+                    <p>Deseados: 1</p>
+                </div>
+                <div>
+                    <h2>Nombre del juego 2</h2>
+                    <p>Visualizaciones: 0</p>
+                    <p>Compras: 0</p>
+                    <p>Deseados: 0</p>
+                </div>
+                <div>
+                    <h2>Nombre del juego 3</h2>
+                    <p>Visualizaciones: 5</p>
+                    <p>Compras: 0</p>
+                    <p>Deseados: 2</p>
+                </div>
+            </div>
+       
+            <!--MIS JUEGOS-->
             <div id="misjuegos" class="misjuegos">
                 <div class="search-bar">
                     <input type="text" placeholder="Nombre del Juego">
                     <button><img src="https://img.icons8.com/ios-filled/24/ffffff/search--v1.png" alt="Buscar"></button>
-                    <button>Crear juego</button>
+                    <button id="crear-juego-btn">Crear juego</button>
                 </div>
         
                 <div class="game-list">
                     <div class="game-item">
                         <span>Juego1</span>
-                        
+                        <select class="form-select" aria-label="Default select example" onchange="handleAction(this.value)">
+                            <option selected>Acción</option>
+                            <option value="modificar">Modificar</option>
+                            <option value="despublicar">Despublicar</option>
+                            <option value="eliminar">Eliminar</option>
+                        </select>
                     </div>
                     <div class="game-item">
                         <span>Juego2</span>
-                        
+                        <select class="form-select" aria-label="Default select example" onchange="handleAction(this.value)">
+                            <option selected>Acción</option>
+                            <option value="modificar">Modificar</option>
+                            <option value="despublicar">Despublicar</option>
+                            <option value="eliminar">Eliminar</option>
+                        </select>
                     </div>
                     <div class="game-item">
                         <span>Juego3</span>
-                        
+                        <select class="form-select" aria-label="Default select example" onchange="handleAction(this.value)">
+                            <option selected>Acción</option>
+                            <option value="modificar">Modificar</option>
+                            <option value="despublicar">Despublicar</option>
+                            <option value="eliminar">Eliminar</option>
+                        </select>
                     </div>
                     <div class="game-item">
                         <span>Juego4</span>
-                        
+                        <select class="form-select" aria-label="Default select example" onchange="handleAction(this.value)">
+                            <option selected>Acción</option>
+                            <option value="modificar">Modificar</option>
+                            <option value="despublicar">Despublicar</option>
+                            <option value="eliminar">Eliminar</option>
+                        </select>
                     </div>
                     <div class="game-item">
                         <span>Juego5</span>
-                        
+                        <select class="form-select" aria-label="Default select example" onchange="handleAction(this.value)">
+                            <option selected>Acción</option>
+                            <option value="modificar">Modificar</option>
+                            <option value="despublicar">Despublicar</option>
+                            <option value="eliminar">Eliminar</option>
+                        </select>
                     </div>
                     <div class="game-item">
                         <span>Juego6</span>
-                        
+                        <select class="form-select" aria-label="Default select example" onchange="handleAction(this.value)">
+                            <option selected>Acción</option>
+                            <option value="modificar">Modificar</option>
+                            <option value="despublicar">Despublicar</option>
+                            <option value="eliminar">Eliminar</option>
+                        </select>
                     </div>
                 </div>
         </div>
@@ -141,5 +195,8 @@
             </ul>
         </div>
     </footer>
+
+    <p id="demo"></p>
+    <script src="../../js/select.js"></script>
 </body>
 </html>
