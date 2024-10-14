@@ -3,8 +3,8 @@ import React from 'react';
 import '../styles/headeryfooter.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Importa Bootstrap JS (sin jQuery)
-import Header from '../componentes/Header';
-import Footer from '../componentes/Footer';
+import Header from './Header';
+import Footer from './Footer';
 
 const PrePagina = () => {
     return (
