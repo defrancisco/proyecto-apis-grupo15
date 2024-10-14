@@ -1,5 +1,5 @@
 import React from 'react'
-import "./"
+import "./BarraFiltros.css";
 
 export default function BarraFiltros() {
     return (

@@ -3,6 +3,9 @@ import Header from '../Header';
 import Footer from '../Footer';
 import Card from './Card';
 import videogames from '../../data/videogames';
+import BarraFiltros from './BarraFiltros';
+import BarraBusqueda from './BarraBusqueda';
+import "./Catalogo.css";
 
 
 const Catalogo = () => {
@@ -12,33 +15,19 @@ const Catalogo = () => {
   });
 
   return (
-    <div>
-      {/* HEADER */}
+    <div className="catalog-page">
       <Header />
-      <div className='container'>
-        {videoGamesList}
-      </div>
-      {/* BARRA DE BUSQUEDA */}
-      <div className="search-bar">
-        <input type="text" placeholder="Buscar" />
-      </div>
 
-      {/* CONTENEDOR PRINCIPAL */}
-      <div className="main-container">
-        {/* BARRA DE FILTROS */}
-        <div className="filter-bar">
-          <button className="filter-btn">Eliminar Filtros</button>
-          <div className="filters">
-            <div className="filter-item">Categoría</div>
-            <div className="filter-item">Precio</div>
-            <div className="filter-item">Sistema Operativo</div>
-            <div className="filter-item">Idioma</div>
-            <div className="filter-item">Cantidad de jugadores</div>
-            <div className="filter-item">Calificación</div>
+      <div className="main-content">
+        <BarraFiltros />
+  
+        <div className="catalog-content">
+          <BarraBusqueda />
+          <div className="videogames">
+            {videoGamesList}
           </div>
         </div>
 
-        {/* VIDEOJUEGOS */}
       </div>
       <Footer />
     </div>
