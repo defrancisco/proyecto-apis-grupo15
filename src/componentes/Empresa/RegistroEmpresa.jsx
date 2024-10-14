@@ -4,8 +4,9 @@ import Footer from '../Footer'; // Importa tu componente de Footer
 import '../../styles/form.css';
 import { formValidation } from "../formValdiation";
 
-const RegistroUsuario = () => {
-  // Estado para manejar los datos del formulario
+
+
+const RegistroEmpresa = () => {
   const [formData, setFormData] = useState({
     mail: '',         // Estado para el campo de correo electrónico
     nombre: '',       // Estado para el campo de nombre de usuario
@@ -91,4 +92,4 @@ const RegistroUsuario = () => {
   );
 };
 
-export default RegistroUsuario;
+export default RegistroEmpresa;
