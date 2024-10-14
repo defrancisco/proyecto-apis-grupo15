@@ -3,7 +3,7 @@ import Header from '../Header'; // Importa tu componente de Header
 import Footer from '../Footer'; // Importa tu componente de Footer
 import '../../styles/form.css';
 
-const RegistroUsuario = () => {
+const RegistroEmpresa = () => {
   const [formData, setFormData] = useState({
     mail: '',
     nombre: '',
@@ -75,4 +75,4 @@ const RegistroUsuario = () => {
   );
 };
 
-export default RegistroUsuario;
+export default RegistroEmpresa;
