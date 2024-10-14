@@ -1,0 +1,67 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.consolas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.consola {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: calc(33.33% - 20px);
+}
+
+.consola img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.consola h2 {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.consola p {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Animación al pasar sobre las imágenes */
+.consola img {
+    transition: transform 0.3s ease;
+  }
+  
+.consola img:hover {
+    transform: scale(1.1);
+}
+  

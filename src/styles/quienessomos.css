@@ -1,0 +1,27 @@
+
+body {
+    margin: 0; /* Eliminar el margen por defecto del body */
+    font-family: Arial, sans-serif; /* Usar una fuente sencilla y legible */
+    background-color: white; /* Fondo blanco */
+    color: black; /* Texto negro */
+  }
+  
+
+  .container {
+    max-width: 800px; /* Limitar el ancho del contenedor */
+    margin: 0 auto; /* Centrar el contenedor horizontalmente */
+    padding: 20px; /* Espaciado interno */
+  }
+  
+ 
+  .titulo {
+    color: red; /* Color rojo para el título */
+    text-align: center; /* Centrar el texto */
+  }
+  
+ 
+  .subtitulo {
+    color: red; /* Color rojo para los subtítulos */
+    margin-top: 20px; /* Espacio encima del subtítulo */
+  }
+  

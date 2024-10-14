@@ -55,3 +55,13 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+/* Animación al pasar sobre las imágenes */
+.consola img {
+    transition: transform 0.3s ease;
+  }
+  
+.consola img:hover {
+    transform: scale(1.1);
+}
+  
