@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <title>UserTab de Empresa</title>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="../PrePágina.html"><img src="imagenes/logo.png" alt="Nintendo Logo"></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../PrePágina.html">Inicio</a></li>
+                    <li><a href="../Catálogo/Catalogo.html">Catálogo</a></li>
+                    <li><a href="../extras/QuienesSomos.html">Quienes somos</a></li>
+                </ul>
+            </nav>
+            <div class="icons">
+                <a href="PerfilEmpresa.html">Perfil</a> 
+                <img src="../imagenes/profile.png" alt="Logo-Perfil">
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <div class="sidebar">
+            <h2>Mi Perfil</h2>
+            <button onclick="showSection('perfil')" id="perfilBtn">Perfil</button>
+            <button onclick="showSection('autenticacion')" id="autenticacionBtn">Autenticación</button>
+            <button onclick="showSection('analisisdevideojuegos')" id="analisisdevideojuegos">Análisis de Videojuegos</button>
+            <button onclick="showSection('misjuegos')" id="misjuegos">Mis Juegos</button>
+            <button>Salir</button>
+        </div>
+
+        <div class="content">
+            <div id="perfil" class="perfil">
+                <section id="profile-section">
+                    <h2>Mis Datos</h2>
+                    <form>
+                        <div class="input-group">
+                            <label for="email">Correo</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                        <div class="input-group">
+                            <label for="first-name">Nombre</label>
+                            <input type="text" id="first-name" name="first-name">
+                        </div>
+                        <div class="input-group">
+                            <label for="last-name">Apellido</label>
+                            <input type="text" id="last-name" name="last-name">
+                        </div>
+                        <div class="input-group">
+                            <label for="birthdate">Fecha de nacimiento</label>
+                            <input type="date" id="birthdate" name="birthdate">
+                        </div>
+                        <div class="button-group">
+                            <button type="submit">Actualizar datos</button>
+                        </div>
+                    </form>
+            </div>
+        
+
+            <div id="autenticacion" class="section">
+            <h2>Cambio de Contraseña</h2>
+                <form>
+                    <label for="password_actual">Contraseña Actual:</label>
+                    <input type="password" id="password_actual" name="password_actual"><br>
+                    
+                    <label for="nueva_password">Nueva Contraseña:</label>
+                    <input type="password" id="nueva_password" name="nueva_password"><br>
+                    
+                    <label for="repetir_nueva_password">Repetir Nueva Contraseña:</label>
+                    <input type="password" id="repetir_nueva_password" name="repetir_nueva_password"><br>
+                    
+                    <button type="submit">Confirmar Contraseña</button>
+                </form>
+       
+
+            <div id="misjuegos" class="misjuegos">
+                <div class="search-bar">
+                    <input type="text" placeholder="Nombre del Juego">
+                    <button><img src="https://img.icons8.com/ios-filled/24/ffffff/search--v1.png" alt="Buscar"></button>
+                    <button>Crear juego</button>
+                </div>
+        
+                <div class="game-list">
+                    <div class="game-item">
+                        <span>Juego1</span>
+                        
+                    </div>
+                    <div class="game-item">
+                        <span>Juego2</span>
+                        
+                    </div>
+                    <div class="game-item">
+                        <span>Juego3</span>
+                        
+                    </div>
+                    <div class="game-item">
+                        <span>Juego4</span>
+                        
+                    </div>
+                    <div class="game-item">
+                        <span>Juego5</span>
+                        
+                    </div>
+                    <div class="game-item">
+                        <span>Juego6</span>
+                        
+                    </div>
+                </div>
+        </div>
+    </main>
+
+
+
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-links">
+            <ul>
+                <li><a href="#">Padres y control parental</a></li>
+                <li><a href="#">Ayuda</a></li>
+                <li><a href="#">Política de privacidad</a></li>
+                <li><a href="#">Eliminación del servicio</a></li>
+                <li><a href="#">RSC</a></li>
+            </ul>
+        </div>
+        <div class="footer-info">
+            <p>Nintendo. 2024</p>
+            <ul>
+                <li><a href="#">Empleo</a></li>
+                <li><a href="#">Información de la empresa</a></li>
+                <li><a href="#">Cookies</a></li>
+                <li><a href="#">Contactar</a></li>
+                <li><a href="#">Información legal</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>
