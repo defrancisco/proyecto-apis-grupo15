@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Importa Bootstrap CSS
@@ -8,9 +8,11 @@ import { formValidation } from '../formValdiation';
 
 
 export const LoginUsuario = () => {
+    // Ejecuta la validación del formulario al montar el componente
     useEffect(() => {
         formValidation();
     }, []); // Se ejecuta al montar el componente
+    
   return (
     <div>
         <Header />
