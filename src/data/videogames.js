@@ -20,3 +20,4 @@ const videogames = [
         image: "/html/imagenes/marioKart2.png",
     }
 ];
+export default videogames;
