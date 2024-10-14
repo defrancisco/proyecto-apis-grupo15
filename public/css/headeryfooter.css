@@ -86,17 +86,17 @@ nav ul li a:hover {
 
 /* Footer Template */
 footer {
-    background-color: #000;
-    color: #fff;
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.15);
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
 }
+
+.footer-links, .footer-info {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
 
 footer ul {
     list-style: none;

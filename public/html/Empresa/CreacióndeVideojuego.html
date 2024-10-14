@@ -1,62 +1,64 @@
-<html lang="es"></html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creación de Videojuegos</title>
-    <link rel="stylesheet" href="../css/headeryfooter.css">
+    <title>Registro de Videojuego - Nintendo</title>
+    <link rel="stylesheet" href="../../css/headeryfooter.css">
+    <link rel="stylesheet" href="../../css/gameForm.css">
 </head>
-
 <body>
-    <!--HEADER EMPRESARIAL-->
-     <header>
+    <header>
         <div class="header-container">
-            <div class="logo">
-                <a href="../PrePágina.html"><img src="imagenes/logo.png" alt="Nintendo Logo"></a>
-            </div>
+            <a href="#" class="logo"><img src="../imagenes/logo.png" alt="Nintendo Logo"></a>
             <nav>
                 <ul>
-                    <li><a href="../PrePágina.html">Inicio</a></li>
-                    <li><a href="../Catálogo/Catalogo.html">Catálogo</a></li>
-                    <li><a href="../extras/QuienesSomos.html">Quienes somos</a></li>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Catálogo</a></li>
+                    <li><a href="#">Quienes somos</a></li>
+                    <li><a href="#">Perfil</a></li>
                 </ul>
             </nav>
-            <div class="icons">
-                <a href="PerfilEmpresa.html">Perfil</a> 
-                <img src="../imagenes/profile.png" alt="Logo-Perfil">
-            </div>
         </div>
     </header>
 
-    <!--CREACIÓN DE VIDEOJUEGO-->
-    <form action="/enviar-juego" method="post">
-        <label for="nombreJuego">Nombre del Videojuego:</label><br>
-        <input type="text" id="nombreJuego" name="nombreJuego"><br>
-      
-        <label for="categoria">Categoría:</label><br>
-        <input type="text" id="categoria" name="categoria"><br>
-      
-        <label for="precio">Precio:</label><br>
-        <input type="text" id="precio" name="precio"><br>
-      
-        <label for="idioma">Idioma:</label><br>
-        <input type="text" id="idioma" name="idioma"><br>
-      
-        <label for="descripcion">Descripción:</label><br>
-        <textarea id="descripcion" name="descripcion"></textarea><br>
-      
-        <label for="requisitosMinimos">Requisitos mínimos del sistema:</label><br>
-        <textarea id="requisitosMinimos" name="requisitosMinimos"></textarea><br>
-      
-        <label for="requisitosRecomendados">Requisitos recomendados del sistema:</label><br>
-        <textarea id="requisitosRecomendados" name="requisitosRecomendados"></textarea><br>
-      
-        <input type="submit" value="Publicar">
-      </form>
+    <main>
+        <form class="game-form">
+            <h2>Creación de Videojuego</h2>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="categoria">Categoría</label>
+                    <input type="text" id="categoria" name="categoria" placeholder="Categoría">
+                </div>
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input type="text" id="precio" name="precio" placeholder="$">
+                </div>
+                <div class="form-group">
+                    <label for="idioma">Idioma</label>
+                    <input type="text" id="idioma" name="idioma" placeholder="Idioma">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción del Juego</label>
+                <textarea id="descripcion" name="descripcion" placeholder="Descripción"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="req-minimos">Requerimientos mínimos del sistema</label>
+                <textarea id="req-minimos" name="req-minimos" placeholder="Especificar"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="req-recomendados">Requerimientos recomendados del sistema</label>
+                <textarea id="req-recomendados" name="req-recomendados" placeholder="Especificar"></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Publicar</button>
+        </form>
+    </main>
 
-
-
-<!-- FOOTER -->
-    <!-- Footer Template -->
     <footer>
         <div class="footer-links">
             <ul>
@@ -80,4 +82,3 @@
     </footer>
 </body>
 </html>
-
