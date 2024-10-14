@@ -1,11 +1,28 @@
 .Card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
     padding: 10px;
     text-align: center;
-    width: 250px;
-    height: 310px;
-    overflow: hidden;
-    box-sizing: border-box;
+    width: 200px; /* Tamaño fijo para las tarjetas */
 }
+
+.Cards {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-around;
+   gap: 20px;
+}
+
+.Card p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.Card img {
+
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+
+}
+
