@@ -28,7 +28,7 @@ export const LoginUsuario = () => {
                         </div>
                         <button type="submit" className="submit-btn">Iniciar Sesión</button>
                     </form>
-                    <a href="#" className="forgot-password">¿Olvidaste tu contraseña?</a>
+                    <a href="/recuperar-contraseña" className="forgot-password">¿Olvidaste tu contraseña?</a>
                 </div>
         </main>
         <Footer />
