@@ -36,9 +36,7 @@ const RegistroEmpresa = () => {
   
   return (
     <div>
-    
       <Header />
-      
       <main>
         <div className="registration-form">
           <h2>Registro de Usuario</h2>
