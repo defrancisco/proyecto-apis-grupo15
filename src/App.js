@@ -11,7 +11,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <BusinessTab />
+        <ModificacionVideojuego />
       </div>
     </BrowserRouter>
   );

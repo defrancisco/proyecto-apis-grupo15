@@ -34,7 +34,7 @@ function CreacionVideojuego() {
         <Header/>
 
       <main>
-        <form className="game-form" onSubmit={handleSubmit}>
+        <form className="game-form justify-content-center" onSubmit={handleSubmit}>
           <h2>Creación de Videojuego</h2>
           <div className="form-group">
             <label htmlFor="nombre">Nombre</label>
