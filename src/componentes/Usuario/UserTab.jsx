@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../styles/headeryfooter.css';
 import '../../styles/userTab.css';
 
-import Header from '../Header';
+import Header from './HeaderCliente';
 import Footer from '../Footer';
 
 // Componente Sidebar

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Header from '../Header'
+import Header from './HeaderEmpresarial';
 import Footer from '../Footer'; 
 import '../../styles/gameForm.css'
 

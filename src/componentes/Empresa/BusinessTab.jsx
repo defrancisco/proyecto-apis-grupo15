@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../Header';
+import Header from './HeaderEmpresarial';
 import Footer from '../Footer'
-import '../../styles/userTab.css'
+import '../../styles/userTab.css';
 
 function UserTabCliente() {
   const [activeSection, setActiveSection] = useState('perfil');

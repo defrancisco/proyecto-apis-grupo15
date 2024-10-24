@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../Header'
+import Header from './HeaderEmpresarial';
 import Footer from '../Footer'; 
-import '../../styles/gameForm.css'
+import '../../styles/gameForm.css';
 
 function ModificacionVideojuego() {
   const [gameData, setGameData] = useState({

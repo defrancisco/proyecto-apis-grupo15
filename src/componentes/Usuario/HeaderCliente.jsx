@@ -1,41 +1,34 @@
-import React from 'react';
+import React from 'react'
 import { Link } from 'react-router-dom';
-import '../styles/headeryfooter.css'; 
+import '../../styles/headeryfooter';
 
-function Header() {
+export const HeaderCliente = () => {
   return (
     <header>
       <div className="header-container">
         <div className="container-left">
-          <Link to="/preinicio" className="logo">
+        <Link to="/preinicio" className="logo">
             <img src="imagenes/logo.png" alt="Nintendo Logo" />
           </Link>
 
-          <nav>
-            <ul>
+        <nav>
+          <ul>
               <li><Link to="/preinicio">Inicio</Link></li>
               <li><Link to="/catalogo">Catálogo</Link></li>
               <li><Link to="/wishlist">Wishlist</Link></li>
               <li><Link to="/consolas">Consolas</Link></li>
               <li><Link to="/quienes-somos">Quienes somos</Link></li>
-              <li><Link to="/perfil">Perfil</Link></li>
               <li><Link to="/ayuda">Ayuda</Link></li>
-            </ul>
-          </nav>
-        </div>
-
-        <div className="auth-buttons">
-          <Link to="/usuario/login">
-            <button id="login-btn">Iniciar sesión</button>
-          </Link>
-          <Link to="/usuario/registro">
-            <button id="register-btn">Registrarse</button>
-          </Link>
+          </ul>
+        </nav>
         </div>
         
-      </div>
+        <div className="icons">
+          <Link to="/business-tab">Perfil</Link>
+          <img src="src\componentes\imagenes\profile.png" alt="Logo-Perfil" />
+        </div>
+
+        </div>
     </header>
   );
 }
-
-export default Header;
