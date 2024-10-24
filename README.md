@@ -1,3 +1,13 @@
+# Aplicaciones Interactivas
+*Profesor: Joaquin Timerman*
+Lunes Turno Noche - Segundo Cuatrimestre 2024
+
+* Antonio Wu
+* Ignacio Roberto Opatich
+* Delfina Francisco Frate
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
