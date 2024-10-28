@@ -5,7 +5,7 @@ import Card from './Card';
 import videogames from '../../data/videogames';
 import BarraFiltros from './BarraFiltros';
 import BarraBusqueda from './BarraBusqueda';
-import "./Catalogo.css";
+import "../../styles/Catalogo.css";
 
 
 const Catalogo = () => {

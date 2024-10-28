@@ -1,5 +1,5 @@
 import React from 'react'
-import "./BarraBusqueda.css";
+import "../../styles/BarraBusqueda.css";
 
 export default function BarraBusqueda() {
   return (
