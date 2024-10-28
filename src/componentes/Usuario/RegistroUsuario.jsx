@@ -23,18 +23,20 @@ export const RegistroUsuario = () => {
             [name]: value
         }));
 
-        if (name === 'confirmarContrasena' || name === 'contrasena') {
-            setPasswordMismatch(form.contrasena !== form.confirmarContrasena);
+        if (name === 'contrasena' || name === 'confirmarContrasena') {
+            setPasswordMismatch(
+                name === 'confirmarContrasena'
+                    ? form.contrasena !== value
+                    : value !== form.confirmarContrasena
+            );
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (form.contrasena !== form.confirmarContrasena) {
-            setPasswordMismatch(true);
-            return;
-        }
+        if (passwordMismatch) return; // No envía el formulario si hay error de contraseña
         console.log('Formulario enviado:', form);
+
     };
 
     return (
