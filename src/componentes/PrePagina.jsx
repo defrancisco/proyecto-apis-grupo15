@@ -1,42 +1,46 @@
-// src/components/PrePagina.js
-import React from 'react';
-import '../styles/headeryfooter.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Importa Bootstrap JS (sin jQuery)
+import React, { useState } from 'react';
+import '../styles/carousel';
 import Header from './Header';
 import Footer from './Footer';
 
+const images = [
+    { src: './imagenes/animalcrossing.jpg', alt: 'Imagen de Animal Crossing' },
+    { src: './imagenes/zelda.jpg', alt: 'Imagen de Zelda' },
+    { src: './imagenes/mariokart.jpg', alt: 'Imagen de Mario Kart' }
+];
+
 const PrePagina = () => {
+    const [current, setCurrent] = useState(0);
+
+    const nextSlide = () => {
+        setCurrent((current + 1) % images.length);
+    };
+
+    const prevSlide = () => {
+        setCurrent((current - 1 + images.length) % images.length);
+    };
+
     return (
         <div>
             <Header />
 
-            {/* CAROUSEL */}
-            <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
-                <ol className="carousel-indicators">
-                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active"></li>
-                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
-                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
-                </ol>
+            <div className="carousel">
                 <div className="carousel-inner">
-                    <div className="carousel-item active">
-                        <img src="./imagenes/animalcrossing.jpg" className="d-block w-100" alt="Imagen de Animal Crossing" />
-                    </div>
-                    <div className="carousel-item">
-                        <img src="./imagenes/zelda.jpg" className="d-block w-100" alt="Imagen de Zelda" />
-                    </div>
-                    <div className="carousel-item">
-                        <img src="./imagenes/mariokart.jpg" className="d-block w-100" alt="Imagen de Mario Kart" />
-                    </div>
+                    {images.map((image, index) => (
+                        <div
+                            key={index}
+                            className={`carousel-item ${index === current ? 'active' : ''}`}
+                        >
+                            <img src={image.src} alt={image.alt} className="carousel-image" />
+                        </div>
+                    ))}
                 </div>
-                <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Previo</span>
-                </a>
-                <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Siguiente</span>
-                </a>
+                <button className="carousel-control-prev" onClick={prevSlide}>
+                    &#10094;
+                </button>
+                <button className="carousel-control-next" onClick={nextSlide}>
+                    &#10095;
+                </button>
             </div>
 
             <Footer />
