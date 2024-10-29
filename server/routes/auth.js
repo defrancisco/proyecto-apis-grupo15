@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { authenticateToken } = require('../middleware/auth');
 
 const {
     register,
@@ -9,10 +10,13 @@ const {
     changePassword
 } = require('../controllers/authController');
 
+// Rutas publicas
 router.post('/register', register);
 router.post('/login', login);
 router.post('/recover-password', recoverPassword);
 router.post('/verify-code', verifyCode);
-router.post('/change-password', changePassword); //solo si esta bien el codigo de verificacion
+
+// Rutas protegidas
+router.post('/change-password', authenticateToken, changePassword);
 
 module.exports = router;

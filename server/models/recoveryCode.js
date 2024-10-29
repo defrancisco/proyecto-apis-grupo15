@@ -1,9 +1,30 @@
-const mongoose = require('mongoose');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
-const RecoveryCodeSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
-  code: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now, expires: '10m' },
+const RecoveryCode = sequelize.define('RecoveryCode', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  email: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
+    unique: true
+  },
+  code: {
+    type: DataTypes.STRING(255),
+    allowNull: false
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: sequelize.literal('GETDATE()'),
+  }
+}, {
+  tableName: 'RecoveryCodes',
+  schema: 'dbo',
+  timestamps: true,
+  updatedAt: false,
 });
 
-module.exports = mongoose.model('RecoveryCode', RecoveryCodeSchema);
+module.exports = RecoveryCode;

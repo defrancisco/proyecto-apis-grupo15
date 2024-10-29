@@ -11,15 +11,15 @@
   "license": "ISC",
   "description": "API nintendo grupo-15",
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
-    "git": "^0.1.5",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.9.0",
-    "mongoose": "^8.7.1",
+    "mssql": "^10.0.2",
     "nodemailer": "^6.9.15",
     "proyecto": "file:",
-    "react": "^18.3.1"
+    "sequelize": "^6.37.1",
+    "tedious": "^18.1.0"
   }
 }

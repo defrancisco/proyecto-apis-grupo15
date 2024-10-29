@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Cart = sequelize.define('Cart', {
+const Review = sequelize.define('Review', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -23,35 +23,26 @@ const Cart = sequelize.define('Cart', {
       key: 'id'
     }
   },
-  quantity: {
+  rating: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    defaultValue: 1,
     validate: {
-      min: 1
+      min: 1,
+      max: 5
     }
   },
-  subtotal: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false
+  content: {
+    type: DataTypes.TEXT,
+    allowNull: true 
   },
-  addedAt: {
+  createdAt: {
     type: DataTypes.DATE,
     defaultValue: sequelize.literal('GETDATE()')
   }
 }, {
-  tableName: 'Carts',
+  tableName: 'Reviews',
   schema: 'dbo',
   timestamps: false
 });
 
-Cart.associate = (models) => {
-  Cart.belongsTo(models.User, {
-    foreignKey: 'userId'
-  });
-  Cart.belongsTo(models.Game, {
-    foreignKey: 'gameId'
-  });
-};
-
-module.exports = Cart;
+module.exports = Review;

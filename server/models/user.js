@@ -1,37 +1,95 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs')
+const { DataTypes } = require('sequelize');
+const bcrypt = require('bcryptjs');
+const sequelize = require('../config/database');
 
-const UserSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  userType: { type: String, enum: ['individual', 'business'], required: true },
-  //individual users
-  name: { type: String },
-  surname: { type: String },
-  dateOfBirth: { type: Date },
-  //business users
-  businessName: { type: String },
-  //Common fields
-  wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Game' }],
-  paymentMethods: [{
-    cardNumber: String,
-    cardHolder: String,
-    expiryDate: String,
-    cvv: String
-  }],
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
-});
-
-UserSchema.pre('save', async function(next) {
-  if (this.isModified('password')) {
-    this.password = await bcrypt.hash(this.password, 10);
+const User = sequelize.define('User', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  email: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: DataTypes.STRING(255),
+    allowNull: false
+  },
+  userType: {
+    type: DataTypes.STRING(20),
+    allowNull: false,
+    validate: {
+      isIn: [['individual', 'business']]
+    }
+  },
+  name: {
+    type: DataTypes.STRING(100)
+  },
+  surname: {
+    type: DataTypes.STRING(100)
+  },
+  dateOfBirth: {
+    type: DataTypes.DATE
+  },
+  businessName: {
+    type: DataTypes.STRING(200)
+  },
+  cardNumber: {
+    type: DataTypes.STRING(16),
+    validate: {
+      isNumeric: true,
+      len: [16, 16]
+    }
+  },
+  cardHolderName: {
+    type: DataTypes.STRING(100)
+  },
+  cardExpirationDate: {
+    type: DataTypes.STRING(5), // Formato: MM/YY
+    validate: {
+      is: /^(0[1-9]|1[0-2])\/([0-9]{2})$/
+    }
+  },
+  cardSecurityCode: {
+    type: DataTypes.STRING(3),
+    validate: {
+      isNumeric: true,
+      len: [3, 3]
+    }
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: sequelize.literal('GETDATE()')
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: sequelize.literal('GETDATE()')
   }
-  next();
+}, {
+  tableName: 'Users',
+  schema: 'dbo',
+  timestamps: true
 });
 
-UserSchema.methods.comparePassword = async function(candidatePassword) {
+User.beforeSave(async (user) => {
+  if (user.changed('password')) {
+    user.password = await bcrypt.hash(user.password, 10);
+  }
+});
+
+User.prototype.comparePassword = async function(candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-module.exports =  mongoose.model('User', UserSchema);
+User.associate = (models) => {
+  User.belongsToMany(models.Game, {
+    through: 'Wishlists',
+    foreignKey: 'userId',
+    otherKey: 'gameId',
+    as: 'wishlistGames'
+  });
+};
+
+module.exports = User;

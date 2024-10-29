@@ -16,7 +16,7 @@ const SMTP_CONFIG = {
 
 const transporter = nodemailer.createTransport(SMTP_CONFIG);
 
-export const sendRecoveryEmail = async (email, recoveryCode) => {
+const sendRecoveryEmail = async (email, recoveryCode) => {
   try {
     await transporter.sendMail({
       from: SMTP_CONFIG.auth.user,
@@ -29,4 +29,8 @@ export const sendRecoveryEmail = async (email, recoveryCode) => {
     console.error('Error sending recovery email:', error);
     throw error;
   }
+};
+
+module.exports = {
+  sendRecoveryEmail
 };

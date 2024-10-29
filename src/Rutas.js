@@ -9,22 +9,22 @@ import Ayuda from './componentes/extras/Ayuda';
 import LoginUsuario from './componentes/Usuario/LoginUsuario';
 import RegistroUsuario from './componentes/Usuario/RegistroUsuario';
 
-//function App() {
-  //return (
-    //<Router>
-      //<Routes>
-        //<Route path="/preinicio" element={<PrePagina />} />
-        //<Route path="/catalogo" element={<Catalogo />} />
-        ////<Route path="/wishlist" element={<Wishlist />} />
-        //<Route path="/consolas" element={<Consolas />} />
-        //<Route path="/quienes-somos" element={<QuienesSomos />} />
-        //<Route path="/perfil" element={<Perfil />} />
-        //<Route path="/ayuda" element={<Ayuda />} />
-        //<Route path="/usuario/login" element={<LoginUsuario />} />
-        //<Route path="/usuario/registro" element={<RegistroUsuario />} />
-      //</Routes>
-    //</Router>
-  //);
-//}
+function Rutas() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<PrePagina />} />
+        <Route path="/catalogo" element={<Catalogo />} />
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/consolas" element={<Consolas />} />
+        <Route path="/quienes-somos" element={<QuienesSomos />} />
+        <Route path="/perfil" element={<Perfil />} />
+        <Route path="/ayuda" element={<Ayuda />} />
+        <Route path="/usuario/login" element={<LoginUsuario />} />
+        <Route path="/usuario/registro" element={<RegistroUsuario />} />
+      </Routes>
+    </Router>
+  );
+}
 
-//export default App;
+export default Rutas;
