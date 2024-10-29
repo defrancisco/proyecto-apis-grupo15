@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../css/consolas.css';
+import '../../styles/consolas.css';
 
 
 const Consola = ({ imagen, titulo, descripcion, info }) => {
