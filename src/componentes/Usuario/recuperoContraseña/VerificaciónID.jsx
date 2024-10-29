@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 import '../../../styles/VerificaciónID';
+import '../../../styles/form.css';
+import Header from '../../Header';
+import Footer from '../../Footer';
 
 const VerificacionIdentidad = () => {
     const [code, setCode] = useState(Array(6).fill("")); // Inicializa el estado para 6 dígitos

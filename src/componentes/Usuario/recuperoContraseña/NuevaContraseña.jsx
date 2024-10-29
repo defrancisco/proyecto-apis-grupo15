@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../../../styles/headeryfooter';
 import '../../../styles/form';
 import Header from '../../Header';
 import Footer from '../../Footer';

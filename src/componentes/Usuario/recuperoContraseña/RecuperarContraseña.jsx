@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom'; 
-import '../../../styles/headeryfooter.css';
 import '../../../styles/form.css';
 import Header from '../../Header';
 import Footer from '../../Footer';

@@ -2,8 +2,7 @@ import React, {useEffect} from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Importa Bootstrap CSS
-import '../../styles/headeryfooter.css';
-import '../../styles/inicioSesion.css';
+import '../../styles/usuario/login.css';
 import { formValidation } from '../formValdiation';
 
 
