@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from '../Header'; // No esta resgitrado = no esta logeado
 import Footer from '../Footer'; 
 import '../../styles/form.css';
+
 import { formValidation } from "../formValdiation";
 
 

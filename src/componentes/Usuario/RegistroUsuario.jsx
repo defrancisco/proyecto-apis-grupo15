@@ -87,7 +87,10 @@ export const RegistroUsuario = () => {
                     </form>
                 </div>
             </main>
-            <Footer />
-        </>
-    );
-};
+
+    <Footer />
+    </>
+  )
+
+}
+export default RegistroUsuario;
