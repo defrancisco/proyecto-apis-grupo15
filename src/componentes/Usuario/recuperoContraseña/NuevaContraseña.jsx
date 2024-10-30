@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../../../styles/form';
+
 import Header from '../../Header';
 import Footer from '../../Footer';
 
@@ -9,8 +9,6 @@ const CambioContraseña = () => {
   return (
     <>
       <Header />
-
-      {/* MAIN */}
       <main>
         <div className="form">
           <h1>Cambio de contraseña</h1>

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import '../../../styles/VerificaciónID';
-import '../../../styles/form.css';
+import '../../../styles/verificacionID.css';
 import Header from '../../Header';
 import Footer from '../../Footer';
 

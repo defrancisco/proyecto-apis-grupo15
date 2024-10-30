@@ -1,3 +1,6 @@
+/*  #E60012;  Rojo Nintendo */
+
+
 /* Estilos generales */
 body {
     font-family: Arial, sans-serif;
@@ -5,8 +8,6 @@ body {
     padding: 0;
     background-color: #fff;
     color: #000;
-    flex-direction: column;
-    
 }
 
 /* Header */
@@ -20,36 +21,37 @@ header {
 /* Contenedor principal del header */
 .header-container {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
+    align-items: center;
 }
 
 /* Contenedor del logo */
 .logo-container {
     display: flex;
     align-items: center;
-    margin-right: 20px;
 }
 
+/* Logo */
 .logo img {
-    height: 40px;
+    height: 50px; /* Adjust logo size */
 }
 
 /* Navegación centrada */
 nav {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
+    flex-grow: 1; /* Allow nav to take up remaining space */
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center nav items */
 }
 
 nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
-    gap: 20px;
+    display: flex; /* Use flexbox for horizontal layout */
+}
+
+nav ul li {
+    margin: 0 15px; /* Space between nav items */
 }
 
 nav ul li a {
@@ -69,22 +71,23 @@ nav ul li a:hover {
 /* Botones de autenticación */
 .auth-buttons {
     display: flex;
-    gap: 10px;
+    align-items: center;
 }
 
 .auth-buttons button {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-    font-weight: bold;
+    background-color: #333; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* Remove default border */
+    padding: 10px 15px; /* Button padding */
+    cursor: pointer; /* Change cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth background color transition */
+    font-weight: bold; /* Bold text */
+    margin-left: 10px; /* Space between buttons */
 }
 
 .auth-buttons button:hover {
-    background-color: #555;
+    background-color: #555; /* Darker background on hover */
 }
 
 /* Media Query para dispositivos móviles */

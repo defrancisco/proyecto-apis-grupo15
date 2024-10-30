@@ -23,6 +23,7 @@ const RecuperarContraseña = () => {
       <main>
         <div className="form">
           <h1>Recuperar contraseña</h1>
+          <p>Enviar código de acceso por e-mail</p>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="email">Email:</label>

@@ -1,0 +1,103 @@
+/* Estilos generales */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Contenedor del formulario */
+.form {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+input[type="email"]:focus {
+    border-color: #E60012; /* Rojo Nintendo */
+}
+
+/* Botón de envío */
+.submit-btn {
+    background-color: #E60012; /* Rojo Nintendo */
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.submit-btn:hover {
+    background-color: #B8000E; /* Tono más oscuro de rojo */
+}
+
+/* Botón de cancelación opcional */
+.cancel-btn {
+    background-color: #ccc;
+    color: #333;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+}
+
+.cancel-btn:hover {
+    background-color: #bbb;
+}
+
+/* Alineación en dispositivos pequeños */
+@media (max-width: 768px) {
+    .form {
+        padding: 20px;
+    }
+
+    .form-group label,
+    .form-group input {
+        font-size: 14px;
+    }
+}

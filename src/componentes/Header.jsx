@@ -31,6 +31,9 @@ function Header() {
           <Link to="/usuario/registro">
             <button id="register-btn">Registrarse</button>
           </Link>
+          <Link to="/preinicio" className="logo">
+            <img src="imagenes/shoppingcart" alt="Cart Logo" />
+          </Link>
         </div>
         
       </div>
