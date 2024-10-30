@@ -1,10 +1,10 @@
 import React from 'react'
-import '../../styles/Card.css';
+import '../../../styles/Videojuego.css';
 
-export default function Card(props) {
+export default function Videojuego(props) {
   return (
-    <div className="Cards">
-      <div className="Card">
+    <div className="Videojuegos">
+      <div className="Videojuego">
         <img src={props.image} alt={props.title} />
         <p>{props.title}</p>
         <p>{props.price}</p>

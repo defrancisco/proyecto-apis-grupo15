@@ -1,4 +1,4 @@
-.Card {
+.Videojuego {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px;
@@ -6,19 +6,19 @@
     width: 200px; /* Tamaño fijo para las tarjetas */
 }
 
-.Cards {
+.Videojuegos {
    display: flex;
    flex-wrap: wrap;
    justify-content: space-around;
    gap: 20px;
 }
 
-.Card p {
+.Videojuego p {
     font-size: 14px;
     margin: 5px 0;
 }
 
-.Card img {
+.Videojuego img {
 
     max-width: 100%;
     height: auto;

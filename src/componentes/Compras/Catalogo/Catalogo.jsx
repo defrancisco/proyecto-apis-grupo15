@@ -1,16 +1,16 @@
 import React from 'react';
-import Header from '../Header';
-import Footer from '../Footer';
-import Card from './Card';
-import videogames from '../../data/videogames';
+import Header from '../../Header';
+import Footer from '../../Footer';
+import videogames from '../../../data/videogames';
 import BarraFiltros from './BarraFiltros';
 import BarraBusqueda from './BarraBusqueda';
-import "../../styles/Catalogo.css";
+import  '../../../styles/catalogo.css';
+import Videojuego from './Videojuego';
 
 
 const Catalogo = () => {
   const videoGamesList = videogames.map(v => {
-    return <Card image={v.image} title={v.title}
+    return <Videojuego image={v.image} title={v.title}
     price={v.price} />;
   });
 
