@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import '../../styles/consolas.css';
-
+import Header from '../Header';
+import Footer from '../Footer';
+import nintendoswitch from '../imagenes/nintendoswitch.webp';
+import nintendolite from '../imagenes/nintendolite.jpg';
+import nintendoswitcholed from '../imagenes/nintendoswitcholed.jpg';
 
 const Consola = ({ imagen, titulo, descripcion, info }) => {
     const [mostrarInfo, setMostrarInfo] = useState(false); 
@@ -42,27 +46,29 @@ const Consola = ({ imagen, titulo, descripcion, info }) => {
 const Consolas = () => {
   return (
     <div>
+      <Header />
       <h1>Tres consolas que ofrecen muchas maneras de jugar</h1>
       <div className="consolas">
         <Consola
-          imagen="nintendo-switch.jpg"
+          imagen={nintendoswitcholed}
           titulo="Nintendo Switch - Modelo OLED"
           descripcion="Sube de nivel con una pantalla OLED que muestra colores brillantes."
           info="La nueva Nintendo Switch OLED ofrece una mejor calidad de imagen y 64GB de almacenamiento."
         />
         <Consola
-          imagen="nintendo-switch-lite.jpg"
+          imagen={nintendolite}
           titulo="Nintendo Switch Lite"
           descripcion="Diseñada para el juego portátil."
           info="La Nintendo Switch Lite es ideal para los jugadores que prefieren jugar en modo portátil."
         />
         <Consola
-          imagen="nintendo-switch.jpg"
+          imagen={nintendoswitch}
           titulo="Nintendo Switch"
           descripcion="Juega en casa o en el camino utilizando una sola consola."
           info="La Nintendo Switch es la consola más versátil. Juega en casa conectándola al televisor o llévala contigo a donde vayas."
         />
       </div>
+      <Footer />
     </div>
   );
 };

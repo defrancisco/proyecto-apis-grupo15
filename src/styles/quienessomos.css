@@ -24,4 +24,13 @@ body {
     color: red; /* Color rojo para los subtítulos */
     margin-top: 20px; /* Espacio encima del subtítulo */
   }
-  
+
+  .link-catalogo {
+    color: #dc3545; /* Cambia el color del enlace */
+    text-decoration: underline; /* Subraya el enlace */
+}
+
+.link-catalogo:hover {
+    color: #c82333; /* Cambia el color al pasar el mouse */
+    text-decoration: none; /* Quita el subrayado al pasar el mouse */
+}

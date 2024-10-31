@@ -1,0 +1,59 @@
+/* ayuda.css */
+
+.container {
+  max-width: 800px; /* Limita el ancho máximo del contenedor */
+  margin: 0 auto; /* Centra el contenedor horizontalmente */
+  padding: 20px; /* Agrega un poco de espacio alrededor del contenido */
+}
+
+h1 {
+  margin-bottom: 30px; /* Espacio debajo del título */
+  font-size: 2.5rem; /* Tamaño del texto del título */
+}
+
+.row {
+  display: flex; /* Utiliza flexbox para la alineación */
+  justify-content: center; /* Centra las tarjetas horizontalmente */
+  gap: 20px; /* Espacio entre las tarjetas */
+}
+
+.card {
+  width: 100%; /* Asegura que las tarjetas ocupen el 100% del ancho de su contenedor */
+  max-width: 350px; /* Limita el ancho máximo de las tarjetas */
+  border: 1px solid #dc3545; /* Borde rojo */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para las tarjetas */
+  transition: transform 0.2s; /* Transición suave para el efecto hover */
+}
+
+.card:hover {
+  transform: scale(1.05); /* Efecto de aumento al pasar el mouse */
+}
+
+.card-body {
+  padding: 20px; /* Espacio interno de la tarjeta */
+}
+
+.card-title {
+  font-size: 1.5rem; /* Tamaño del texto del título de la tarjeta */
+  margin-bottom: 15px; /* Espacio debajo del título de la tarjeta */
+}
+
+.card-text {
+  font-size: 1rem; /* Tamaño del texto de la tarjeta */
+  margin-bottom: 20px; /* Espacio debajo del texto de la tarjeta */
+}
+
+.btn-danger {
+  background-color: #dc3545; /* Color de fondo del botón */
+  border: none; /* Sin borde */
+  padding: 10px 15px; /* Espaciado interno del botón */
+  border-radius: 5px; /* Bordes redondeados para el botón */
+  color: white; /* Color del texto del botón */
+  text-decoration: none; /* Sin subrayado */
+  transition: background-color 0.2s; /* Transición suave para el efecto hover */
+}
+
+.btn-danger:hover {
+  background-color: #c82333; /* Color más oscuro al pasar el mouse */
+}

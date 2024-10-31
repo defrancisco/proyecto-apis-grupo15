@@ -1,8 +1,14 @@
 import React from 'react';
-import '../../styles/ayuda.css';
+import '../../styles/ayuda.css'
+import Header from '../Header';
+import Footer from '../Footer';
+
+
 
 const Ayuda = () => {
   return (
+    <div>
+      <Header />
     <div className="container">
       <h1 className="text-center mb-4">¿Necesitas Ayuda?</h1>
       <div className="row justify-content-center">
@@ -29,6 +35,8 @@ const Ayuda = () => {
           </div>
         </div>
       </div>
+      </div>
+      <Footer />
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Importa Bootstrap CSS
-import '../../styles/usuario/login.css';
+import '../../styles/form.css';
 import { formValidation } from '../formValdiation';
 
 
@@ -12,11 +12,11 @@ export const LoginUsuario = () => {
         formValidation();
     }, []); // Se ejecuta al montar el componente
     
-  return (
-    <div>
-        <Header />
-        <main>
-            <div className="form">
+    return (
+        <div>
+            <Header />
+            <main>
+                <div className="form">
                     <h1>Inicia Sesión</h1>
                     <form>
                         <div className="form-group">
@@ -29,14 +29,14 @@ export const LoginUsuario = () => {
                         </div>
                         <button type="submit" className="submit-btn">Iniciar Sesión</button>
                     </form>
-                    <a href="/recuperar-contraseña" className="forgot-password">¿Olvidaste tu contraseña?</a>
+                    <Link to="/recuperar-contraseña" className="forgot-password">¿Olvidaste tu contraseña?</Link>
                 </div>
-        </main>
-        <Footer />
-    </div>
-  );
-};
+            </main>
+            <Footer />
+        </div>
+    );
 
+}
 export default LoginUsuario;
 
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/headeryfooter.css'; 
+import logo from './imagenes/logo.png';
+import shoppingcart from './imagenes/shoppingcart.jpg';
 
 function Header() {
   return (
@@ -8,7 +10,7 @@ function Header() {
       <div className="header-container">
         <div className="container-left">
           <Link to="/preinicio" className="logo">
-            <img src="imagenes/logo.png" alt="Nintendo Logo" />
+            <img src={logo} alt="Nintendo Logo" />
           </Link>
 
           <nav>
@@ -32,7 +34,7 @@ function Header() {
             <button id="register-btn">Registrarse</button>
           </Link>
           <Link to="/preinicio" className="logo">
-            <img src="imagenes/shoppingcart" alt="Cart Logo" />
+            <img src={shoppingcart} alt="Cart Logo" />
           </Link>
         </div>
         

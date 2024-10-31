@@ -46,7 +46,7 @@ const VerificacionIdentidad = () => {
     }
 
     return (
-        <main>
+        <><Header /><main>
             <h1>Verifique su Identidad</h1>
             <p style={{ textAlign: 'center' }}>Ingrese el código de 6 dígitos</p>
             <div className="code-input">
@@ -57,15 +57,14 @@ const VerificacionIdentidad = () => {
                         type="text"
                         maxLength="1"
                         value={digit}
-                        onChange={(e) => handleChange(e, index)}
-                    />
+                        onChange={(e) => handleChange(e, index)} />
                 ))}
             </div>
             <div className="buttons">
-                <button className="confirm" onClick={handleConfirm}>Confirmar</button> 
+                <button className="confirm" onClick={handleConfirm}>Confirmar</button>
                 <button className="resend" onClick={handleResend}>Reenviar Código</button>
             </div>
-        </main>
+        </main><Footer /></>
     );
 };
 

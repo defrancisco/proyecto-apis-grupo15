@@ -1,10 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../../styles/quienessomos.css'; 
-
+import Header from '../Header';
+import Footer from '../Footer';
 
 
 const QuienesSomos = () => {
   return (
+    <div>
+      <Header />
+   
     <div className="container">
       <h1 className="titulo">Nintendo: Una historia de diversión en Argentina</h1>
       <p>
@@ -59,9 +64,11 @@ const QuienesSomos = () => {
           color, acción y diversión para toda la familia.
         </p>
         <p>
-          Visita nuestro sitio web para conocer más sobre nuestras consolas, juegos y eventos.
+          Visita nuestro <Link to="/catalogo" className="link-catalogo">catálogo</Link> para conocer más sobre nuestras consolas, juegos y eventos.
         </p>
       </div>
+      </div>
+      <Footer />
     </div>
   );
 };

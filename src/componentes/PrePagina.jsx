@@ -1,12 +1,27 @@
 import React, { useState } from 'react';
-import '../styles/carousel';
+import '../styles/carrousel.css';
 import Header from './Header';
 import Footer from './Footer';
+import animalcrossing from './imagenes/animalcrossing.jpg';
+import mariokart from './imagenes/mariokart.jpg';
+import zelda from './imagenes/zelda.jpg';
+import zeldaEoW from './imagenes/zeldaEoW.png';
+import baldursGate from './imagenes/baldursGate.jpg';
+import pokemonScarlet from './imagenes/pokemonScarlet.png';
+import pokemonViolet from './imagenes/pokemonViolet.png';
+import rainbowSixSiege from './imagenes/rainbowSixSiege.jpg';
+import redDeadRedemption2 from './imagenes/redDeadRedemption2.jpg';
 
 const images = [
-    { src: './imagenes/animalcrossing.jpg', alt: 'Imagen de Animal Crossing' },
-    { src: './imagenes/zelda.jpg', alt: 'Imagen de Zelda' },
-    { src: './imagenes/mariokart.jpg', alt: 'Imagen de Mario Kart' }
+    animalcrossing,
+    mariokart,
+    zelda,
+    zeldaEoW,
+    baldursGate,
+    pokemonScarlet,
+    pokemonViolet,
+    rainbowSixSiege,
+    redDeadRedemption2,
 ];
 
 const PrePagina = () => {
@@ -23,15 +38,11 @@ const PrePagina = () => {
     return (
         <div>
             <Header />
-
             <div className="carousel">
-                <div className="carousel-inner">
+                <div className="carousel-inner" style={{ transform: `translateX(-${current * 100}vw)` }}>
                     {images.map((image, index) => (
-                        <div
-                            key={index}
-                            className={`carousel-item ${index === current ? 'active' : ''}`}
-                        >
-                            <img src={image.src} alt={image.alt} className="carousel-image" />
+                        <div key={index} className="carousel-item">
+                            <img src={image} alt={`Slide ${index}`} className="carousel-image" />
                         </div>
                     ))}
                 </div>
@@ -42,7 +53,6 @@ const PrePagina = () => {
                     &#10095;
                 </button>
             </div>
-
             <Footer />
         </div>
     );

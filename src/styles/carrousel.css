@@ -1,40 +1,42 @@
+/* Contenedor principal del carrusel */
 .carousel {
     position: relative;
-    width: 100%;
-    max-width: 600px;
-    margin: auto;
     overflow: hidden;
+    width: 100vw; /* Todo el ancho de la pantalla */
+    height: 100vh; /* Opcional: Ajustar al 100% de la altura de la pantalla */
 }
 
+/* Contenedor interno del carrusel */
 .carousel-inner {
     display: flex;
     transition: transform 0.5s ease-in-out;
+    width: 100%; /* Ocupa todo el ancho */
 }
 
+/* Elementos del carrusel (diapositivas) */
 .carousel-item {
-    min-width: 100%;
-    display: none;
+    min-width: 100vw; /* Cada imagen ocupa el ancho completo de la pantalla */
+    height: 100%; 
 }
 
-.carousel-item.active {
-    display: block;
-}
-
+/* Imagen dentro del carrusel */
 .carousel-image {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen ocupe todo el contenedor sin deformarse */
 }
 
+/* Botones de control del carrusel */
 .carousel-control-prev, .carousel-control-next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 24px;
-    color: black;
-    background: none;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    color: #fff;
+    font-size: 2rem;
     border: none;
     cursor: pointer;
-    padding: 10px;
+    z-index: 10;
 }
 
 .carousel-control-prev {

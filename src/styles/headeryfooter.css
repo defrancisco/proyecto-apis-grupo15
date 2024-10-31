@@ -15,45 +15,44 @@ header {
     background-color: #E60012; /* Rojo Nintendo */
     color: #fff;
     padding: 10px 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Contenedor principal del header */
 .header-container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
-/* Contenedor del logo */
-.logo-container {
+/* Contenedor para el logo a la izquierda */
+.container-left {
+    flex: 1;
     display: flex;
     align-items: center;
 }
 
 /* Logo */
 .logo img {
-    height: 50px; /* Adjust logo size */
+    height: 50px;
 }
 
 /* Navegación centrada */
 nav {
-    flex-grow: 1; /* Allow nav to take up remaining space */
-    display: flex; /* Use flexbox for layout */
-    justify-content: center; /* Center nav items */
+    flex: 2;
+    display: flex;
+    justify-content: center;
 }
 
 nav ul {
+    display: inline-flex;
+    gap: 20px;
     list-style: none;
-    margin: 0;
     padding: 0;
-    display: flex; /* Use flexbox for horizontal layout */
+    margin: 0;
 }
 
-nav ul li {
-    margin: 0 15px; /* Space between nav items */
-}
-
+/* Enlaces de navegación */
 nav ul li a {
     color: white;
     text-decoration: none;
@@ -68,26 +67,39 @@ nav ul li a:hover {
     border-radius: 5px;
 }
 
-/* Botones de autenticación */
+/* Botones de autenticación y carrito a la derecha */
 .auth-buttons {
+    flex: 1;
     display: flex;
+    justify-content:  flex-end;
     align-items: center;
+    gap: 10px;
 }
 
 .auth-buttons button {
-    background-color: #333; /* Button background color */
-    color: white; /* Button text color */
-    border: none; /* Remove default border */
-    padding: 10px 15px; /* Button padding */
-    cursor: pointer; /* Change cursor on hover */
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s; /* Smooth background color transition */
-    font-weight: bold; /* Bold text */
-    margin-left: 10px; /* Space between buttons */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
 }
 
 .auth-buttons button:hover {
-    background-color: #555; /* Darker background on hover */
+    background-color: #555;
+}
+
+#login-btn {
+    background-color: white;
+    color: #333;
+}
+
+#register-btn {
+    background-color: #333;
+}
+
+.auth-buttons .logo img {
+    height: 40px; /* Tamaño del carrito */
 }
 
 /* Media Query para dispositivos móviles */
