@@ -165,6 +165,16 @@ footer ul li a:hover {
     gap: 15px;
 }
 
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content-wrap {
+    flex: 1;
+}
+
 @media (max-width: 768px) {
     footer {
         flex-direction: column;

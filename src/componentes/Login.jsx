@@ -1,11 +1,12 @@
 import React from 'react';
-import '../styles/iniciosesion.css';
+import '../styles/inicioSesion'
+import '../styles/headeryfooter';
 import Header from './Header';
 import Footer from './Footer';
 
 function Login(){
     return (
-        <div id="page">
+        <div>
           <Header />
           <div className="account-type-selection">
             <h2>¿Qué tipo de cuenta desea registrar?</h2>
