@@ -28,12 +28,12 @@
     "start:server": "node server/app.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "eslint": "eslint ."
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
@@ -49,6 +49,8 @@
     ]
   },
   "devDependencies": {
-    "eslint-config-react-app": "^7.0.1"
+    "eslint": "^8.57.1",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-react": "^7.37.2"
   }
 }

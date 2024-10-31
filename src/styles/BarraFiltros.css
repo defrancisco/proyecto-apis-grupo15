@@ -2,11 +2,13 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 200px;
+    margin-top: 0;
 }
 
 .filter-btn {
     background-color: #ff4b4b;
-    color: white;
+    color: rgb(255, 255, 255);
     border: none;
     padding: 10px;
     cursor: pointer;

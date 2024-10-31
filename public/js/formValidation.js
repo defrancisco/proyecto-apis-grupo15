@@ -1,6 +1,6 @@
 // Script para manejar la validación del formulario
 (function () {
-    'use strict';
+    
     const forms = document.querySelectorAll('.needs-validation');
 
     Array.from(forms).forEach(function (form) {
