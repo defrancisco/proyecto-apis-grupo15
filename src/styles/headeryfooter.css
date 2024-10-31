@@ -165,7 +165,7 @@ footer ul li a:hover {
     gap: 15px;
 }
 
-.page-container {
+.login-page {
     display: flex;
     flex-direction: column;
     min-height: 100vh;

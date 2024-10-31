@@ -6,22 +6,24 @@
   
   .main-content {
     display: flex;
+    flex-direction: column;
+    flex: 1;
     align-items: flex-start;
     gap: 20px;
     padding: 20px;
   }
   
   .catalog-content {
-    flex-grow: 1;
-    padding-left: 20px;
+    flex: 1;
     display: flex;
     flex-direction: column;
+    gap: 20px;
   }
   
   .videogames {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
   }
   
   
