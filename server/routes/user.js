@@ -8,14 +8,15 @@ const {
     updateUserProfile,
     addToWishlist,
     removeFromWishlist,
-    updatePaymentMethod
+    updatePaymentMethod,
+    addToCartFromWishlist
 } = require('../controllers/userController');
 
-router.get('/profile/individual', authenticateToken, getUserProfile);
-router.get('/profile/business', authenticateToken, getBusinessProfile);
-router.put('/profile', authenticateToken, updateUserProfile);
-router.post('/wishlist', authenticateToken, addToWishlist);
-router.delete('/wishlist/:gameId', authenticateToken, removeFromWishlist);
-router.put('/payment-method', authenticateToken, updatePaymentMethod);
-
+router.get('/profile/individual/:individualId', authenticateToken, getUserProfile);
+router.get('/profile/business/:businessId', authenticateToken, getBusinessProfile);
+router.put('/profile/:userId', authenticateToken, updateUserProfile);
+router.post('/wishlist/:userId', authenticateToken, addToWishlist);
+router.delete('/wishlist/:userId/:gameId', authenticateToken, removeFromWishlist);
+router.put('/payment-method/:userId', authenticateToken, updatePaymentMethod);
+router.post('/cart/from-wishlist/:userId/:gameId', authenticateToken, addToCartFromWishlist);
 module.exports = router;

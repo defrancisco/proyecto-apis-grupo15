@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const Game = require('../models/game');
 const Wishlist = require('../models/wishList');
+const Cart = require('../models/cart');
 
 const getUserProfile = async (req, res) => {
   try {
@@ -137,11 +138,47 @@ const updatePaymentMethod = async (req, res) => {
   }
 };
 
+const addToCartFromWishlist = async (req, res) => {
+  try {
+    const { userId, gameId } = req.params;
+
+    //si el juego esta en la wishlist del usuario
+    const wishlistItem = await Wishlist.findOne({
+      where: { userId, gameId }
+    });
+
+    if (!wishlistItem) {
+      return res.status(404).json({ message: 'Game not found in wishlist' });
+    }
+
+    //agregar el juego al carrito
+    const [cartItem, created] = await Cart.findOrCreate({
+      where: { userId, gameId },
+      defaults: { quantity: 1, subtotal: 0 }
+    });
+
+    if (!created) {
+      const game = await Game.findByPk(gameId);
+      const newQuantity = cartItem.quantity + 1;
+      const newSubtotal = Number((game.price * newQuantity).toFixed(2));
+      await cartItem.update({ 
+        quantity: newQuantity,
+        subtotal: newSubtotal
+      });
+    }
+
+    res.json({ message: 'Game added to cart from wishlist' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error adding game to cart from wishlist', error: error.message });
+  }
+};
+
 module.exports = {
   getUserProfile,
   getBusinessProfile,
   updateUserProfile,
   addToWishlist,
   removeFromWishlist,
-  updatePaymentMethod
+  updatePaymentMethod,
+  addToCartFromWishlist
 };

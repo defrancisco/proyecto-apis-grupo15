@@ -93,7 +93,11 @@ const Game = sequelize.define('Game', {
   updatedAt: {
     type: DataTypes.DATE,
     defaultValue: sequelize.literal('GETDATE()')
-  }
+  },
+  isPublished: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 }, {
   tableName: 'Games',
   schema: 'dbo',

@@ -8,10 +8,10 @@ const {
   deleteReview
 } = require('../controllers/reviewController');
 
-// Rutas públicas
+
 router.get('/game/:gameId', getGameReviews);
 
-// Rutas protegidas
+
 router.use(authenticateToken);
 router.post('/', createReview);
 router.put('/:reviewId', updateReview);

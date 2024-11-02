@@ -138,14 +138,10 @@ const deleteGame = async (req, res) => {
 
 const getGameAnalytics = async (req, res) => {
   try {
-    const { gameId } = req.params;
-    const userId = req.user.userId;
+    const developerId = req.user.userId;
 
-    const game = await Game.findOne({
-      where: { 
-        id: gameId,
-        developerId: userId
-      },
+    const games = await Game.findAll({
+      where: { developerId },
       include: [{
         model: Review,
         as: 'reviews',
@@ -157,13 +153,13 @@ const getGameAnalytics = async (req, res) => {
       ]
     });
 
-    if (!game) {
+    if (!games.length) {
       return res.status(404).json({ 
-        message: 'Game not found or you do not have permission to view analytics' 
+        message: 'No games found for this developer' 
       });
     }
 
-    res.json(game);
+    res.json(games);
   } catch (error) {
     res.status(500).json({ 
       message: 'Error getting game analytics', 
@@ -172,9 +168,51 @@ const getGameAnalytics = async (req, res) => {
   }
 };
 
+const unpublishGame = async (req, res) => {
+  try {
+    const { gameId } = req.params;
+    const developerId = req.user.userId;
+
+    const game = await Game.findOne({ where: { id: gameId, developerId } });
+
+    if (!game) {
+      return res.status(404).json({ message: 'Game not found' });
+    }
+
+    game.isPublished = false; // Cambia el estado de publicación
+    await game.save();
+
+    res.json({ message: 'Game unpublished successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error unpublishing game', error: error.message });
+  }
+};
+
+const publishGame = async (req, res) => {
+  try {
+    const { gameId } = req.params;
+    const developerId = req.user.userId;
+
+    const game = await Game.findOne({ where: { id: gameId, developerId } });
+
+    if (!game) {
+      return res.status(404).json({ message: 'Game not found' });
+    }
+
+    game.isPublished = true; // Cambia el estado de publicación a true
+    await game.save();
+
+    res.json({ message: 'Game published successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error publishing game', error: error.message });
+  }
+};
+
 module.exports = {
   createGame,
   updateGame,
   deleteGame,
-  getGameAnalytics
+  getGameAnalytics,
+  unpublishGame,
+  publishGame
 };

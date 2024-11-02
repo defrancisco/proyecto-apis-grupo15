@@ -5,7 +5,9 @@ const {
   createGame,
   updateGame,
   deleteGame,
-  getGameAnalytics
+  getGameAnalytics,
+  unpublishGame,
+  publishGame
 } = require('../controllers/businessController');
 
 // Todas las rutas requieren autenticación y ser usuario empresa
@@ -16,6 +18,8 @@ router.use(isBusinessUser);
 router.post('/games', createGame);
 router.put('/games/:gameId', updateGame);
 router.delete('/games/:gameId', deleteGame);
-router.get('/games/:gameId/analytics', getGameAnalytics);
+router.get('/games/analytics', getGameAnalytics);
+router.put('/games/:gameId/unpublish', unpublishGame);
+router.put('/games/:gameId/publish', publishGame);
 
 module.exports = router;
