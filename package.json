@@ -11,6 +11,7 @@
     "eslint": "^9.13.0",
     "express": "^4.21.1",
     "lucide-react": "^0.453.0",
+    "multer": "^1.4.5-lts.1",
     "mysql2": "^3.11.3",
     "next": "^14.2.15",
     "proyecto-apis-grupo15": "file:",

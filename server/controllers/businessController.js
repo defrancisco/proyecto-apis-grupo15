@@ -26,6 +26,8 @@ const createGame = async (req, res) => {
       recommendedRequirements
     } = req.body;
 
+    const imagePath = req.file ? req.file.path : null; // Obtener la ruta de la imagen
+
     const game = await Game.create({
       name,
       category,
@@ -37,7 +39,8 @@ const createGame = async (req, res) => {
       rating,
       minRequirements,
       recommendedRequirements,
-      developerId
+      developerId,
+      imagePath // Guardar la ruta de la imagen en la base de datos
     });
 
     res.status(201).json({ 
@@ -82,6 +85,8 @@ const updateGame = async (req, res) => {
       });
     }
 
+    const imagePath = req.file ? req.file.path : game.imagePath; // Usar la nueva imagen si se proporciona
+
     await game.update({
       name,
       category,
@@ -92,7 +97,8 @@ const updateGame = async (req, res) => {
       players,
       rating,
       minRequirements,
-      recommendedRequirements
+      recommendedRequirements,
+      imagePath // Actualizar la ruta de la imagen
     });
 
     res.json({ 

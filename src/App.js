@@ -40,7 +40,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <VerificaciónID />
+        <ModificacionVideojuego/>
       </div>
     </Router>
   );
