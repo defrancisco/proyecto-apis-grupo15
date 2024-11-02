@@ -34,13 +34,14 @@ import redDeadRedemption2 from './componentes/imagenes/redDeadRedemption2.jpg';
 import nintendoswitch from './componentes/imagenes/nintendoswitch.webp';
 import nintendolite from './componentes/imagenes/nintendolite.jpg';
 import nintendoswitcholed from './componentes/imagenes/nintendoswitcholed.jpg';
+import profile from './componentes/imagenes/profile.png';
 
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <ModificacionVideojuego/>
+        <Ayuda />
       </div>
     </Router>
   );

@@ -1,28 +1,38 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Importamos Link para manejar rutas de React Router
-import '../styles/headeryfooter.css'; // Estilos del header y footer
+import { Link } from 'react-router-dom';
+import '../styles/headeryfooter.css';
+import ContactForm from './extras/ContactForm';
+import instagramlogo from './imagenes/instagramlogo.jpg';
+import twitter from './imagenes/twitter.jpg';
+import youtube from './imagenes/youtube.jpg';
 
 function Footer() {
   return (
     <footer>
       <div className="footer-links">
         <ul>
-          <li><a href="#web">Padres y control parental</a></li> {/* Ruta de sitio web */}
-          <li><Link to="/ayuda">Ayuda</Link></li> 
-          <li><a href="#web">Política de privacidad</a></li> {/* Ruta de sitio web */}
-          <li><Link to="/ayuda">Eliminación del servicio</Link></li> 
-          <li><a href="#web">RSC</a></li> {/* Ruta de sitio web */}
+          <li><Link to="/ayuda">Padres y control parental</Link></li>
+          <li><Link to="/ayuda">Ayuda</Link></li>
+          <li><Link to="/ayuda">Eliminación del servicio</Link></li>
+          <li><Link to="/quienesSomos">Información de la empresa</Link></li>
+          <li><Link to="/contactar">Contactar</Link></li>
         </ul>
+      </div>
+      <div className="footer-social">
+        <div className="social-links">
+          <a href="https://twitter.com/NintendoES" target="_blank" rel="noopener noreferrer">
+            <img src={twitter} alt="Twitter" />
+          </a>
+          <a href="https://www.instagram.com/nintendoes/" target="_blank" rel="noopener noreferrer">
+            <img src={instagramlogo} alt="Instagram" />
+          </a>
+          <a href="https://www.youtube.com/user/Nintendo" target="_blank" rel="noopener noreferrer">
+            <img src={youtube} alt="YouTube" />
+          </a>
+        </div>
       </div>
       <div className="footer-info">
         <p>Nintendo. 2024</p>
-        <ul>
-          <li><a href="#web">Empleo</a></li> {/* Ruta de sitio web */}
-          <li><Link to="/quienes-somos">Información de la empresa</Link></li> 
-          <li><a href="#web">Cookies</a></li> {/* Ruta de sitio web */}
-          <li><Link to="/ayuda">Contactar</Link></li> 
-          <li><a href="#web">Información legal</a></li> {/* Ruta de sitio web */}
-        </ul>
       </div>
     </footer>
   );
