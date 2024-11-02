@@ -22,15 +22,15 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
     width: 100%;
 }
 
 /* Contenedor para el logo a la izquierda */
 .container-left {
-    flex-grow: 1;
     display: flex;
-    justify-content: center;
     align-items: center;
+    flex-grow: 1;
 }
 
 /* Logo */
@@ -40,7 +40,9 @@ header {
 
 /* Navegación centrada */
 nav {
-    flex: 2;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     justify-content: center;
 }
@@ -74,9 +76,8 @@ nav ul li a:hover {
 
 /* Botones de autenticación y carrito a la derecha */
 .auth-buttons {
-    flex: 1;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     gap: 10px;
 }
