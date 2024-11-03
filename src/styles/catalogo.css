@@ -1,29 +1,104 @@
-.catalog-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  .main-content {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .catalog-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .videogames {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 20px;
-  }
-  
-  
+.main-content {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+  min-height: 80vh;
+}
+
+.catalog-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.videogames {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.videogames div {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  width: 500px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 16px;
+}
+
+.search-bar button {
+  padding: 10px;
+  background-color: #eee;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.filter-bar {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.filter-btn {
+  background-color: #ff4b4b;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-item {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-item summary {
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  outline: none;
+  list-style: none;
+}
+
+.filter-item summary:hover {
+  background-color: #e0e0e0;
+}
+
+.filter-item[open] summary {
+  background-color: #d0d0d0;
+}
+
+.filter-item div {
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}

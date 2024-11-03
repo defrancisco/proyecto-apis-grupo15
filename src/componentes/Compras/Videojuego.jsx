@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../../styles/Videojuego.css';
+import '../../styles/Videojuego.css';
 
 export default function Videojuego(props) {
   return (

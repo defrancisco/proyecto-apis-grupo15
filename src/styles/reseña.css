@@ -1,19 +1,28 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+/* Estructura general */
+.review-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    flex-direction: column;
+    min-height: 80vh;
 }
 
+.review-content {
+    display: flex;
+    max-width: 800px;
+    width: 100%;
+    gap: 20px; /* Espacio entre las columnas */
+}
+
+/* Estilos para GameInfo */
 .game-info {
+    flex: 1;
+    padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     border: 1px solid #eaeaea;
     text-align: center;
-}
-
-.game-image {
-    width: 150px;
-    height: 150px;
-    margin-bottom: 15px;
 }
 
 .game-info h5 {
@@ -25,10 +34,17 @@ body {
     color: #888;
 }
 
+/* Estilos para ReviewBox */
 .review-box {
+    flex: 1;
+    padding: 20px;
     background-color: #eaeaea;
     border-radius: 10px;
     border: 1px solid #ccc;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .review-box h6 {
@@ -36,18 +52,39 @@ body {
     margin-bottom: 15px;
 }
 
+.rating {
+    margin-bottom: 15px;
+}
+
 .rating span {
     font-size: 24px;
     color: #ffc107;
+    cursor: pointer;
 }
 
-textarea {
+/* Estilo para el textarea */
+.review-textarea {
+    width: 100%;
     resize: none;
     border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 15px;
 }
 
-.btn-danger {
+/* Botón de subir */
+.submit-button {
+    width: 100%;
     background-color: #ff0000;
+    color: #fff;
     border: none;
+    padding: 10px;
     border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
 }
+
+.submit-button:hover {
+    background-color: #cc0000;
+}
+
