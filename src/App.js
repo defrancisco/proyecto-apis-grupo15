@@ -20,8 +20,8 @@ import VerificaciónID from './componentes/Usuario/recuperoContraseña/Verificac
 
 
 // Imagenes
-import logo from './componentes/imagenes/logo.png'; // Ruta correcta a logo.png
-import shoppingcart from './componentes/imagenes/shoppingcart.jpg'; // Ruta correcta a logo.png
+import logo from './componentes/imagenes/logo.png'; 
+import shoppingcart from './componentes/imagenes/shoppingcart.jpg'; 
 import animalcrossing from './componentes/imagenes/animalcrossing.jpg';
 import mariokart from './componentes/imagenes/mariokart.jpg';
 import zelda from './componentes/imagenes/zelda.jpg';

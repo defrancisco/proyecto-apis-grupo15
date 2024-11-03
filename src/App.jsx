@@ -27,6 +27,11 @@ import ModificacionVideojuego from "./componentes/Empresa/ModificacionJuego.jsx"
 import RegistroEmpresa from "./componentes/Empresa/RegistroEmpresa.jsx";
 import CreacionVideojuego from "./componentes/Empresa/CreacionJuego.jsx";
 
+
+
+
+
+
 // Crear rutas
 const router = createBrowserRouter([
     {
