@@ -11,7 +11,8 @@ function ModificacionVideojuego() {
     idioma: '',
     descripcion: '',
     reqMinimos: '',
-    reqRecomendados: ''
+    reqRecomendados: '',
+    imagen: null
   });
 
   useEffect(() => {
@@ -41,8 +42,19 @@ function ModificacionVideojuego() {
     }));
   };
 
+  const handleFileChange = (e) => {
+    setGameData(prevData => ({
+      ...prevData,
+      imagen: e.target.files[0]
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data = new FormData();
+    for (const key in gameData) {
+      data.append(key, gameData[key]);
+    }
     console.log('Datos del juego actualizados:', gameData);
     // Aquí iría la lógica para enviar los datos actualizados al servidor
   };
@@ -140,6 +152,16 @@ function ModificacionVideojuego() {
                 placeholder="Especificar"
                 required
               ></textarea>
+            </div>
+            <div className="form-group">
+              <label htmlFor="imagen">Imagen del Juego (opcional)</label>
+              <input
+                type="file"
+                id="imagen"
+                name="imagen"
+                onChange={handleFileChange}
+                accept="image/*"
+              />
             </div>
             <div className="form-actions">
               <button type="submit" className="btn-submit">Guardar cambios</button>

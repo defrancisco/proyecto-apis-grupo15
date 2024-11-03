@@ -19,9 +19,10 @@ header {
 
 /* Contenedor principal del header */
 .header-container {
+    position: relative;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
 }
 
@@ -39,17 +40,23 @@ header {
 
 /* Navegación centrada */
 nav {
-    flex: 2;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     justify-content: center;
 }
 
 nav ul {
-    display: inline-flex;
-    gap: 20px;
-    list-style: none;
+    display: flex;
+    justify-content: center;
     padding: 0;
     margin: 0;
+    list-style: none;
+}
+
+nav ul li {
+    margin: 0 10px;
 }
 
 /* Enlaces de navegación */
@@ -126,12 +133,11 @@ footer {
     padding: 20px 0;
 }
 
-.footer-links, .footer-info {
+.footer-links, .footer-info, .footer-social {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
-
 
 footer ul {
     list-style: none;
@@ -160,19 +166,25 @@ footer ul li a:hover {
     margin: 0;
 }
 
-.footer-info ul {
+.footer-social {
     display: flex;
-    gap: 15px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
 }
 
-.login-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+.footer-social h4 {
+    margin-right: 15px; /* Espaciado entre el texto y los logos */
 }
 
-.content-wrap {
-    flex: 1;
+.social-links {
+    display: flex;
+    gap: 15px; /* Espaciado entre los íconos */
+}
+
+.social-links img {
+    width: 30px; /* Ajusta el tamaño de los logos */
+    height: auto;
 }
 
 @media (max-width: 768px) {
@@ -185,6 +197,11 @@ footer ul li a:hover {
         text-align: center;
     }
 
+    .footer-social {
+        justify-content: center; /* Centra los logos en pantallas pequeñas */
+        margin-top: 10px;
+    }
+
     header {
         flex-direction: column;
     }
@@ -195,8 +212,6 @@ footer ul li a:hover {
     }
 }
 
-
-
-button{
+button {
     font-weight: bold;
 }

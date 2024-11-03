@@ -20,8 +20,8 @@ import VerificaciónID from './componentes/Usuario/recuperoContraseña/Verificac
 
 
 // Imagenes
-import logo from './componentes/imagenes/logo.png'; // Ruta correcta a logo.png
-import shoppingcart from './componentes/imagenes/shoppingcart.jpg'; // Ruta correcta a logo.png
+import logo from './componentes/imagenes/logo.png'; 
+import shoppingcart from './componentes/imagenes/shoppingcart.jpg'; 
 import animalcrossing from './componentes/imagenes/animalcrossing.jpg';
 import mariokart from './componentes/imagenes/mariokart.jpg';
 import zelda from './componentes/imagenes/zelda.jpg';
@@ -34,13 +34,14 @@ import redDeadRedemption2 from './componentes/imagenes/redDeadRedemption2.jpg';
 import nintendoswitch from './componentes/imagenes/nintendoswitch.webp';
 import nintendolite from './componentes/imagenes/nintendolite.jpg';
 import nintendoswitcholed from './componentes/imagenes/nintendoswitcholed.jpg';
+import profile from './componentes/imagenes/profile.png';
 
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <VerificaciónID />
+        <Ayuda />
       </div>
     </Router>
   );

@@ -12,7 +12,8 @@ function CreacionVideojuego() {
     idioma: '',
     descripcion: '',
     reqMinimos: '',
-    reqRecomendados: ''
+    reqRecomendados: '',
+    imagen: null
   });
 
   const handleInputChange = (e) => {
@@ -23,8 +24,19 @@ function CreacionVideojuego() {
     }));
   };
 
+  const handleFileChange = (e) => {
+    setFormData(prevData => ({
+      ...prevData,
+      imagen: e.target.files[0]
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data = new FormData();
+    for (const key in formData) {
+      data.append(key, formData[key]);
+    }
     console.log('Datos del nuevo juego:', formData);
     // Aquí iría la lógica para enviar los datos al servidor
   };
@@ -118,6 +130,17 @@ function CreacionVideojuego() {
               placeholder="Especificar"
               required
             ></textarea>
+          </div>
+          <div className="form-group">
+            <label htmlFor="imagen">Imagen del Juego</label>
+            <input
+              type="file"
+              id="imagen"
+              name="imagen"
+              onChange={handleFileChange}
+              accept="image/*"
+              required
+            />
           </div>
           <button type="submit" className="btn-submit">Publicar</button>
         </form>
