@@ -19,29 +19,12 @@ import VerificaciónID from './componentes/Usuario/recuperoContraseña/Verificac
 
 
 
-// Imagenes
-import logo from './componentes/imagenes/logo.png'; 
-import shoppingcart from './componentes/imagenes/shoppingcart.jpg'; 
-import animalcrossing from './componentes/imagenes/animalcrossing.jpg';
-import mariokart from './componentes/imagenes/mariokart.jpg';
-import zelda from './componentes/imagenes/zelda.jpg';
-import zeldaEoW from './componentes/imagenes/zeldaEoW.png';
-import baldursGate from './componentes/imagenes/baldursGate.jpg';
-import pokemonScarlet from './componentes/imagenes/pokemonScarlet.png';
-import pokemonViolet from './componentes/imagenes/pokemonViolet.png';
-import rainbowSixSiege from './componentes/imagenes/rainbowSixSiege.jpg';
-import redDeadRedemption2 from './componentes/imagenes/redDeadRedemption2.jpg';
-import nintendoswitch from './componentes/imagenes/nintendoswitch.webp';
-import nintendolite from './componentes/imagenes/nintendolite.jpg';
-import nintendoswitcholed from './componentes/imagenes/nintendoswitcholed.jpg';
-import profile from './componentes/imagenes/profile.png';
-
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <RecuperarContraseña />
+        <Login />
       </div>
     </Router>
   );

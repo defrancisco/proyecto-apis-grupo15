@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useUserContext } from '../context/UserContext'; 
+/* import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../context/UserContext';  */
 
 import '../styles/iniciosesion.css';
 import '../styles/headeryfooter.css';
@@ -8,7 +8,7 @@ import Header from './Header';
 import Footer from './Footer';
 
 function Login() {
-  const navigate = useNavigate();
+  /* const navigate = useNavigate();
   const { login } = useUserContext(); // Obtiene la función de login del contexto
   const [accountType, setAccountType] = useState(null); // Estado para tipo de cuenta
 
@@ -28,7 +28,7 @@ function Login() {
       navigate('/iniciarSesion/loginEmpresa'); // Redirige a LoginEmpresa
     }
   };
-
+ */
   return (
     <div className="login-page">
       <Header />
@@ -36,16 +36,16 @@ function Login() {
         <div className="account-type-selection">
           <h2>¿Qué tipo de cuenta desea registrar?</h2>
           <div className="button-group">
-            <button type="button" className="personal-account" onClick={() => handleAccountSelection('personal')}>
+            <button type="button" className="personal-account" >
               ⭐ Cuenta Personal
             </button>
-            <button type="button" className="business-account" onClick={() => handleAccountSelection('business')}>
+            <button type="button" className="business-account" >
               ⭐ Cuenta Empresarial
             </button>
           </div>
           <h2>O si ya tiene cuenta</h2>
           <div className="login">
-            <button type="button" className="login-button" onClick={handleLogin}>
+            <button type="button" className="login-button"> 
               ⭐ Iniciar Sesión
             </button>
           </div>

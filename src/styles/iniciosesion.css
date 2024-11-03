@@ -1,0 +1,64 @@
+/* form.css */
+
+body {
+  margin: 0; /* Eliminar el margen por defecto del body */
+  font-family: Arial, sans-serif; /* Usar una fuente sencilla y legible */
+  background-color: #f5f5f5; /* Fondo suave */
+  color: black; /* Texto negro */
+}
+
+
+
+.content-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra el contenido horizontalmente */
+  padding: 240px; /* Espaciado alrededor del contenido */
+  background-color: white; /* Fondo blanco para el contenido */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+h2 {
+  margin: 20px 0; /* Espacio arriba y abajo del título */
+  text-align: center; /* Centra el texto */
+}
+
+.button-group {
+  display: flex; /* Cambia a flexbox */
+  flex-direction: row; /* Alinea los botones horizontalmente */
+  justify-content: center; /* Centra los botones en el contenedor */
+  gap: 10px; /* Espacio entre los botones */
+}
+
+.button-group button {
+  background-color: #e60012; /* Rojo Nintendo */
+  color: white; /* Texto blanco */
+  border: none; /* Sin borde */
+  padding: 15px 30px; /* Espaciado interno del botón */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  font-size: 16px; /* Tamaño de fuente */
+  border-radius: 5px; /* Bordes redondeados */
+  transition: background-color 0.3s; /* Transición suave para el efecto hover */
+}
+
+.button-group button:hover {
+  background-color: #c50010; /* Color más oscuro al pasar el mouse */
+}
+
+/* Asegúrate de que el botón de iniciar sesión tenga el mismo estilo */
+.login-button {
+  background-color: #e60012; /* Rojo Nintendo */
+  color: white; /* Texto blanco */
+  border: none; /* Sin borde */
+  padding: 15px 30px; /* Espaciado interno del botón */
+  margin-top: 10px; /* Margen superior para separar del título */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  font-size: 16px; /* Tamaño de fuente */
+  border-radius: 5px; /* Bordes redondeados */
+  transition: background-color 0.3s; /* Transición suave para el efecto hover */
+}
+
+.login-button:hover {
+  background-color: #c50010; /* Color más oscuro al pasar el mouse */
+}
