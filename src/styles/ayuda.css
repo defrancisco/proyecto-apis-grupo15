@@ -1,29 +1,44 @@
 /* ayuda.css */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: white;
+  color: black;
+  height: 100%;
+}
 
 .container {
-  max-width: 800px; /* Limita el ancho máximo del contenedor */
-  margin: 0 auto; /* Centra el contenedor horizontalmente */
-  padding: 20px; /* Agrega un poco de espacio alrededor del contenido */
+  max-width: 1200px; /* Asegura que use todo el ancho de la pantalla */
+  width: 100%;
+  padding: 180px;
+  margin: 0 auto;
+  flex-grow: 1; /* Expande el contenedor para ocupar el espacio disponible */
 }
 
 h1 {
-  margin-bottom: 30px; /* Espacio debajo del título */
-  font-size: 2.5rem; /* Tamaño del texto del título */
+  margin-bottom: 100px; /* Espacio debajo del título */
+  font-size: 10px; /* Tamaño del texto del título */
 }
 
 .row {
-  display: flex; /* Utiliza flexbox para la alineación */
-  justify-content: center; /* Centra las tarjetas horizontalmente */
-  gap: 20px; /* Espacio entre las tarjetas */
+  display: flex;
+  justify-content: center;
+  align-items: stretch; /* Asegura que los elementos hijos llenen el espacio vertical */
+  flex-wrap: wrap; /* Permite que las tarjetas se envuelvan */
+  gap: 20px;
 }
 
 .card {
+  flex: 1 1 300px;
   width: 100%; /* Asegura que las tarjetas ocupen el 100% del ancho de su contenedor */
   max-width: 350px; /* Limita el ancho máximo de las tarjetas */
-  border: 1px solid #dc3545; /* Borde rojo */
-  border-radius: 8px; /* Bordes redondeados */
+  border: 2px solid #dc3545; /* Borde rojo */
+  border-radius: 20px; /* Bordes redondeados */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para las tarjetas */
   transition: transform 0.2s; /* Transición suave para el efecto hover */
+  margin-bottom: 20px; /* Añade espacio entre las filas */
+  padding: 20px;
 }
 
 .card:hover {

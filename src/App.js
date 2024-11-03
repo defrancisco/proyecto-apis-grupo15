@@ -41,7 +41,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Ayuda />
+        <RecuperarContraseña />
       </div>
     </Router>
   );
