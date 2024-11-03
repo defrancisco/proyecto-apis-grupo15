@@ -24,7 +24,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Login />
+        <LoginUsuario />
       </div>
     </Router>
   );

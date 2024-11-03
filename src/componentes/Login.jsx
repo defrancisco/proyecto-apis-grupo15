@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-/* import { useNavigate } from 'react-router-dom';
-import { useUserContext } from '../context/UserContext';  */
+import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../context/UserContext'; 
 
 import '../styles/iniciosesion.css';
 import '../styles/headeryfooter.css';
@@ -8,7 +8,7 @@ import Header from './Header';
 import Footer from './Footer';
 
 function Login() {
-  /* const navigate = useNavigate();
+  const navigate = useNavigate();
   const { login } = useUserContext(); // Obtiene la función de login del contexto
   const [accountType, setAccountType] = useState(null); // Estado para tipo de cuenta
 
@@ -28,7 +28,7 @@ function Login() {
       navigate('/iniciarSesion/loginEmpresa'); // Redirige a LoginEmpresa
     }
   };
- */
+
   return (
     <div className="login-page">
       <Header />
