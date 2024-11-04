@@ -1,5 +1,31 @@
-import CreacionVideojuego from "./componentes/Empresa/CreacionJuego";
-import ModificacionVideojuego from "./componentes/Empresa/ModificacionJuego";
+import React from "react";
+import "./index.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+// Componentes
+import Root, { loader as rootLoader } from "./routes/root";
+import Catalogo from "./componentes/Compras/Catalogo/Catalogo.jsx";
+import Videojuego from "./componentes/Compras/Catalogo/Videojuego.jsx";
+import CarritoCompras from "./componentes/Compras/CarritoCompras/CarritoCompras.jsx";
+import ResumenCompra from "./componentes/Compras/CarritoCompras/ResumenCompra.jsx";
+import Producto from "./componentes/Compras/CarritoCompras/Producto.jsx";
+import PrePagina from "./componentes/PrePagina.jsx";
+import Ayuda from "./componentes/extras/Ayuda.jsx";
+import QuienesSomos from "./componentes/extras/QuienesSomos.jsx";
+import Consolas from "./componentes/extras/Consolas.jsx";
+import ContactForm from "./componentes/extras/ContactForm.jsx";
+import LoginEmpresa from "./componentes/Empresa/LoginEmpresa.jsx";
+import Login from "./componentes/Login.jsx";
+import LoginUsuario from "./componentes/Usuario/LoginUsuario";
+import UserTab from "./componentes/Usuario/UserTab.jsx";
+import RegistroUsuario from "./componentes/Usuario/RegistroUsuario.jsx";
+import VerificacionID from "./componentes/Usuario/recuperoContraseña/VerificaciónID.jsx";
+import NuevaContraseña from "./componentes/Usuario/recuperoContraseña/NuevaContraseña.jsx";
+import RecuperarContraseña from "./componentes/Usuario/recuperoContraseña/RecuperarContraseña.jsx";
+import BusinessTab from "./componentes/Empresa/BusinessTab.jsx"; 
+import ModificacionVideojuego from "./componentes/Empresa/ModificacionJuego.jsx";
+import RegistroEmpresa from "./componentes/Empresa/RegistroEmpresa.jsx";
+import CreacionVideojuego from "./componentes/Empresa/CreacionJuego.jsx";
 
 const router = createBrowserRouter([
     {
@@ -33,38 +59,44 @@ const router = createBrowserRouter([
                 path: "iniciarSesion", 
                 element: <Login />,
                 children: [
-                    // Subrutas para LoginUsuario y LoginEmpresa
+                    // Tengo el mismo componente de Login
                     { 
-                        path: "loginUsuario", 
-                        element: <LoginUsuario />,
                         children: [
+                            // SI es que quiero crear una cuenta
                             { path: "registroUsuario", element: <RegistroUsuario /> },
-                            { path: "recuperarContraseña", element: <VerificacionID />,
+                            { path: "registroEmpresa", element: <RegistroEmpresa />},
+
+                            // Si es que quiero iniciar sesión
+                            {
+                                path: "loginUsuario",
+                                element: <LoginUsuario />,
                                 children: [
+                                    { path: "recuperarContraseña", element: <VerificacionID /> },
                                     { path: "nuevaContraseña", element: <NuevaContraseña /> },
                                     { path: "finalizarRecuperacion", element: <RecuperarContraseña /> }
                                 ]
-                            }
+                            },
                         ]
                     },
-                    // emprea
+                    // Usuario
+                    {
+                        path: "userTab",
+                        element: <User Tab />,
+                    },
+
+                    // Empresa
                     { 
-                        path: "loginEmpresa", 
-                        element: <LoginEmpresa />,
+                        path: "businessTab", 
+                        element: <BusinessTab />,
                         children: [
-                            { path: "registroEmpresa", element: <RegistroEmpresa /> },
-                            { path: "businessTab", element: <BusinessTab />,
-                                children: [
-                                    { path: "creacionJuego", element: <CreacionVideojuego /> },
-                                    { path: "modificacionJuego", element: <ModificacionVideojuego /> }
-                                ]
-                            }
+                            { path: "creacionJuego", element: <CreacionVideojuego /> },
+                            { path: "modificacionJuego", element: <ModificacionVideojuego /> }
                         ]
                     }
                 ]
             }
         ]
-    }
+    },
 ]);
 
 if (import.meta.hot) {
