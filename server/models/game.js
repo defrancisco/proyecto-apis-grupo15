@@ -23,20 +23,20 @@ const Game = sequelize.define('Game', {
     type: DataTypes.STRING(50),
     allowNull: false,
     validate: {
-      isIn: [['Action', 'Adventure', 'RPG', 'Strategy', 'Sports', 'Simulation', 'Puzzle', 'Other']]
+      isIn: [['Accion', 'Aventura', 'RPG', 'EStrategia', 'Deporte', 'Simulacion', 'Acertijos']]
     }
   },
   operatingSystem: {
     type: DataTypes.STRING(100),
     allowNull: false,
     validate: {
-      isIn: [['Windows', 'MacOS', 'Linux', 'Android', 'iOS']]
+      isIn: [['Windows', 'MacOS', 'Linux', 'Android', 'iOS', 'Nintendo']]
     }
   },
   language: {
     type: DataTypes.STRING(50),
     allowNull: false,
-    defaultValue: 'English'
+    defaultValue: 'Español'
   },
   players: {
     type: DataTypes.INTEGER,
