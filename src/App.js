@@ -16,15 +16,15 @@ import UserTabCliente from './componentes/Usuario/UserTab';
 import NuevaContraseña from './componentes/IniciosSesion/recuperoContraseña/NuevaContraseña';
 import RecuperarContraseña from './componentes/IniciosSesion/recuperoContraseña/RecuperarContraseña';
 import VerificaciónID from './componentes/IniciosSesion/recuperoContraseña/VerificaciónID';
-
-
+import Reseña from './componentes/Compras/Reseña';
+import InformacionJuego from './componentes/Compras/InformacionJuego'
 
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <LoginUsuario />
+        <InformacionJuego />
       </div>
     </Router>
   );

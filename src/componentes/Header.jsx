@@ -31,17 +31,15 @@ function Header() {
         </div>
 
         <div className="auth-buttons">
-          <li>
-                {userType ? (
-                  <Link to={userType === 'business' ? '/empresa/bussinessTab' : '/usuario/UserTab'}>
-                    <img src={profile} alt="Perfil" /> 
-                  </Link>
-                ) : (
-                  <Link to="/usuario/login">
-                    <button id="login-btn">Iniciar sesión</button>
-                  </Link>
-                )}
-              </li>
+              {userType ? (
+                <Link to={userType === 'business' ? '/empresa/bussinessTab' : '/usuario/UserTab'}>
+                  <img src={profile} alt="Perfil" /> 
+                </Link>
+              ) : (
+                <Link to="/usuario/login">
+                  <button id="login-btn">Iniciar sesión</button>
+                </Link>
+              )}
           <Link to="/usuario/registro">
             <button id="register-btn">Registrarse</button>
           </Link>
