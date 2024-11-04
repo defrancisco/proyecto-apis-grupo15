@@ -11,11 +11,11 @@ import QuienesSomos from './componentes/extras/QuienesSomos'
 import PrePagina from './componentes/PrePagina'
 import Login from './componentes/Login'
 import Ayuda from './componentes/extras/Ayuda';
-import LoginUsuario from './componentes/Usuario/LoginUsuario';
+import LoginUsuario from './componentes/IniciosSesion/LoginUsuario';
 import UserTabCliente from './componentes/Usuario/UserTab';
-import NuevaContraseña from './componentes/Usuario/recuperoContraseña/NuevaContraseña';
-import RecuperarContraseña from './componentes/Usuario/recuperoContraseña/RecuperarContraseña';
-import VerificaciónID from './componentes/Usuario/recuperoContraseña/VerificaciónID';
+import NuevaContraseña from './componentes/IniciosSesion/recuperoContraseña/NuevaContraseña';
+import RecuperarContraseña from './componentes/IniciosSesion/recuperoContraseña/RecuperarContraseña';
+import VerificaciónID from './componentes/IniciosSesion/recuperoContraseña/VerificaciónID';
 
 
 

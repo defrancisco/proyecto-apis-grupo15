@@ -1,35 +1,42 @@
-import React, { createContext, useContext, useState } from 'react'; // Importa las funciones necesarias
-import { Outlet } from 'react-router-dom';
+import React, { createContext, useContext, useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 
-export function loader() {
-  // Aquí podrías cargar datos iniciales para la aplicación si es necesario
-  return {};
-}
-
-//--------------------------------------------------
-// Crear un contexto para el usuario
+// Crear contexto para el usuario
 const UserContext = createContext();
 
+// Hook personalizado para acceder al contexto del usuario
 export const useUser = () => {
     return useContext(UserContext);
 };
 
+// Proveedor de contexto para gestionar el tipo de usuario
 export const UserProvider = ({ children }) => {
-    const [userType, setUserType] = useState(null); // null, 'personal', o 'business'
+    const [userType, setUserType] = useState(null); // null, 'cliente', o 'empresa'
+    const navigate = useNavigate();
+
+    // Función para iniciar sesión que asigna el tipo de usuario
+    const loginUser = (type) => {
+        setUserType(type);
+        // Redirigir según el tipo de usuario
+        if (type === 'cliente') {
+            navigate('/usuarioTab'); // Ruta para el cliente
+        } else if (type === 'empresa') {
+            navigate('/businessTab'); // Ruta para la empresa
+        }
+    };
 
     return (
-        <UserContext.Provider value={{ userType, setUserType }}>
+        <UserContext.Provider value={{ userType, setUserType, loginUser }}>
             {children}
         </UserContext.Provider>
     );
 };
-//--------------------------------------------------
 
-// Código Principal 
+// Componente Root principal que engloba toda la aplicación
 export default function Root() {
-  return (
-    <UserProvider> {/* Asegúrate de envolver Outlet con el UserProvider */}
-      <Outlet />
-    </UserProvider>
-  );
+    return (
+        <UserProvider> 
+            <Outlet />  {/* Punto de inserción para el contenido de las rutas hijas */}
+        </UserProvider>
+    );
 }
