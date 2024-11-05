@@ -8,37 +8,49 @@ body {
   height: 100%;
 }
 
-.container {
-  max-width: 1200px; /* Asegura que use todo el ancho de la pantalla */
-  width: 100%;
-  padding: 180px;
-  margin: 0 auto;
-  flex-grow: 1; /* Expande el contenedor para ocupar el espacio disponible */
-}
-
-h1 {
-  margin-bottom: 100px; /* Espacio debajo del título */
-  font-size: 10px; /* Tamaño del texto del título */
+.container { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  height: 100vh; /* Ocupa toda la altura de la pantalla */ 
+  padding: 10px;
+  box-sizin: border-box;
 }
 
 .row {
   display: flex;
-  justify-content: center;
-  align-items: stretch; /* Asegura que los elementos hijos llenen el espacio vertical */
+  justify-content: space-between; /* Distribuye el espacio entre las tarjetas */
   flex-wrap: wrap; /* Permite que las tarjetas se envuelvan */
-  gap: 20px;
+  gap: 20px; /* Espacio entre las tarjetas */
+}
+
+.col-sm-6 {
+  flex: 1 1 45%;
+  max-width: 45%; /* Ajusta el tamaño máximo para asegurarte de que dos tarjetas caben en una fila */
+  box-sizing: border-box;
 }
 
 .card {
   flex: 1 1 300px;
   width: 100%; /* Asegura que las tarjetas ocupen el 100% del ancho de su contenedor */
   max-width: 350px; /* Limita el ancho máximo de las tarjetas */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  border: 1px solid #ccc;
   border: 2px solid #dc3545; /* Borde rojo */
   border-radius: 20px; /* Bordes redondeados */
+  margin-bottom: 20px; /* Añade espacio entre las filas */
+  background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para las tarjetas */
   transition: transform 0.2s; /* Transición suave para el efecto hover */
-  margin-bottom: 20px; /* Añade espacio entre las filas */
-  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 100px; /* Espacio debajo del título */
+  font-size: 30px; /* Tamaño del texto del título */
 }
 
 .card:hover {

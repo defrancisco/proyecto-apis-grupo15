@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import '../../styles/consolas.css';
-import Header from '../Header';
-import Footer from '../Footer';
 import nintendoswitch from '../imagenes/nintendoswitch.webp';
 import nintendolite from '../imagenes/nintendolite.jpg';
 import nintendoswitcholed from '../imagenes/nintendoswitcholed.jpg';
@@ -46,8 +44,7 @@ const Consola = ({ imagen, titulo, descripcion, info }) => {
 const Consolas = () => {
   return (
     <div>
-      <Header />
-      <h1>Tres consolas que ofrecen muchas maneras de jugar</h1>
+     <h1>Tres consolas que ofrecen muchas maneras de jugar</h1>
       <div className="consolas">
         <Consola
           imagen={nintendoswitcholed}
@@ -68,7 +65,6 @@ const Consolas = () => {
           info="La Nintendo Switch es la consola más versátil. Juega en casa conectándola al televisor o llévala contigo a donde vayas."
         />
       </div>
-      <Footer />
     </div>
   );
 };

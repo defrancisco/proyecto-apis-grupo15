@@ -21,7 +21,7 @@ function Header() {
             <ul>
               <li><Link to="/prePagina">Inicio</Link></li>
               <li><Link to="/catalogo">Catálogo</Link></li>
-              <li><Link to={userType ? "/wishlist" : "/iniciarSesion/loginUsuario"}>
+              <li><Link to={userType ? "/wishli" : "/inicciarSesion"}>
               Wishlist</Link></li>
               <li><Link to="/consolas">Consolas</Link></li>
               <li><Link to="/quienesSomos">Quienes somos</Link></li>
@@ -32,18 +32,18 @@ function Header() {
 
         <div className="auth-buttons">
               {userType ? (
-                <Link to={userType === 'business' ? '/empresa/bussinessTab' : '/usuario/UserTab'}>
+                <Link to={userType === 'business' ? 'bussinessTab' : 'UserTab'}>
                   <img src={profile} alt="Perfil" /> 
                 </Link>
               ) : (
-                <Link to="/usuario/login">
+                <Link to="/iniciarSesion">
                   <button id="login-btn">Iniciar sesión</button>
                 </Link>
               )}
-          <Link to="/usuario/registro">
+          <Link to="/iniciarSesion">
             <button id="register-btn">Registrarse</button>
           </Link>
-          <Link to="/carritoCompra" className="logo">
+          <Link to="/carritoCompras" className="logo">
             <img src={shoppingcart} alt="Cart Logo" />
           </Link>
         </div>

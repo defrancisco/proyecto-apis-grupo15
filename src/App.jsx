@@ -1,30 +1,36 @@
 import React from "react";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Root, { loader as rootLoader } from "./routes/root";
+
 
 // Componentes
-import Root, { loader as rootLoader } from "./routes/root";
-import Catalogo from "./componentes/Compras/Catalogo/Catalogo.jsx";
-import Reseña from "./componentes/Compras/Reseña.jsx";
-import CarritoCompras from "./componentes/Compras/CarritoCompras/CarritoCompras.jsx";
 import PrePagina from "./componentes/PrePagina.jsx";
+import Login from "./componentes/Login.jsx";
+
+import Catalogo from "./componentes/Compras/Catalogo.jsx";
+import CarritoCompras from "./componentes/Compras/CarritoCompras.jsx";
+import Reseña from "./componentes/Compras/Reseña.jsx";
+import MetodoPago from "./componentes/Compras/MetodoPago.jsx";
+import InformacionJuego from "./componentes/Compras/InformacionJuego.jsx";
+
+// Header y Footer
 import Ayuda from "./componentes/extras/Ayuda.jsx";
 import QuienesSomos from "./componentes/extras/QuienesSomos.jsx";
 import Consolas from "./componentes/extras/Consolas.jsx";
 import ContactForm from "./componentes/extras/ContactForm.jsx";
-import Login from "./componentes/Login.jsx";
-import LoginUsuario from "./componentes/Usuario/LoginUsuario";
+
+
 import UserTab from "./componentes/Usuario/UserTab.jsx";
 import RegistroUsuario from "./componentes/Usuario/RegistroUsuario.jsx";
-import VerificacionID from "./componentes/Usuario/recuperoContraseña/VerificaciónID.jsx";
-import NuevaContraseña from "./componentes/Usuario/recuperoContraseña/NuevaContraseña.jsx";
-import RecuperarContraseña from "./componentes/Usuario/recuperoContraseña/RecuperarContraseña.jsx";
+
+
 import BusinessTab from "./componentes/Empresa/BusinessTab.jsx"; 
 import ModificacionVideojuego from "./componentes/Empresa/ModificacionJuego.jsx";
 import RegistroEmpresa from "./componentes/Empresa/RegistroEmpresa.jsx";
 import CreacionVideojuego from "./componentes/Empresa/CreacionJuego.jsx";
-import InformacionJuego from "./componentes/Compras/InformacionJuego.jsx";
-import MetodoPago from "./componentes/Compras/MetodoPago.jsx";
+
+
 
 const router = createBrowserRouter([
     {
@@ -34,18 +40,22 @@ const router = createBrowserRouter([
         children: [
             { path: "prueba", element: <h1>Hola Mundo</h1> },
             { path: "prePagina", element: <PrePagina /> },
+
+            // Páginas que aparecen tanto en Footer como en Header
             { path: "quienesSomos", element: <QuienesSomos /> },
             { path: "ayuda", element: <Ayuda /> },
             { path: "consolas", element: <Consolas /> },
             { path: "contacto", element: <ContactForm /> },
-            { 
-                path: "catalogo", 
-                element: <Catalogo />,
+            
+            // Catálogo 
+            { path: "catalogo", element: <Catalogo />,
                 children: [
                     { path: "catalogo/:videojuego", element: <InformacionJuego /> },
                     { path: "catalogo/:videojuego/:crearReseña", element: <Reseña />},
                 ]
             },
+
+            // Carrito de Compras
             { 
                 path: "carritoCompras", 
                 element: <CarritoCompras />,
@@ -55,48 +65,25 @@ const router = createBrowserRouter([
             },
 
             // Sección de Inicio de Sesión
-            { 
-                path: "iniciarSesion", 
-                element: <Login />,
+            { path: "iniciarSesion", element: <Login />,},
+        
+            // Si es que quiero crear una cuenta
+            { path: "iniciarSesion/:registroUsuario", element: <RegistroUsuario /> },
+            { path: "iniciarSesion/:registroEmpresa", element: <RegistroEmpresa />},
+                        
+                    
+            // Usuario perfiles
+            { path: "userTab", element: <UserTab /> },
+
+            // Empresa perfiles
+            { path: "businessTab", element: <BusinessTab />,
                 children: [
-                    // Tengo el mismo componente de Login
-                    { 
-                        children: [
-                            // Si es que quiero crear una cuenta
-                            { path: "iniciarSesion/:registroUsuario", element: <RegistroUsuario /> },
-                            { path: "iniciarSesion/:registroEmpresa", element: <RegistroEmpresa />},
-
-                            // Si es que quiero iniciar sesión
-                            {
-                                path: "loginUsuario",
-                                element: <LoginUsuario />,
-                                children: [
-                                    { path: "iniciarSesion/:recuperarContraseña", element: <VerificacionID /> },
-                                    { path: "iniciarSesion/:nuevaContraseña", element: <NuevaContraseña /> },
-                                    { path: "iniciarSesion/:finalizarRecuperacion", element: <RecuperarContraseña /> }
-                                ]
-                            },
+                        { path: "iniciarSesion/:businessTabcreacionJuego", element: <CreacionVideojuego /> },
+                        { path: "iniciarSesion/:businessTabmodificacionJuego", element: <ModificacionVideojuego /> }
                         ]
                     },
-                    // Usuario
-                    {
-                        path: "iniciarSesion/:userTab",
-                        element: <UserTab />,
-                    },
-
-                    // Empresa
-                    { 
-                        path: "iniciarSesion/:businessTab", 
-                        element: <BusinessTab />,
-                        children: [
-                            { path: "iniciarSesion/:businessTabcreacionJuego", element: <CreacionVideojuego /> },
-                            { path: "iniciarSesion/:businessTabmodificacionJuego", element: <ModificacionVideojuego /> }
-                        ]
-                    }
                 ]
-            }
-        ]
-    },
+            },
 ]);
 
 if (import.meta.hot) {

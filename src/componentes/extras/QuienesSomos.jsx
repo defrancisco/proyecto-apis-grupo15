@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/quienessomos.css'; 
-import Header from '../Header';
-import Footer from '../Footer';
+
 
 
 const QuienesSomos = () => {
   return (
     <div>
-      <Header />
+
    
     <div className="container">
       <h1 className="titulo">Nintendo: Una historia de diversión en Argentina</h1>
@@ -68,7 +67,7 @@ const QuienesSomos = () => {
         </p>
       </div>
       </div>
-      <Footer />
+
     </div>
   );
 };

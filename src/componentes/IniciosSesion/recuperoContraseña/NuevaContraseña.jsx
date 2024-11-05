@@ -1,39 +1,45 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import '../../../styles/form.css';
 
-import Header from '../../Header';
-import Footer from '../../Footer';
+const CambioContraseña = ({ password, confirmPassword, setPassword, setConfirmPassword, onSubmit }) => {
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onSubmit(password, confirmPassword);
+    };
 
-const CambioContraseña = () => {
-  return (
-    <>
-      <Header />
-      <main>
+    return (
         <div className="form">
-          <h1>Cambio de contraseña</h1>
-          <form>
-            <div className="form-group">
-              <label htmlFor="old-pass">Contraseña actual</label>
-              <input type="password" id="oldPass" name="old-pass" required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="new-pass">Nueva contraseña</label>
-              <input type="password" id="new-pass" name="new-pass" required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="confirm-new-pass">Confirmar nueva contraseña</label>
-              <input type="password" id="confirm-new-pass" name="confirm-new-pass" required />
-            </div>
-            <button type="submit" className="submit-btn">Confirmar contraseña</button>
-          </form>
-          <Link to="/recuperar-contraseña" className="forgot-password">¿Olvidaste tu contraseña?</Link>
+            <h1>Cambiar Contraseña</h1>
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label htmlFor="new-password">Nueva Contraseña:</label>
+                    <input
+                        type="password"
+                        id="new-password"
+                        name="new-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="confirm-password">Confirmar Nueva Contraseña:</label>
+                    <input
+                        type="password"
+                        id="confirm-password"
+                        name="confirm-password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit" className="submit-btn">Cambiar Contraseña</button>
+            </form>
         </div>
-      </main>
-
-      <Footer />
-    </>
-  );
+    );
 };
 
 export default CambioContraseña;
+
+

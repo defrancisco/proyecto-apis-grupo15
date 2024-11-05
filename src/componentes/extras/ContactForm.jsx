@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import Header from '../Header';
-import Footer from '../Footer';
 import '../../styles/form.css';
+
 
 
 const ContactForm = () => {
@@ -41,7 +40,6 @@ const ContactForm = () => {
 
   return (
     <div>
-      <Header />
     <div className="contact-form">
       <h2>Contáctanos</h2>
       <form onSubmit={handleSubmit}>
@@ -78,7 +76,6 @@ const ContactForm = () => {
       </form>
       {status && <p>{status}</p>}
     </div>
-    <Footer />
     </div>
   );
 };

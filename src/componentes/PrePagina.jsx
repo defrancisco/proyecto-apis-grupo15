@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/carrousel.css';
-import Header from './Header';
-import Footer from './Footer';
+
 import animalcrossing from './imagenes/animalcrossing.jpg';
 import mariokart from './imagenes/mariokart.jpg';
 import zelda from './imagenes/zelda.jpg';
@@ -37,7 +36,7 @@ const PrePagina = () => {
 
     return (
         <div>
-            <Header />
+
             <div className="carousel">
                 <div className="carousel-inner" style={{ transform: `translateX(-${current * 100}vw)` }}>
                     {images.map((image, index) => (
@@ -53,7 +52,7 @@ const PrePagina = () => {
                     &#10095;
                 </button>
             </div>
-            <Footer />
+
         </div>
     );
 };

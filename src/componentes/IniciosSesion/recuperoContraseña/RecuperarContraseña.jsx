@@ -1,46 +1,54 @@
-import React, {useState} from 'react';
-import {useNavigate} from 'react-router-dom'; 
-import '../../../styles/form.css';
+import React, { useState } from 'react';
 import Header from '../../Header';
 import Footer from '../../Footer';
 
+const RecuperarContraseña = ({ onSubmit, onResend }) => {
+    const [email, setEmail] = useState('');
+    const [codeSent, setCodeSent] = useState(false);
 
-const RecuperarContraseña = () => {
-     {/* ESTO ES MI INTENTO DE ROUTEO*/}
-     const [email, setEmail] = useState('');
-     const navigate = useNavigate(); 
-     // Hook para navegar a otras páginas
-     
-     const handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        navigate('VerificaciónID.jsx');
-  };
+        setCodeSent(true);
+        onSubmit(email);
+    };
 
-  return (
-    <>
-        <Header />
+    const handleResend = () => {
+        onResend(email);
+    };
 
-      <main>
-        <div className="form">
-          <h1>Recuperar contraseña</h1>
-          <p>Enviar código de acceso por e-mail</p>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="email">Email:</label>
-              <input type="email" id="email" name="email" required 
-              
-              onChange={(e) => setEmail(e.target.value)} 
-              // Actualiza el estado si es que cambia
-              />
-            </div>
-            <button type="submit" className="submit-btn">Enviar</button>
-          </form>
+    return (
+        <div>
+            <Header />
+            <main>
+                <div className="form">
+                    <h1>Recuperar contraseña</h1>
+                    <p>Enviar código de acceso por e-mail</p>
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="email">Email:</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="submit-btn">
+                            Enviar
+                        </button>
+                    </form>
+                    {codeSent && (
+                        <button onClick={handleResend} className="resend-btn">
+                            Reenviar Código
+                        </button>
+                    )}
+                </div>
+            </main>
+            <Footer />
         </div>
-      </main>
-        
-        <Footer />
-    </>
-  );
+    );
 };
 
 export default RecuperarContraseña;

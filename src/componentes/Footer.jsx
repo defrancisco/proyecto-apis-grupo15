@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/headeryfooter.css';
-import ContactForm from './extras/ContactForm';
 import instagramlogo from './imagenes/instagramlogo.jpg';
 import twitter from './imagenes/twitter.jpg';
 import youtube from './imagenes/youtube.jpg';
@@ -15,7 +14,7 @@ function Footer() {
           <li><Link to="/ayuda">Ayuda</Link></li>
           <li><Link to="/ayuda">Eliminación del servicio</Link></li>
           <li><Link to="/quienesSomos">Información de la empresa</Link></li>
-          <li><Link to="/contactar">Contactar</Link></li>
+          <li><Link to="/contacto">Contactar</Link></li>
         </ul>
       </div>
       <div className="footer-social">
