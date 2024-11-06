@@ -10,21 +10,19 @@ const RecoveryCode = sequelize.define('RecoveryCode', {
   email: {
     type: DataTypes.STRING(255),
     allowNull: false,
-    unique: true
+    references: {
+      model: 'Users',
+      key: 'email'
+    }
   },
   code: {
-    type: DataTypes.STRING(255),
+    type: DataTypes.STRING(6),
     allowNull: false
   },
-  createdAt: {
+  expiresAt: {
     type: DataTypes.DATE,
-    defaultValue: sequelize.literal('GETDATE()'),
+    allowNull: false
   }
-}, {
-  tableName: 'RecoveryCodes',
-  schema: 'dbo',
-  timestamps: true,
-  updatedAt: false,
 });
 
 module.exports = RecoveryCode;

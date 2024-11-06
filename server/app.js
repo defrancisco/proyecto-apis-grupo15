@@ -6,6 +6,8 @@ const cartRoutes = require('./routes/cart');
 const reviewRoutes = require('./routes/review');
 const businessRoutes = require('./routes/business');
 const sequelize = require('./config/database');
+const path = require('path');
+const { User, Game, RecoveryCode, Cart, Wishlist, models, setupAssociations } = require('./models');
 
 app.use(express.json());
 
@@ -24,7 +26,8 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/business', businessRoutes);
 
-
+// Después de las configuraciones de CORS
+app.use('/uploads', express.static('uploads'));
 // Manejo de errores global
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -33,12 +36,21 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-sequelize.sync({ alter: true })
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch(err => {
-    console.error('Error syncing database:', err);
+// Sincronizar modelos en orden inverso al definido en models/index.js
+const syncDatabase = async () => {
+  try {
+    await sequelize.sync();
+    
+    // Configurar asociaciones
+    setupAssociations();
+    console.log('Database synced successfully');
+  } catch (error) {
+    console.error('Error syncing database:', error);
+  }
+};
+
+syncDatabase().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
   });
+});

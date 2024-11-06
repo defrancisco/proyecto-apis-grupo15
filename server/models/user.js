@@ -9,9 +9,11 @@ const User = sequelize.define('User', {
     autoIncrement: true
   },
   email: {
-    type: DataTypes.STRING(255),
+    type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    validate: {
+      isEmail: true
+    }
   },
   password: {
     type: DataTypes.STRING(255),
@@ -70,7 +72,14 @@ const User = sequelize.define('User', {
 }, {
   tableName: 'Users',
   schema: 'dbo',
-  timestamps: true
+  timestamps: true,
+  indexes: [
+    {
+      unique: true,
+      fields: ['email'],
+      name: 'users_email_unique'
+    }
+  ]
 });
 
 User.beforeSave(async (user) => {

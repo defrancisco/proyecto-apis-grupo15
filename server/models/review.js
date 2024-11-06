@@ -33,16 +33,12 @@ const Review = sequelize.define('Review', {
   },
   content: {
     type: DataTypes.TEXT,
-    allowNull: true 
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    defaultValue: sequelize.literal('GETDATE()')
+    allowNull: false
   }
 }, {
   tableName: 'Reviews',
   schema: 'dbo',
-  timestamps: false
+  timestamps: true
 });
 
 module.exports = Review;

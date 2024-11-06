@@ -83,7 +83,7 @@ const Game = sequelize.define('Game', {
     defaultValue: 0
   },
   averageRating: {
-    type: DataTypes.DECIMAL(2, 1),
+    type: DataTypes.DECIMAL(3, 2),
     defaultValue: 0
   },
   createdAt: {
@@ -96,8 +96,13 @@ const Game = sequelize.define('Game', {
   },
   isPublished: {
     type: DataTypes.BOOLEAN,
-    defaultValue: false,
+    allowNull: false,
+    defaultValue: false
   },
+  imagePath: {
+    type: DataTypes.STRING,
+    allowNull: true
+  }
 }, {
   tableName: 'Games',
   schema: 'dbo',

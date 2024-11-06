@@ -31,14 +31,45 @@ function CreacionVideojuego() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData();
-    for (const key in formData) {
-      data.append(key, formData[key]);
+    const form = new FormData();
+    
+    // Mapear los nombres de campos del frontend al backend
+    form.append('name', formData.nombre);
+    form.append('category', formData.categoria);
+    form.append('price', formData.precio);
+    form.append('description', formData.descripcion);
+    form.append('operatingSystem', 'Windows');
+    form.append('language', formData.idioma);
+    form.append('players', '1');
+    form.append('rating', 'E');
+    form.append('minRequirements', formData.reqMinimos);
+    form.append('recommendedRequirements', formData.reqRecomendados);
+    
+    if (formData.imagen) {
+      form.append('imagen', formData.imagen);
     }
-    console.log('Datos del nuevo juego:', formData);
-    // Aquí iría la lógica para enviar los datos al servidor
+
+    try {
+      const response = await fetch('http://localhost:3000/api/business/games', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: form
+      });
+
+      if (response.ok) {
+        console.log('Juego creado exitosamente');
+
+      } else {
+        const error = await response.json();
+        console.error('Error al crear el juego:', error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (

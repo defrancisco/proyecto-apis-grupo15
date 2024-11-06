@@ -1,61 +1,36 @@
 const jwt = require('jsonwebtoken');
+const { User } = require('../models');
 
 const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: 'Authentication token required' });
+  }
+
   try {
-    const authHeader = req.headers['authorization'];
-    
-    if (!authHeader) {
-      return res.status(401).json({ 
-        message: 'Authorization header not found' 
-      });
-    }
-
-    const token = authHeader.split(' ')[1];
-    
-    if (!token) {
-      return res.status(401).json({ 
-        message: 'Token not found' 
-      });
-    }
-
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        return res.status(403).json({ 
-          message: 'Token inválido o expirado' 
-        });
-      }
-
-      req.user = decoded;
-      next();
-    });
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
   } catch (error) {
-    res.status(500).json({ 
-      message: 'Error en la autenticación', 
-      error: error.message 
-    });
+    return res.status(403).json({ message: 'Invalid token' });
   }
 };
 
-const isBusinessUser = (req, res, next) => {
-  if (!req.user || req.user.userType !== 'business') {
-    return res.status(403).json({ 
-      message: 'Acceso denegado. Se requiere cuenta de empresa.' 
-    });
+const isBusinessUser = async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.user.userId);
+    if (!user || user.userType !== 'business') {
+      return res.status(403).json({ message: 'Business account required' });
+    }
+    next();
+  } catch (error) {
+    res.status(500).json({ message: 'Error verifying user type' });
   }
-  next();
-};
-
-const isIndividualUser = (req, res, next) => {
-  if (!req.user || req.user.userType !== 'individual') {
-    return res.status(403).json({ 
-      message: 'Acceso denegado. Se requiere cuenta individual.' 
-    });
-  }
-  next();
 };
 
 module.exports = {
   authenticateToken,
-  isBusinessUser,
-  isIndividualUser
+  isBusinessUser
 }; 
