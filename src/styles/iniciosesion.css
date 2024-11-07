@@ -46,6 +46,19 @@ h2 {
   background-color: #c50010; /* Color más oscuro al pasar el mouse */
 }
 
+/* Estilos para enlaces dentro de botones */
+.button-group button a,
+.login-button a {
+  color: white; /* Color blanco para el texto */
+  text-decoration: none; /* Sin subrayado */
+}
+
+.login {
+  display: flex;
+  justify-content: center; /* Centra el botón dentro del contenedor */
+  width: 100%;
+}
+
 /* Asegúrate de que el botón de iniciar sesión tenga el mismo estilo */
 .login-button {
   background-color: #e60012; /* Rojo Nintendo */
