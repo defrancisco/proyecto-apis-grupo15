@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/form.css';
 
-
-
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -28,54 +26,59 @@ const ContactForm = () => {
         setName('');
         setEmail('');
         setMessage('');
-      } else if (response.status === 400) {
-        setStatus('Por favor, verifica los datos ingresados.');
+        alert('Mensaje enviado con éxito');
       } else {
-        setStatus('Error en el servidor. Inténtalo de nuevo más tarde.');
+        const errorData = await response.json();
+        if (response.status === 400) {
+          setStatus('Por favor, verifica los datos ingresados: ' + (errorData.message || 'Error desconocido'));
+        } else {
+          setStatus('Error en el servidor: ' + (errorData.message || 'Error desconocido'));
+        }
       }
     } catch (error) {
       setStatus('Error en la conexión. Inténtalo de nuevo más tarde.');
+      console.error('Error de conexión:', error);
     }
   };
 
   return (
     <div>
-    <div className="contact-form">
-      <h2>Contáctanos</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">Nombre:</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="message">Mensaje:</label>
-          <textarea
-            id="message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Enviar</button>
-      </form>
-      {status && <p>{status}</p>}
-    </div>
+      <div className="contact-form">
+        <h2>Contáctanos</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">Nombre:</label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="message">Mensaje:</label>
+            <textarea
+              id="message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit">Enviar</button>
+        </form>
+        {status && <p>{status}</p>}
+      </div>
     </div>
   );
 };

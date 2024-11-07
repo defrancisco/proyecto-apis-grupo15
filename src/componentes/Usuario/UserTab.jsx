@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/userTab.css';
 
-import Header from '../Header';
-import Footer from '../Footer';
+
 
 // Componente Sidebar
 const Sidebar = ({ showSection }) => {
@@ -152,7 +151,6 @@ const UserTab = () => {
 
   return (
     <div>
-      <Header /> {/* Renderiza el componente Header */}
       <main>
         <Sidebar showSection={showSection} /> {/* Renderiza la barra lateral y le pasa la función para cambiar de sección */}
         <div className="content">
@@ -163,7 +161,6 @@ const UserTab = () => {
           {section === 'mediosPago' && <MediosPago />} 
         </div>
       </main>
-      <Footer /> {/* Renderiza el componente Footer */}
     </div>
   );
 };

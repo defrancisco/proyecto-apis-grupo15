@@ -32,7 +32,7 @@ export const LoginCuenta = () => {
     }; 
     
     const handleCodeSubmit = (inputCode) => {
-        const actualCode = "123456"; 
+        const actualCode = "071726"; // Código de verificación fijo 
         if (inputCode === actualCode) { 
             alert("Código verificado con éxito!"); 
             setStep(3); 
