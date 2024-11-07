@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import Header from '../../Header';
-import Footer from '../../Footer';
+import '../../../styles/usuario/recuperarcontraseña.css';
 
 const RecuperarContraseña = ({ onSubmit, onResend }) => {
     const [email, setEmail] = useState('');
@@ -14,11 +13,11 @@ const RecuperarContraseña = ({ onSubmit, onResend }) => {
 
     const handleResend = () => {
         onResend(email);
+        setCodeSent(true); // Si deseas que al reenvío también se marque como enviado
     };
 
     return (
         <div>
-            <Header />
             <main>
                 <div className="form">
                     <h1>Recuperar contraseña</h1>
@@ -46,7 +45,6 @@ const RecuperarContraseña = ({ onSubmit, onResend }) => {
                     )}
                 </div>
             </main>
-            <Footer />
         </div>
     );
 };

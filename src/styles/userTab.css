@@ -57,3 +57,47 @@ body, html {
     background-color: #f0f0f0;
 }
 
+
+.confirm-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .confirm-popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .confirm-popup-content h3 {
+    margin-top: 0;
+  }
+  
+  .confirm-popup-content button {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .confirm-popup-content button:first-child {
+    background-color: #e60000; /* Color rojo para confirmar */
+    color: white;
+  }
+  
+  .confirm-popup-content button:last-child {
+    background-color: #ddd; /* Color gris para cancelar */
+  }
+  

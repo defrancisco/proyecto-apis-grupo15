@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/verificacionID.css';
+import '../../../styles/usuario/verificacionID.css';
 
 const VerificacionIdentidad = ({ code, setCode, onSubmit, onResend }) => {
     const [codeSent, setCodeSent] = useState(false);

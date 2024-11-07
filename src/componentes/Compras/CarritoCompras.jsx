@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../Header';
-import Footer from '../Footer';
+
+
 import videogames from '../../data/videogames';
 import Producto from './Producto';
 import '../../styles/carritocompras.css';
@@ -14,7 +14,6 @@ function CarritoCompras() {
 
   return (
     <div>
-      <Header />
       <div className="cart-page">
 
         <div className="products-row">
@@ -45,7 +44,6 @@ function CarritoCompras() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   )
 }

@@ -106,8 +106,10 @@ nav ul li a:hover {
 }
 
 .auth-buttons .logo img {
-    height: 40px; /* Tamaño del carrito */
+    height: 30px; /* Tamaño del carrito */
 }
+
+
 
 /* Media Query para dispositivos móviles */
 @media (max-width: 768px) {

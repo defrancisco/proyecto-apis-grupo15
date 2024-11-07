@@ -1,28 +1,17 @@
-import React, {useEffect} from 'react';
-import { Link } from 'react-router-dom';
-import Header from '../Header';
-import Footer from '../Footer';
+import React, { useEffect, useState } from 'react'; // Asegúrate de importar useState
+import { Link, useNavigate } from 'react-router-dom'; // Asegúrate de importar useNavigate
 import '../../styles/form.css';
-import { formValidation } from './formValdiation';
+import { formValidation } from './formValidation';
 
-
-// Compacto Recuperación de Contraseñas
+// Componentes de recuperación de contraseña
 import NuevaContraseña from './recuperoContraseña/NuevaContraseña';
 import VerificacionIdentidad from './recuperoContraseña/VerificaciónID';
 import RecuperarContraseña from './recuperoContraseña/RecuperarContraseña';
 
-
-export const LoginUsuario = () => {
-    /*EXPLICACIÓN
-    Cuando uno se olvida la contraseña tiene que pasar por estos tres procesos : 
-    1. el mail de la cuenta (opción de man dar msj devuelta) 
-    2. ingresar nro (tiene que estar bien) 
-    3. nueva contraseña y que te lleve al perfil luego.
-
-    */
-    const [step, setStep] = useState(1); // Estado para rastrear el paso actual 
+export const LoginCuenta = () => {
+    const [step, setStep] = useState(1); // Estado para rastrear el paso actual
     const [email, setEmail] = useState(''); 
-    const [code, setCode] = useState(Array(6).fill("")); // Estado para los dígitos del código 
+    const [code, setCode] = useState(Array(6).fill("")); // Estado para los dígitos del código
     const [password, setPassword] = useState(''); 
     const [confirmPassword, setConfirmPassword] = useState(''); 
     const navigate = useNavigate();
@@ -30,11 +19,12 @@ export const LoginUsuario = () => {
     // Ejecuta la validación del formulario al montar el componente
     useEffect(() => {
         formValidation();
-    }, []); // Se ejecuta al montar el componente
+    }, []);
 
     const handleEmailSubmit = (email) => { 
         alert(`Código enviado a ${email}`); 
-        setEmail(email); setStep(2); 
+        setEmail(email);
+        setStep(2); 
     }; 
     
     const handleResendCode = (email) => { 
@@ -60,10 +50,22 @@ export const LoginUsuario = () => {
         } 
     };
 
-    // -------------------------    ME FALTA BAJO VER COMO LO LINKEO
+    // Renderizar los pasos de recuperación de contraseña
+    const renderStep = () => {
+        switch (step) {
+            case 1:
+                return <RecuperarContraseña onSubmit={handleEmailSubmit} onResend={handleResendCode} />;
+            case 2:
+                return <VerificacionIdentidad code={code} onSubmit={handleCodeSubmit} />;
+            case 3:
+                return <NuevaContraseña onSubmit={handlePasswordSubmit} />;
+            default:
+                return null;
+        }
+    };
+
     return (
         <div>
-            <Header />
             <main>
                 <div className="form">
                     <h1>Inicia Sesión</h1>
@@ -80,13 +82,15 @@ export const LoginUsuario = () => {
                     </form>
                     <Link to="/recuperar-contraseña" className="forgot-password">¿Olvidaste tu contraseña?</Link>
                 </div>
+                {/* Renderiza la recuperación de contraseña si el paso es mayor que 1 */}
+                {step > 1 && (
+                    <div className="recovery-steps">
+                        {renderStep()}
+                    </div>
+                )}
             </main>
-            <Footer />
         </div>
     );
+};
 
-}
-export default LoginUsuario;
-
-
-
+export default LoginCuenta;

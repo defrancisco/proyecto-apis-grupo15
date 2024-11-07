@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Header from '../Header';
-import Footer from '../Footer';
 import '../../styles/form.css';
 
 export const RegistroUsuario = () => {
@@ -39,7 +37,6 @@ export const RegistroUsuario = () => {
 
     return (
         <>
-            <Header />
             <main>
                 <div className="form">
                     <h2>Registro de Usuario</h2>
@@ -85,7 +82,6 @@ export const RegistroUsuario = () => {
                     </form>
                 </div>
             </main>
-            <Footer />
         </>
     );
 };

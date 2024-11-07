@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../Header';
-import Footer from '../Footer'
+import { Link } from 'react-router-dom';
 import '../../styles/userTab.css';
 
-function UserTabCliente() {
+function BusinessTab() {
   const [activeSection, setActiveSection] = useState('perfil');
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [confirmAction, setConfirmAction] = useState(null); // "despublicar" o "eliminar"
 
   useEffect(() => {
     const sectionId = window.location.hash.substring(1);
@@ -18,9 +19,26 @@ function UserTabCliente() {
     window.location.hash = section;
   };
 
+  // Pop ups de confirmación
+  const handleDeleteOrArchive = (action) => {
+    setConfirmAction(action);
+    setShowConfirmPopup(true);
+  };
+
+  const confirmActionHandler = () => {
+    if (confirmAction === "eliminar") {
+      // Lógica para eliminar el juego
+      console.log("Juego eliminado");
+    } else if (confirmAction === "despublicar") {
+      // Lógica para despublicar el juego
+      console.log("Juego despublicado");
+    }
+    setShowConfirmPopup(false);
+    setConfirmAction(null);
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
-      <Header/>
       <main>
         <div className="sidebar">
           <h2>Mi Perfil</h2>
@@ -86,15 +104,30 @@ function UserTabCliente() {
               <input type="text" placeholder="Nombre del Juego" />
               <button>Buscar</button>
             </div>
-            <button>Crear Juego</button>
+            <button>
+              <Link to="/businessTab/creacionVideojuego">Crear Juego</Link>
+            </button>
             <ul className="game-list">
-              {/* lista de juegos */}
+              <li>
+                <h3>Nombre del Juego</h3>
+                <button onClick={() => handleDeleteOrArchive("despublicar")}>Despublicar</button>
+                <button onClick={() => handleDeleteOrArchive("eliminar")}>Eliminar</button>
+              </li>
             </ul>
           </div>
         </div>
+         {/* Popup de confirmación */}
+         {showConfirmPopup && (
+          <div className="confirm-popup">
+            <div className="confirm-popup-content">
+              <h3>Atención</h3>
+              <p>¿Estás seguro que quiere {confirmAction === "eliminar" ? "eliminar" : "despublicar"} este juego?</p>
+              <button onClick={confirmActionHandler}>Sí</button>
+              <button onClick={() => setShowConfirmPopup(false)}>No</button>
+            </div>
+          </div>
+        )}
       </main>
-
-    <Footer/>
     </div>
   );
 }

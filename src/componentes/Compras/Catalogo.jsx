@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from '../Header';
-import Footer from '../Footer';
 import videogames from '../../data/videogames';
 import '../../styles/catalogo.css';
 import Videojuego from './Videojuego';
@@ -14,7 +12,7 @@ const Catalogo = () => {
 
   return (
     <div>
-      <Header />
+
       <div className="main-content">
         <div className="filter-bar">
           <button className="filter-btn">Eliminar Filtros</button>
@@ -91,7 +89,7 @@ const Catalogo = () => {
           </div>
         </div>
       </div>
-      <Footer />
+ 
     </div>
   );
 };

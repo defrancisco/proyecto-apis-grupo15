@@ -7,6 +7,8 @@ import Root, { loader as rootLoader } from "./routes/root";
 // Componentes
 import PrePagina from "./componentes/PrePagina.jsx";
 import Login from "./componentes/Login.jsx";
+import LoginCuenta  from "./componentes/IniciosSesion/LoginCuenta.jsx";
+
 
 import Catalogo from "./componentes/Compras/Catalogo.jsx";
 import CarritoCompras from "./componentes/Compras/CarritoCompras.jsx";
@@ -70,7 +72,7 @@ const router = createBrowserRouter([
             // Si es que quiero crear una cuenta
             { path: "iniciarSesion/:registroUsuario", element: <RegistroUsuario /> },
             { path: "iniciarSesion/:registroEmpresa", element: <RegistroEmpresa />},
-                        
+            { path: "iniciarSesion/:loginCuenta", element: <LoginCuenta />},          
                     
             // Usuario perfiles
             { path: "userTab", element: <UserTab /> },
@@ -78,8 +80,8 @@ const router = createBrowserRouter([
             // Empresa perfiles
             { path: "businessTab", element: <BusinessTab />,
                 children: [
-                        { path: "iniciarSesion/:businessTabcreacionJuego", element: <CreacionVideojuego /> },
-                        { path: "iniciarSesion/:businessTabmodificacionJuego", element: <ModificacionVideojuego /> }
+                        { path: "businessTab/:creacionVideojuego", element: <CreacionVideojuego /> },
+                        { path: "businessTab/:modificacionVideoJuego", element: <ModificacionVideojuego /> }
                         ]
                     },
                 ]

@@ -3,7 +3,7 @@ import Header from '../Header'; // No esta resgitrado = no esta logeado
 import Footer from '../Footer'; 
 import '../../styles/form.css';
 
-import { formValidation } from "../IniciosSesion/formValdiation";
+import { formValidation } from "../IniciosSesion/formValidation";
 
 
 

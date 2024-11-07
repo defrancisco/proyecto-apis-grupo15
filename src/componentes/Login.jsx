@@ -1,57 +1,39 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useUserContext } from '../context/UserContext'; 
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUser } from '../routes/root';
 
 import '../styles/iniciosesion.css';
-import '../styles/headeryfooter.css';
-import Header from './Header';
-import Footer from './Footer';
 
 function Login() {
   const navigate = useNavigate();
-  const { login } = useUserContext(); // Obtiene la función de login del contexto
-  const [accountType, setAccountType] = useState(null); // Estado para tipo de cuenta
+  const { loginUser } = useUser(); // Obtiene la función de login del contexto
 
-  const handleAccountSelection = (type) => {
-    setAccountType(type);
-  };
-
-  const handleLogin = () => {
-    // Simula la información del usuario (esto debería ser reemplazado con datos reales)
-    const userData = { name: accountType === 'personal' ? 'Usuario Personal' : 'Usuario Empresarial' };
-
-    if (accountType === 'personal') {
-      login(userData); // Llama a la función de login con la información del usuario
-      navigate('/iniciarSesion/loginUsuario'); // Redirige a LoginUsuario
-    } else if (accountType === 'business') {
-      login(userData); // Llama a la función de login con la información del usuario
-      navigate('/iniciarSesion/loginEmpresa'); // Redirige a LoginEmpresa
-    }
+  const handleLogin = (type) => {
+    loginUser(type); // Llama a la función de login con el tipo de usuario
+    navigate(type === 'cliente' ? '/usuarioTab' : '/businessTab'); // Redirige según el tipo
   };
 
   return (
     <div className="login-page">
-      <Header />
       <div className="content-wrap">
         <div className="account-type-selection">
           <h2>¿Qué tipo de cuenta desea registrar?</h2>
           <div className="button-group">
-            <button type="button" className="personal-account" >
-              ⭐ Cuenta Personal
+            <button type="button" className="personal-account">
+              <Link to="/iniciarSesion/registroUsuario">⭐ Cuenta Personal</Link>  
             </button>
-            <button type="button" className="business-account" >
-              ⭐ Cuenta Empresarial
+            <button type="button" className="business-account">
+              <Link to="/iniciarSesion/registroEmpresa">⭐ Cuenta Empresarial</Link> 
             </button>
           </div>
           <h2>O si ya tiene cuenta</h2>
           <div className="login">
-            <button type="button" className="login-button"> 
-              ⭐ Iniciar Sesión
+            <button type="button" className="login-button" onClick={handleLogin}>
+              <Link to="/iniciarSesion/loginCuenta">Iniciar Sesión</Link>  
             </button>
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
