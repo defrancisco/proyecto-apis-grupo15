@@ -113,6 +113,16 @@ function BusinessTab() {
                 <button onClick={() => handleDeleteOrArchive("despublicar")}>Despublicar</button>
                 <button onClick={() => handleDeleteOrArchive("eliminar")}>Eliminar</button>
               </li>
+              <li>
+                <h3>Nombre del Juego</h3>
+                <button onClick={() => handleDeleteOrArchive("despublicar")}>Despublicar</button>
+                <button onClick={() => handleDeleteOrArchive("eliminar")}>Eliminar</button>
+              </li>
+              <li>
+                <h3>Nombre del Juego</h3>
+                <button onClick={() => handleDeleteOrArchive("despublicar")}>Despublicar</button>
+                <button onClick={() => handleDeleteOrArchive("eliminar")}>Eliminar</button>
+              </li>
             </ul>
           </div>
         </div>

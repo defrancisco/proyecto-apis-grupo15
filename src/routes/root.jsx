@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Header from '../componentes/Header';
 import Footer from '../componentes/Footer';
+import ErrorBoundary from './ErrorBoundary';
 
 // Crear contexto para el usuario
 const UserContext = createContext();
@@ -49,9 +50,11 @@ export const loader = async () => {
 export default function Root() {
     return (
         <UserProvider>
+            <ErrorBoundary>
             <Header />
                 <Outlet />  {/* Punto de inserción para el contenido de las rutas hijas */}
             <Footer />
+            </ErrorBoundary>
         </UserProvider>
     );
 }

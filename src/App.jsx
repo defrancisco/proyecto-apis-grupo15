@@ -58,11 +58,9 @@ const router = createBrowserRouter([
             },
 
             // Carrito de Compras
-            { 
-                path: "carritoCompras", 
-                element: <CarritoCompras />,
+            { path: "carritoCompras", element: <CarritoCompras />,
                 children: [
-                    {path: "carritoCompras/:metodoPago", element: <MetodoPago /> },
+                    { path: "carritoCompras/:metodoPago", element: <MetodoPago /> },
                 ]
             },
 
