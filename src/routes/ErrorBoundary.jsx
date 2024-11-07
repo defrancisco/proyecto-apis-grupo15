@@ -20,7 +20,6 @@ class ErrorBoundary extends React.Component {
                 <div>
                     <h1>404 Not Found</h1>
                     <p>💿 Hi 👋</p>
-                    <p>Disculpen pero soy yo tratando de hacer mi parte.</p>
                 </div>
             );
         }

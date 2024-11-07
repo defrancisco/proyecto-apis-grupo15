@@ -25,7 +25,6 @@ const VerificacionIdentidad = ({ code, setCode, onSubmit, onResend }) => {
     const handleResend = () => {
         onResend();
         setCode(Array(6).fill(""));
-        setCodeSent(true);
     };
 
     return (

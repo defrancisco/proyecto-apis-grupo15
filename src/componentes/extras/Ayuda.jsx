@@ -13,7 +13,7 @@ const Ayuda = () => {
               <p className="card-text">
                 Nuestro equipo de servicio al cliente está disponible para ayudarte con cualquier consulta o problema que puedas tener. Nos aseguramos de brindarte una atención personalizada y efectiva para resolver tus inquietudes rápidamente.
               </p>
-              <a href="https://http.cat/" className="btn btn-danger">Servicio al Cliente</a>
+              <a href="https://http.cat/status/404" className="btn btn-danger">Servicio al Cliente</a>
             </div>
           </div>
         </div>
@@ -24,7 +24,7 @@ const Ayuda = () => {
               <p className="card-text">
                 Si experimentas problemas técnicos o necesitas asistencia con nuestros productos, nuestro equipo de soporte técnico está aquí para ayudarte. Contáctanos y resolveremos cualquier inconveniente que enfrentes.
               </p>
-              <a href="https://http.cat/" className="btn btn-danger">Soporte Técnico</a>
+              <a href="https://http.cat/status/404" className="btn btn-danger">Soporte Técnico</a>
             </div>
           </div>
         </div>

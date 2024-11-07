@@ -1,6 +1,5 @@
 import React from 'react'
-
-
+import { Link } from 'react-router-dom';
 import videogames from '../../data/videogames';
 import Producto from './Producto';
 import '../../styles/carritocompras.css';
@@ -40,7 +39,9 @@ function Carrito() {
                 <strong>"Total"</strong>
               </li>
             </ul>
-            <button className="btn-transaction">Continuar Transacción</button>
+            <button className="btn-transaction">
+              <Link to="carrito/checkout">Continuar Transacción</Link>
+              </button>
           </div>
         </div>
       </div>

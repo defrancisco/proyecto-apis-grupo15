@@ -4,6 +4,7 @@ import Header from '../componentes/Header';
 import Footer from '../componentes/Footer';
 import ErrorBoundary from './ErrorBoundary';
 
+
 // Crear contexto para el usuario
 const UserContext = createContext();
 
@@ -59,4 +60,4 @@ export default function Root() {
     );
 }
 
-//rendizar el header y footer
+// Rendizar el header y footer

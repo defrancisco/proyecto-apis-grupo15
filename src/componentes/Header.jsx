@@ -4,7 +4,6 @@ import '../styles/headeryfooter.css';
 import logo from './imagenes/logo.png';
 import shoppingcart from './imagenes/shoppingcart.jpg';
 import profile from './imagenes/profile.png';
-import profile2 from './imagenes/profile2.jpg';
 import { useUser } from '../routes/root';
 
 function Header() {
@@ -22,7 +21,7 @@ function Header() {
             <ul>
               <li><Link to="/prePagina">Inicio</Link></li>
               <li><Link to="/catalogo">Catálogo</Link></li>
-              <li><Link to={userType ? "/wishlist" : "/iniciarSesion"}>Wishlist</Link></li>
+              <li><Link to={userType ? "/wishlist" : "/iniciarSesion/loginCuenta"}>Wishlist</Link></li>
               <li><Link to="/consolas">Consolas</Link></li>
               <li><Link to="/quienesSomos">Quienes somos</Link></li>
               <li><Link to="/ayuda">Ayuda</Link></li>
@@ -32,18 +31,18 @@ function Header() {
 
         <div className="auth-buttons">
           {userType ? (
-            <Link to={userType === 'business' ? '/businessTab' : '/usuarioTab'}>
-              <img src={profile2} alt="Perfil" /> 
+            <Link to={userType === 'business' ? '/businessTab' : '/userTab'}>
+              <img src={profile} alt="Perfil" /> 
             </Link>
           ) : (
-            <Link to="/iniciarSesion">
+            <Link to="/iniciarSesion/loginCuenta">
               <button id="login-btn">Iniciar sesión</button>
             </Link>
           )}
           <Link to="/iniciarSesion">
             <button id="register-btn">Registrarse</button>
           </Link>
-          <Link to="/carritoCompras" className="logo">
+          <Link to="/carrito" className="logo">
             <img src={shoppingcart} alt="Cart Logo" />
           </Link>
         </div>

@@ -2,6 +2,7 @@ import React from "react";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root, { loader as rootLoader } from "./routes/root";
+import NotFound from "./routes/NotFound";
 
 
 // Componentes
@@ -39,8 +40,8 @@ const router = createBrowserRouter([
         path: "/",
         element: <Root />,
         loader: rootLoader,
+        errorElement: <NotFound />,
         children: [
-            { path: "prueba", element: <h1>Hola Mundo</h1> },
             { path: "prePagina", element: <PrePagina /> },
 
             // Páginas que aparecen tanto en Footer como en Header
@@ -66,11 +67,12 @@ const router = createBrowserRouter([
 
             // Sección de Inicio de Sesión
             { path: "iniciarSesion", element: <Login />,},
+            { path: "iniciarSesion/:loginCuenta", element: <LoginCuenta />},
         
             // Si es que quiero crear una cuenta
             { path: "iniciarSesion/:registroUsuario", element: <RegistroUsuario /> },
             { path: "iniciarSesion/:registroEmpresa", element: <RegistroEmpresa />},
-            { path: "iniciarSesion/:loginCuenta", element: <LoginCuenta />},          
+                      
                     
             // Usuario perfiles
             { path: "userTab", element: <UserTab /> },
@@ -91,5 +93,6 @@ if (import.meta.hot) {
 }
 
 export default function App() {
-    return <RouterProvider router={router} />;
+    return ( <RouterProvider router={router} />
+    );
 }
