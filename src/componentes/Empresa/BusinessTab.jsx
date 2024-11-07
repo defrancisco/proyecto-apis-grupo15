@@ -99,4 +99,4 @@ function UserTabCliente() {
   );
 }
 
-export default UserTabCliente;
+export default BusinessTab;
