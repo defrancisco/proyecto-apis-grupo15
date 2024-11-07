@@ -42,90 +42,84 @@ const ContactForm = () => {
   };
 
   return (
-    <main>
-      <div className="contact-form-wrapper">
+    <>
+      <main>
+        <div className="contact-form-wrapper">
+          <div className="contact-form">
+            <h2>Contáctanos</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="name" className="form-label">Nombre:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email" className="form-label">Email:</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="message" className="form-label">Mensaje:</label>
+                <textarea
+                  className="form-text-area"
+                  id="message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  required />
+              </div>
+              <div className="form-group">
+                <button className="submit-btn" type="submit">Enviar</button>
+              </div>
+            </form>
+            {status && <p>{status}</p>}
+          </div>
+        </div>
+      </main><div>
         <div className="contact-form">
           <h2>Contáctanos</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="name" className="form-label">Nombre:</label>
+              <label htmlFor="name">Nombre:</label>
               <input
                 type="text"
-                className="form-control"
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                required
-              />
+                required />
             </div>
             <div className="form-group">
-              <label htmlFor="email" className="form-label">Email:</label>
+              <label htmlFor="email">Email:</label>
               <input
                 type="email"
-                className="form-control"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+                required />
             </div>
             <div className="form-group">
-              <label htmlFor="message" className="form-label">Mensaje:</label>
+              <label htmlFor="message">Mensaje:</label>
               <textarea
-                className="form-text-area"
                 id="message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                required
-              />
+                required />
             </div>
-            <div className="form-group">
-              <button className="submit-btn" type="submit">Enviar</button>
-            </div>
+            <button type="submit">Enviar</button>
           </form>
           {status && <p>{status}</p>}
         </div>
       </div>
-    </main>
-
-    <div>
-      <div className="contact-form">
-        <h2>Contáctanos</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="name">Nombre:</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="message">Mensaje:</label>
-            <textarea
-              id="message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit">Enviar</button>
-        </form>
-        {status && <p>{status}</p>}
-      </div>
-    </div>
+    </>
   );
 };
 
