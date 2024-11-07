@@ -5,7 +5,7 @@ import videogames from '../../data/videogames';
 import Producto from './Producto';
 import '../../styles/carritocompras.css';
 
-function CarritoCompras() {
+function Carrito() {
 
   const videoGamesList = videogames.map(v => {
     return <Producto image={v.image} title={v.title}
@@ -48,4 +48,4 @@ function CarritoCompras() {
   )
 }
 
-export default CarritoCompras;
+export default Carrito;

@@ -3,7 +3,7 @@ import Header from '../Header'
 import Footer from '../Footer'
 import '../../styles/infojuegos.css';
 
-function InformacionJuego() {
+function Juego() {
     return (
         <div>
             <Header />
@@ -64,4 +64,4 @@ function InformacionJuego() {
     )
 }
 
-export default InformacionJuego
+export default Juego
