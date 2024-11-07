@@ -3,7 +3,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import '../../styles/metododepago.css';
 
-function MetodoPago() {
+function Checkout() {
     return (
         <div>
             <Header />
@@ -61,4 +61,4 @@ function MetodoPago() {
     );
 }
 
-export default MetodoPago;
+export default Checkout;

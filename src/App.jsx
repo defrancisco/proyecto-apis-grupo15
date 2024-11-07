@@ -11,10 +11,10 @@ import LoginCuenta  from "./componentes/IniciosSesion/LoginCuenta.jsx";
 
 
 import Catalogo from "./componentes/Compras/Catalogo.jsx";
-import CarritoCompras from "./componentes/Compras/CarritoCompras.jsx";
+import Carrito from "./componentes/Compras/Carrito.jsx";
 import Reseña from "./componentes/Compras/Reseña.jsx";
-import MetodoPago from "./componentes/Compras/MetodoPago.jsx";
-import InformacionJuego from "./componentes/Compras/InformacionJuego.jsx";
+import Checkout from "./componentes/Compras/Checkout.jsx";
+import Juego from "./componentes/Compras/Juego.jsx";
 
 // Header y Footer
 import Ayuda from "./componentes/extras/Ayuda.jsx";
@@ -52,15 +52,15 @@ const router = createBrowserRouter([
             // Catálogo 
             { path: "catalogo", element: <Catalogo />,
                 children: [
-                    { path: "catalogo/:videojuego", element: <InformacionJuego /> },
-                    { path: "catalogo/:videojuego/:crearReseña", element: <Reseña />},
+                    { path: "catalogo/:juego", element: <Juego /> },
+                    { path: "catalogo/:juego/:crearReseña", element: <Reseña />},
                 ]
             },
 
             // Carrito de Compras
-            { path: "carritoCompras", element: <CarritoCompras />,
+            { path: "carrito", element: <Carrito />,
                 children: [
-                    { path: "carritoCompras/:metodoPago", element: <MetodoPago /> },
+                    { path: "carrito/:checkout", element: <Checkout /> },
                 ]
             },
 
