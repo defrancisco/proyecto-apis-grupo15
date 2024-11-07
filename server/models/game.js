@@ -23,7 +23,7 @@ const Game = sequelize.define('Game', {
     type: DataTypes.STRING(50),
     allowNull: false,
     validate: {
-      isIn: [['Accion', 'Aventura', 'RPG', 'EStrategia', 'Deporte', 'Simulacion', 'Acertijos']]
+      isIn: [['Accion', 'Aventura', 'RPG', 'Estrategia', 'Deporte', 'Simulacion', 'Acertijos']]
     }
   },
   operatingSystem: {
