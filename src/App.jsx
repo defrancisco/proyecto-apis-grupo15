@@ -23,7 +23,7 @@ import ContactForm from "./componentes/extras/ContactForm.jsx";
 
 // Usuario
 import UserTab from "./componentes/Usuario/UserTab.jsx";
-import RegistroUsuario from "./componentes/Usuario/RegistroUsuario.jsx";
+import { RegistroUsuario } from "./componentes/Usuario/RegistroUsuario";
 
 // Empresa
 import BusinessTab from "./componentes/Empresa/BusinessTab.jsx"; 
@@ -58,8 +58,8 @@ const router = createBrowserRouter([
             },
             { path: "iniciarSesion", element: <Login /> },
             { path: "iniciarSesion/:loginCuenta", element: <LoginCuenta />},
-            { path: "iniciarSesion/:registroUsuario", element: <RegistroUsuario /> },
-            { path: "iniciarSesion/:registroEmpresa", element: <RegistroEmpresa /> },
+            { path: "iniciarSesion/registroUsuario", element: <RegistroUsuario /> },
+            { path: "iniciarSesion/registroEmpresa", element: <RegistroEmpresa /> },
             { 
                 path: "userTab", 
                 element: (

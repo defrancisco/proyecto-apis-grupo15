@@ -20,10 +20,12 @@ function Login() {
           <h2>¿Qué tipo de cuenta desea registrar?</h2>
           <div className="button-group">
             <button type="button" className="personal-account">
-              <Link to="/iniciarSesion/registroUsuario">⭐ Cuenta Personal</Link>  
+              <Link to="registroUsuario">
+                ⭐ Cuenta Personal
+              </Link>  
             </button>
             <button type="button" className="business-account">
-              <Link to="/iniciarSesion/registroEmpresa">⭐ Cuenta Empresarial</Link> 
+              <Link to="registroEmpresa">⭐ Cuenta Empresarial</Link> 
             </button>
           </div>
           <h2>O si ya tiene cuenta</h2>
