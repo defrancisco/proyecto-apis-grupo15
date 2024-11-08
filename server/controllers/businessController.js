@@ -5,7 +5,6 @@ const createGame = async (req, res) => {
   try {
     const developerId = req.user.userId;
     
-    // Verificar que el usuario sea de tipo business
     const developer = await User.findByPk(developerId);
     if (!developer || developer.userType !== 'business') {
       return res.status(403).json({ 
@@ -15,32 +14,37 @@ const createGame = async (req, res) => {
 
     const {
       name,
-      category,
-      price,
       description,
       operatingSystem,
-      language,
       players,
-      rating,
       minRequirements,
       recommendedRequirements
     } = req.body;
 
-    const imagePath = req.file ? req.file.path : null; // Obtener la ruta de la imagen
+    const price = Number(req.body.price);
+    if (isNaN(price)) {
+      return res.status(400).json({ 
+        message: 'Price must be a valid number' 
+      });
+    }
+
+    const categories = JSON.parse(req.body.categories);
+    const languages = JSON.parse(req.body.languages);
+
+    const imagePath = req.file ? req.file.path : null;
 
     const game = await Game.create({
       name,
-      category,
+      categories,
       price,
       description,
       operatingSystem,
-      language,
+      languages,
       players,
-      rating,
       minRequirements,
       recommendedRequirements,
       developerId,
-      imagePath // Guardar la ruta de la imagen en la base de datos
+      imagePath
     });
 
     res.status(201).json({ 
@@ -61,13 +65,12 @@ const updateGame = async (req, res) => {
     const developerId = req.user.userId;
     const {
       name,
-      category,
+      categories,
       price,
       description,
       operatingSystem,
-      language,
+      languages,
       players,
-      rating,
       minRequirements,
       recommendedRequirements
     } = req.body;
@@ -85,20 +88,19 @@ const updateGame = async (req, res) => {
       });
     }
 
-    const imagePath = req.file ? req.file.path : game.imagePath; // Usar la nueva imagen si se proporciona
+    const imagePath = req.file ? req.file.path : game.imagePath;
 
     await game.update({
       name,
-      category,
+      categories,
       price,
       description,
       operatingSystem,
-      language,
+      languages,
       players,
-      rating,
       minRequirements,
       recommendedRequirements,
-      imagePath // Actualizar la ruta de la imagen
+      imagePath
     });
 
     res.json({ 

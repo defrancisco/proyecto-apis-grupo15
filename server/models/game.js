@@ -19,11 +19,21 @@ const Game = sequelize.define('Game', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false
   },
-  category: {
-    type: DataTypes.STRING(50),
+  categories: {
+    type: DataTypes.TEXT,
     allowNull: false,
-    validate: {
-      isIn: [['Accion', 'Aventura', 'RPG', 'Estrategia', 'Deporte', 'Simulacion', 'Acertijos']]
+    get() {
+      const rawValue = this.getDataValue('categories');
+      return rawValue ? JSON.parse(rawValue) : [];
+    },
+    set(value) {
+      if (Array.isArray(value)) {
+        const validCategories = ['Accion', 'Aventura', 'RPG', 'Estrategia', 'Deporte', 'Simulacion', 'Acertijos'];
+        if (!value.every(cat => validCategories.includes(cat))) {
+          throw new Error('Categorías inválidas');
+        }
+        this.setDataValue('categories', JSON.stringify(value));
+      }
     }
   },
   operatingSystem: {
@@ -33,10 +43,19 @@ const Game = sequelize.define('Game', {
       isIn: [['Windows', 'MacOS', 'Linux', 'Android', 'iOS', 'Nintendo']]
     }
   },
-  language: {
-    type: DataTypes.STRING(50),
+  languages: {
+    type: DataTypes.TEXT,
     allowNull: false,
-    defaultValue: 'Español'
+    defaultValue: JSON.stringify(['Español']),
+    get() {
+      const rawValue = this.getDataValue('languages');
+      return rawValue ? JSON.parse(rawValue) : [];
+    },
+    set(value) {
+      if (Array.isArray(value)) {
+        this.setDataValue('languages', JSON.stringify(value));
+      }
+    }
   },
   players: {
     type: DataTypes.INTEGER,
@@ -47,12 +66,13 @@ const Game = sequelize.define('Game', {
       max: 8
     }
   },
-  rating: {
-    type: DataTypes.STRING(5),
-    allowNull: false,
-    validate: {
-      isIn: [['E', 'E10+', 'T', 'M', 'A']]
-    }
+  minRequirements: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
+  recommendedRequirements: {
+    type: DataTypes.TEXT,
+    allowNull: true
   },
   developerId: {
     type: DataTypes.INTEGER,
@@ -85,14 +105,6 @@ const Game = sequelize.define('Game', {
   averageRating: {
     type: DataTypes.DECIMAL(3, 2),
     defaultValue: 0
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    defaultValue: sequelize.literal('GETDATE()')
-  },
-  updatedAt: {
-    type: DataTypes.DATE,
-    defaultValue: sequelize.literal('GETDATE()')
   },
   isPublished: {
     type: DataTypes.BOOLEAN,
