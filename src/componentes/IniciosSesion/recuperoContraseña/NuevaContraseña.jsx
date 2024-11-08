@@ -41,5 +41,3 @@ const CambioContraseña = ({ password, confirmPassword, setPassword, setConfirmP
 };
 
 export default CambioContraseña;
-
-

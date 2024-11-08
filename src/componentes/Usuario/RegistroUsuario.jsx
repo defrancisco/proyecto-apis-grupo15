@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/form.css';
+import { formValidation } from '../IniciosSesion/formValidation';
 
 export const RegistroUsuario = () => {
     const [form, setForm] = useState({
@@ -34,6 +35,11 @@ export const RegistroUsuario = () => {
         if (passwordMismatch) return; // No envía el formulario si hay error de contraseña
         console.log('Formulario enviado:', form);
     };
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        formValidation(); // Invoca la función
+    });
+    
 
     return (
         <>

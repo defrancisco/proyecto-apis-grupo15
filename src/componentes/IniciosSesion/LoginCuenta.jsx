@@ -3,10 +3,11 @@ import { Link, useNavigate } from 'react-router-dom'; // Asegúrate de importar 
 import '../../styles/form.css';
 import { formValidation } from './formValidation';
 
-// Componentes de recuperación de contraseña
-import NuevaContraseña from './recuperoContraseña/NuevaContraseña';
+// Componentes de recuperación de contraseñaimport CambioCo from './recuperoContraseña/NuevaContraseña';
 import VerificacionIdentidad from './recuperoContraseña/VerificaciónID';
 import RecuperarContraseña from './recuperoContraseña/RecuperarContraseña';
+import CambioContraseña from './recuperoContraseña/NuevaContraseña';
+
 
 export const LoginCuenta = () => {
     const [step, setStep] = useState(1); // Estado para rastrear el paso actual
@@ -26,12 +27,19 @@ export const LoginCuenta = () => {
         setEmail(email);
         setStep(2); 
     }; 
-    
+
     const handleResendCode = (email) => { 
         alert(`Código reenviado a ${email}`); 
     }; 
-    
-    const handleCodeSubmit = (inputCode) => {
+
+    const handleCodeChange = (index, value) => {
+        const updatedCode = [...code];
+        updatedCode[index] = value;
+        setCode(updatedCode);
+    };
+
+    const handleCodeSubmit = () => {
+        const inputCode = code.join(""); // Unir los valores del código ingresado
         const actualCode = "071726"; // Código de verificación fijo 
         if (inputCode === actualCode) { 
             alert("Código verificado con éxito!"); 
@@ -39,8 +47,8 @@ export const LoginCuenta = () => {
         } else { 
             alert("Código incorrecto. Intenta nuevamente."); 
         } 
-    }; 
-    
+    };
+
     const handlePasswordSubmit = (newPassword, confirmPassword) => { 
         if (newPassword === confirmPassword) { 
             alert("Contraseña cambiada con éxito!"); 
@@ -56,13 +64,16 @@ export const LoginCuenta = () => {
             case 1:
                 return <RecuperarContraseña onSubmit={handleEmailSubmit} onResend={handleResendCode} />;
             case 2:
-                return <VerificacionIdentidad code={code} onSubmit={handleCodeSubmit} />;
+                return <VerificacionIdentidad code={code} onCodeChange={handleCodeChange} onSubmit={handleCodeSubmit} />;
             case 3:
-                return <NuevaContraseña onSubmit={handlePasswordSubmit} />;
+                return <CambioContraseña onSubmit={handlePasswordSubmit} />;
             default:
                 return null;
         }
     };
+    document.addEventListener('DOMContentLoaded', () => {
+        formValidation(); // Invoca la función
+    });
 
     return (
         <div>
@@ -72,11 +83,25 @@ export const LoginCuenta = () => {
                     <form>
                         <div className="form-group">
                             <label htmlFor="email">Email</label>
-                            <input type="email" id="email" name="email" required />
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)} 
+                                required 
+                            />
                         </div>
                         <div className="form-group">
                             <label htmlFor="contrasena">Contraseña</label>
-                            <input type="password" id="contrasena" name="contrasena" required />
+                            <input 
+                                type="password" 
+                                id="contrasena" 
+                                name="contrasena" 
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)} 
+                                required 
+                            />
                         </div>
                         <button type="submit" className="submit-btn">Iniciar Sesión</button>
                     </form>

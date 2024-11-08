@@ -50,3 +50,4 @@ const RecuperarContraseña = ({ onSubmit, onResend }) => {
 };
 
 export default RecuperarContraseña;
+

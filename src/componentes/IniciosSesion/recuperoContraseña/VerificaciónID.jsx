@@ -1,30 +1,33 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 import '../../../styles/usuario/verificacionID.css';
 
 const VerificacionIdentidad = ({ code, setCode, onSubmit, onResend }) => {
-    const [codeSent, setCodeSent] = useState(false);
+    const [inputCode, setInputCode] = useState('');
+    const { auth } = useAuth();
+    const navigate = useNavigate();
 
-    const handleChange = (e, index) => {
-        const value = e.target.value;
-        if (/^[0-9]$/.test(value) || value === "") {
-            const newCode = [...code];
-            newCode[index] = value;
-            setCode(newCode);
-
-            if (value && index < 5) {
-                document.getElementById(`code-${index + 1}`).focus();
+    const handleVerify = () => {
+        if (inputCode === '071726') {
+            if (auth.accountType === 'client') {
+                navigate('/profile/client');
+            } else if (auth.accountType === 'business') {
+                navigate('/profile/business');
             }
+        } else {
+            alert('Código incorrecto');
         }
     };
 
     const handleConfirm = () => {
-        const inputCode = code.join("");
-        onSubmit(inputCode);
+        const codeToSubmit = inputCode; 
+        onSubmit(codeToSubmit);
     };
 
     const handleResend = () => {
         onResend();
-        setCode(Array(6).fill(""));
+        setCode(Array(6).fill("")); // Limpiar el código enviado
     };
 
     return (
@@ -32,14 +35,14 @@ const VerificacionIdentidad = ({ code, setCode, onSubmit, onResend }) => {
             <h1>Verificación de Identidad</h1>
             <p>Ingrese el código de 6 dígitos enviado a su email</p>
             <div className="code-input">
-                {code.map((digit, index) => (
+                {Array.from({ length: 6 }).map((_, index) => (
                     <input
                         key={index}
                         id={`code-${index}`}
                         type="text"
                         maxLength="1"
-                        value={digit}
-                        onChange={(e) => handleChange(e, index)}
+                        value={inputCode[index] || ''}
+                        onChange={(e) => setInputCode((prev) => prev.slice(0, index) + e.target.value + prev.slice(index + 1))}
                     />
                 ))}
             </div>

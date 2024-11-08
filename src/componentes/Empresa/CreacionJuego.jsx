@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from '../Header';
 import Footer from '../Footer'; 
 import '../../styles/gameForm.css'
+import { formValidation } from "../IniciosSesion/formValidation";
 
 
 function CreacionVideojuego() {
@@ -70,6 +71,11 @@ function CreacionVideojuego() {
     } catch (error) {
       console.error('Error:', error);
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      formValidation(); // Invoca la función
+    });
+  
   };
 
   return (
