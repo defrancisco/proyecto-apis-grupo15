@@ -3,8 +3,8 @@ const app = express();
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const cartRoutes = require('./routes/cart');
-const reviewRoutes = require('./routes/review');
 const businessRoutes = require('./routes/business');
+const gameRoutes = require('./routes/game');
 const sequelize = require('./config/database');
 const path = require('path');
 const { User, Game, RecoveryCode, Cart, Wishlist, models, setupAssociations } = require('./models');
@@ -23,8 +23,8 @@ app.use((req, res, next) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/cart', cartRoutes);
-app.use('/api/reviews', reviewRoutes);
 app.use('/api/business', businessRoutes);
+app.use('/api/games', gameRoutes);
 
 // Después de las configuraciones de CORS
 app.use('/uploads', express.static('uploads'));
