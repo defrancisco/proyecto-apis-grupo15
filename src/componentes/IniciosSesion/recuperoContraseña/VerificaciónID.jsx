@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import { useAuth } from '../../../routes/AuthContext';
 import '../../../styles/usuario/verificacionID.css';
 
 const VerificacionIdentidad = ({ code, setCode, onSubmit, onResend }) => {
