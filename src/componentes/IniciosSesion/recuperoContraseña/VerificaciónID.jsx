@@ -8,6 +8,7 @@ const VerificacionIdentidad = ({ code, setCode, onSubmit, onResend }) => {
     const { auth } = useAuth();
     const navigate = useNavigate();
 
+    
     const handleConfirm = () => {
         if (inputCode === '071726') {
             if (auth.accountType === 'client') {

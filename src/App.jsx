@@ -32,7 +32,6 @@ import RegistroEmpresa from "./componentes/Empresa/RegistroEmpresa.jsx";
 import CreacionVideojuego from "./componentes/Empresa/CreacionJuego.jsx";
 
 // Contexto de Autenticación
-import { AuthProvider } from "./routes/AuthContext.jsx";
 
 const router = createBrowserRouter([
     {
@@ -91,8 +90,6 @@ if (import.meta.hot) {
 
 export default function App() {
     return (
-        <AuthProvider>
-            <RouterProvider router={router} />
-        </AuthProvider>
+        <RouterProvider router={router} />
     );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/form.css';
 import { formValidation } from './formValidation';
 import CambioContraseña from './recuperoContraseña/NuevaContraseña';
@@ -7,7 +7,8 @@ import VerificacionIdentidad from './recuperoContraseña/VerificaciónID';
 import RecuperarContraseña from './recuperoContraseña/RecuperarContraseña';
 
 export const LoginCuenta = () => {
-    const [step, setStep] = useState(1); // Estado para rastrear el paso actual
+    const [isRecoveringPassword, setIsRecoveringPassword] = useState(false); // Modo de recuperación de contraseña
+    const [step, setStep] = useState(1); // Estado para rastrear el paso actual en recuperación
     const [email, setEmail] = useState('');
     const [code, setCode] = useState(Array(6).fill("")); // Estado para los dígitos del código
     const [password, setPassword] = useState('');
@@ -54,7 +55,6 @@ export const LoginCuenta = () => {
         }
     };
 
-    // Renderizar los pasos de recuperación de contraseña
     const renderStep = () => {
         switch (step) {
             case 1:
@@ -71,37 +71,44 @@ export const LoginCuenta = () => {
     return (
         <div>
             <main>
-                <div className="form">
-                    <h1>Inicia Sesión</h1>
-                    <form>
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input 
-                                type="email" 
-                                id="email" 
-                                name="email" 
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)} 
-                                required 
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="contrasena">Contraseña</label>
-                            <input 
-                                type="password" 
-                                id="contrasena" 
-                                name="contrasena" 
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)} 
-                                required 
-                            />
-                        </div>
-                        <button type="submit" className="submit-btn">Iniciar Sesión</button>
-                    </form>
-                    <Link to="/recuperar-contraseña" className="forgot-password">¿Olvidaste tu contraseña?</Link>
-                </div>
-                {/* Renderiza la recuperación de contraseña si el paso es mayor que 1 */}
-                {step > 1 && (
+                {!isRecoveringPassword ? (
+                    // Formulario de inicio de sesión
+                    <div className="form">
+                        <h1>Inicia Sesión</h1>
+                        <form>
+                            <div className="form-group">
+                                <label htmlFor="email">Email</label>
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    name="email" 
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)} 
+                                    required 
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="contrasena">Contraseña</label>
+                                <input 
+                                    type="password" 
+                                    id="contrasena" 
+                                    name="contrasena" 
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)} 
+                                    required 
+                                />
+                            </div>
+                            <button type="submit" className="submit-btn">Iniciar Sesión</button>
+                        </form>
+                        <button 
+                            className="forgot-password" 
+                            onClick={() => setIsRecoveringPassword(true)}
+                        >
+                            ¿Olvidaste tu contraseña?
+                        </button>
+                    </div>
+                ) : (
+                    // Pasos de recuperación de contraseña
                     <div className="recovery-steps">
                         {renderStep()}
                     </div>
