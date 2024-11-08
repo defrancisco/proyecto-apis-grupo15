@@ -2,13 +2,9 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const RecoveryCode = sequelize.define('RecoveryCode', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
   email: {
     type: DataTypes.STRING(255),
+    primaryKey: true,
     allowNull: false,
     references: {
       model: 'Users',
@@ -23,6 +19,9 @@ const RecoveryCode = sequelize.define('RecoveryCode', {
     type: DataTypes.DATE,
     allowNull: false
   }
+}, {
+  tableName: 'RecoveryCodes',
+  schema: 'dbo'
 });
 
 module.exports = RecoveryCode;

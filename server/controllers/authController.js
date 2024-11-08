@@ -70,19 +70,29 @@ const recoverPassword = async (req, res) => {
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
     const recoveryCode = Math.floor(100000 + Math.random() * 900000).toString();
-    await RecoveryCode.upsert({
+    const expiresAt = new Date();
+    expiresAt.setHours(expiresAt.getHours() + 1);
+
+    await RecoveryCode.destroy({ where: { email } });
+    
+    await RecoveryCode.create({
       email,
-      code: recoveryCode
+      code: recoveryCode,
+      expiresAt
     });
 
     await sendRecoveryEmail(email, recoveryCode);
-    res.json({ message: 'Recovery code sent to email' });
+    res.json({ message: 'Código de recuperación enviado al correo' });
   } catch (error) {
-    res.status(500).json({ message: 'Error sending recovery code', error: error.message });
+    console.error('Error completo:', error);
+    res.status(500).json({ 
+      message: 'Error enviando código de recuperación', 
+      error: error.message 
+    });
   }
 };
 
@@ -106,19 +116,36 @@ const verifyCode = async (req, res) => {
 
 const changePassword = async (req, res) => {
   try {
-    const { email, newPassword } = req.body;
-    const user = await User.findOne({ where: { email } });
+    const { email, newPassword, code } = req.body;
+    
+    // Verificar si existe un código de recuperación válido
+    const recoveryCode = await RecoveryCode.findOne({
+      where: { email, code }
+    });
 
+    if (!recoveryCode) {
+      return res.status(400).json({ 
+        message: 'Código de verificación inválido o expirado' 
+      });
+    }
+
+    const user = await User.findOne({ where: { email } });
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
     user.password = newPassword;
     await user.save();
+    
+    // Eliminar el código de recuperación usado
+    await RecoveryCode.destroy({ where: { email } });
 
-    res.json({ message: 'Password changed successfully' });
+    res.json({ message: 'Contraseña cambiada exitosamente' });
   } catch (error) {
-    res.status(500).json({ message: 'Error changing password', error: error.message });
+    res.status(500).json({ 
+      message: 'Error cambiando contraseña', 
+      error: error.message 
+    });
   }
 };
 

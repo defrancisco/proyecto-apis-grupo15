@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const { authenticateToken } = require('../middleware/auth');
 
 const {
     register,
@@ -15,8 +14,6 @@ router.post('/register', register);
 router.post('/login', login);
 router.post('/recover-password', recoverPassword);
 router.post('/verify-code', verifyCode);
-
-// Rutas protegidas
-router.post('/change-password', authenticateToken, changePassword);
+router.post('/change-password', changePassword);
 
 module.exports = router;
