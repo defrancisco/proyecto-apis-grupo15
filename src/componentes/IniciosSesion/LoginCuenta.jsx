@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from 'react'; // Asegúrate de importar useState
-import { Link, useNavigate } from 'react-router-dom'; // Asegúrate de importar useNavigate
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../styles/form.css';
 import { formValidation } from './formValidation';
-
-// Componentes de recuperación de contraseñaimport CambioCo from './recuperoContraseña/NuevaContraseña';
+import CambioContraseña from './recuperoContraseña/NuevaContraseña';
 import VerificacionIdentidad from './recuperoContraseña/VerificaciónID';
 import RecuperarContraseña from './recuperoContraseña/RecuperarContraseña';
-import CambioContraseña from './recuperoContraseña/NuevaContraseña';
-
 
 export const LoginCuenta = () => {
     const [step, setStep] = useState(1); // Estado para rastrear el paso actual
-    const [email, setEmail] = useState(''); 
+    const [email, setEmail] = useState('');
     const [code, setCode] = useState(Array(6).fill("")); // Estado para los dígitos del código
-    const [password, setPassword] = useState(''); 
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
     // Ejecuta la validación del formulario al montar el componente
@@ -21,15 +18,15 @@ export const LoginCuenta = () => {
         formValidation();
     }, []);
 
-    const handleEmailSubmit = (email) => { 
-        alert(`Código enviado a ${email}`); 
+    const handleEmailSubmit = (email) => {
+        alert(`Código enviado a ${email}`);
         setEmail(email);
-        setStep(2); 
-    }; 
+        setStep(2);
+    };
 
-    const handleResendCode = (email) => { 
-        alert(`Código reenviado a ${email}`); 
-    }; 
+    const handleResendCode = () => {
+        alert(`Código reenviado a ${email}`);
+    };
 
     const handleCodeChange = (index, value) => {
         const updatedCode = [...code];
@@ -39,22 +36,22 @@ export const LoginCuenta = () => {
 
     const handleCodeSubmit = () => {
         const inputCode = code.join(""); // Unir los valores del código ingresado
-        const actualCode = "071726"; // Código de verificación fijo 
-        if (inputCode === actualCode) { 
-            alert("Código verificado con éxito!"); 
-            setStep(3); 
-        } else { 
-            alert("Código incorrecto. Intenta nuevamente."); 
-        } 
+        const actualCode = "071726"; // Código de verificación fijo
+        if (inputCode === actualCode) {
+            alert("Código verificado con éxito!");
+            setStep(3);
+        } else {
+            alert("Código incorrecto. Intenta nuevamente.");
+        }
     };
 
-    const handlePasswordSubmit = (newPassword, confirmPassword) => { 
-        if (newPassword === confirmPassword) { 
-            alert("Contraseña cambiada con éxito!"); 
-            navigate('/perfil'); 
-        } else { 
-            alert("Las contraseñas no coinciden. Intenta nuevamente."); 
-        } 
+    const handlePasswordSubmit = (newPassword, confirmPassword) => {
+        if (newPassword === confirmPassword) {
+            alert("Contraseña cambiada con éxito!");
+            navigate('/perfil');
+        } else {
+            alert("Las contraseñas no coinciden. Intenta nuevamente.");
+        }
     };
 
     // Renderizar los pasos de recuperación de contraseña
@@ -70,9 +67,6 @@ export const LoginCuenta = () => {
                 return null;
         }
     };
-    document.addEventListener('DOMContentLoaded', () => {
-        formValidation(); // Invoca la función
-    });
 
     return (
         <div>

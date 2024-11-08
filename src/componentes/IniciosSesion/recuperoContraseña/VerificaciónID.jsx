@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import { useAuth } from '../../../routes/AuthContext';
 import '../../../styles/usuario/verificacionID.css';
 
 const VerificacionIdentidad = ({ code, setCode, onSubmit, onResend }) => {
@@ -8,7 +8,7 @@ const VerificacionIdentidad = ({ code, setCode, onSubmit, onResend }) => {
     const { auth } = useAuth();
     const navigate = useNavigate();
 
-    const handleVerify = () => {
+    const handleConfirm = () => {
         if (inputCode === '071726') {
             if (auth.accountType === 'client') {
                 navigate('/profile/client');
@@ -18,11 +18,7 @@ const VerificacionIdentidad = ({ code, setCode, onSubmit, onResend }) => {
         } else {
             alert('Código incorrecto');
         }
-    };
-
-    const handleConfirm = () => {
-        const codeToSubmit = inputCode; 
-        onSubmit(codeToSubmit);
+        onSubmit(inputCode);
     };
 
     const handleResend = () => {

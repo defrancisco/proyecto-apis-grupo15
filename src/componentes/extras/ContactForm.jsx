@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/no-redundant-roles */
 import React, { useState } from 'react';
-import './ContactForm.css';
+import '../../styles/contactForm.css';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
