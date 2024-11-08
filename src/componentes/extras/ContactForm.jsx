@@ -1,16 +1,58 @@
 import React, { useState } from 'react';
-import '../../styles/contactForm.css';
+import './ContactForm.css';
 
 const ContactForm = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) return 'El email es requerido';
+    if (!emailRegex.test(email)) return 'Email inválido';
+    return '';
+  };
+
+  const validateForm = () => {
+    const newErrors = {
+      name: !formData.name.trim() ? 'El nombre es requerido' : '',
+      email: validateEmail(formData.email.trim()),
+      message: !formData.message.trim() ? 'El mensaje es requerido' : ''
+    };
+
+    setErrors(newErrors);
+    return !Object.values(newErrors).some(error => error);
+  };
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [id]: value
+    }));
+    // Clear error when user starts typing
+    setErrors(prev => ({
+      ...prev,
+      [id]: ''
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
 
-    const contactRequest = { name, email, message };
+    if (!validateForm()) {
+      setStatus('Por favor, corrige los errores en el formulario');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setStatus('');
 
     try {
       const response = await fetch('/contact-requests', {
@@ -18,108 +60,91 @@ const ContactForm = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(contactRequest),
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim()
+        }),
       });
 
       if (response.ok) {
-        setStatus('Mensaje enviado con éxito');
-        setName('');
-        setEmail('');
-        setMessage('');
-        alert('Mensaje enviado con éxito');
+        setStatus('¡Mensaje enviado con éxito!');
+        setFormData({ name: '', email: '', message: '' });
       } else {
         const errorData = await response.json();
-        if (response.status === 400) {
-          setStatus('Por favor, verifica los datos ingresados: ' + (errorData.message || 'Error desconocido'));
-        } else {
-          setStatus('Error en el servidor: ' + (errorData.message || 'Error desconocido'));
-        }
+        setStatus(errorData.message || 'Error en el servidor');
       }
     } catch (error) {
-      setStatus('Error en la conexión. Inténtalo de nuevo más tarde.');
       console.error('Error de conexión:', error);
+      setStatus('Error en la conexión. Por favor, inténtalo más tarde.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <>
-      <main>
-        <div className="contact-form-wrapper">
-          <div className="contact-form">
-            <h2>Contáctanos</h2>
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="name" className="form-label">Nombre:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required />
-              </div>
-              <div className="form-group">
-                <label htmlFor="email" className="form-label">Email:</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required />
-              </div>
-              <div className="form-group">
-                <label htmlFor="message" className="form-label">Mensaje:</label>
-                <textarea
-                  className="form-text-area"
-                  id="message"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  required />
-              </div>
-              <div className="form-group">
-                <button className="submit-btn" type="submit">Enviar</button>
-              </div>
-            </form>
-            {status && <p>{status}</p>}
+    <div className="contact-form-wrapper" data-testid="contact-form-wrapper">
+      <div className="contact-form" data-testid="contact-form">
+        <h2>Contáctanos</h2>
+        <form onSubmit={handleSubmit} role="form" noValidate>
+          <div className="form-group">
+            <label htmlFor="name" className="form-label">Nombre:</label>
+            <input
+              type="text"
+              className={`form-control ${errors.name ? 'form-control-error' : ''}`}
+              id="name"
+              value={formData.name}
+              onChange={handleChange}
+              maxLength={100}
+              required
+            />
+            {errors.name && <span className="error-message">{errors.name}</span>}
           </div>
-        </div>
-      </main><div>
-        <div className="contact-form">
-          <h2>Contáctanos</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="name">Nombre:</label>
-              <input
-                type="text"
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="email">Email:</label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="message">Mensaje:</label>
-              <textarea
-                id="message"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                required />
-            </div>
-            <button type="submit">Enviar</button>
-          </form>
-          {status && <p>{status}</p>}
-        </div>
+
+          <div className="form-group">
+            <label htmlFor="email" className="form-label">Email:</label>
+            <input
+              type="email"
+              className={`form-control ${errors.email ? 'form-control-error' : ''}`}
+              id="email"
+              value={formData.email}
+              onChange={handleChange}
+              maxLength={100}
+              required
+            />
+            {errors.email && <span className="error-message">{errors.email}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="message" className="form-label">Mensaje:</label>
+            <textarea
+              className={`form-text-area ${errors.message ? 'form-text-area-error' : ''}`}
+              id="message"
+              value={formData.message}
+              onChange={handleChange}
+              maxLength={1000}
+              required
+            />
+            {errors.message && <span className="error-message">{errors.message}</span>}
+          </div>
+
+          <div className="form-group">
+            <button 
+              className="submit-btn" 
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Enviando...' : 'Enviar'}
+            </button>
+          </div>
+        </form>
+        {status && (
+          <p className={`status-message ${status.includes('éxito') ? 'status-success' : 'status-error'}`} role="alert">
+            {status}
+          </p>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 
