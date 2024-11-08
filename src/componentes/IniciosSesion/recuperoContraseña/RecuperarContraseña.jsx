@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../../../styles/usuario/recuperarcontraseña.css';
 
+
 const RecuperarContraseña = ({ onSubmit, onResend }) => {
     const [email, setEmail] = useState('');
     const [codeSent, setCodeSent] = useState(false);

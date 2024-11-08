@@ -14,7 +14,6 @@ export const LoginCuenta = () => {
     const [email, setEmail] = useState(''); 
     const [code, setCode] = useState(Array(6).fill("")); // Estado para los dígitos del código
     const [password, setPassword] = useState(''); 
-    const [confirmPassword, setConfirmPassword] = useState(''); 
     const navigate = useNavigate();
 
     // Ejecuta la validación del formulario al montar el componente
