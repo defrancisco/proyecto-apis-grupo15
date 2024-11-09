@@ -53,7 +53,7 @@ const router = createBrowserRouter([
             },
             { path: "carrito", element: <Carrito />,
                 children: [
-                    { path: "carrito/:checkout", element: <Checkout /> },
+                    { path: "carrito/checkout", element: <Checkout /> },
                 ]
             },
             { path: "iniciarSesion", element: <Login /> },

@@ -19,6 +19,7 @@ main {
     justify-content: center;
     align-items: center;
     width: 100%;
+    padding: 90px;
 }
 
 .contact-form {
