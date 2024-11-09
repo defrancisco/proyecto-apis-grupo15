@@ -59,7 +59,7 @@ const router = createBrowserRouter([
             { 
                 path: "userTab", 
                 element: (
-                    <CheckWrapper allowedAccountType="user">
+                    <CheckWrapper allowedAccountType="individual">
                         <UserTab />
                     </CheckWrapper>
                 ),

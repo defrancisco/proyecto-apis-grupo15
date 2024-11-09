@@ -68,6 +68,39 @@ export const LoginCuenta = () => {
         }
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        try {
+            const response = await fetch('http://localhost:3000/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('userType', data.userType);
+                
+                // Redirigir según el tipo de usuario
+                if (data.userType === 'business') {
+                    navigate('/businessTab');
+                } else if (data.userType === 'individual') {
+                    navigate('/userTab');
+                }
+            } else {
+                alert('Credenciales inválidas');
+            }
+        } catch (error) {
+            alert('Error al iniciar sesión');
+            console.error('Error:', error);
+        }
+    };
+
     return (
         <div>
             <main>
@@ -75,7 +108,7 @@ export const LoginCuenta = () => {
                     // Formulario de inicio de sesión
                     <div className="form">
                         <h1>Inicia Sesión</h1>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="email">Email</label>
                                 <input 

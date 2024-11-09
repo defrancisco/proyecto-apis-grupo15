@@ -8,7 +8,7 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     isAuthenticated: false,
-    accountType: null, // 'cliente' o 'empresa'
+    userType: null, // 'individual' o 'business'
   });
   const [recoveryCode, setRecoveryCode] = useState(null); // Código de recuperación generado
   const navigate = useNavigate();
@@ -17,19 +17,19 @@ export const AuthProvider = ({ children }) => {
   const login = (accountType) => {
     setAuth({
       isAuthenticated: true,
-      accountType,
+      userType: accountType,
     });
     // Redirigir dependiendo del tipo de cuenta
-    if (accountType === 'cliente') {
+    if (accountType === 'individual') {
       navigate('/userTab');
-    } else if (accountType === 'empresa') {
+    } else if (accountType === 'business') {
       navigate('/businessTab');
     }
   };
 
   // Función para cerrar sesión
   const logout = () => {
-    setAuth({ isAuthenticated: false, accountType: null });
+    setAuth({ isAuthenticated: false, userType: null });
     navigate('/'); // Redirigir a la página principal o login
   };
 
