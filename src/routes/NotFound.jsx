@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const NotFound = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            navigate('/prePagina'); // Redirige a prePagina después de 5 segundos
+        }, 3000);
+
+        return () => clearTimeout(timer); // Limpia el timer si el componente se desmonta
+    }, [navigate]);
+
     return (
         <div style={{ textAlign: 'center', marginTop: '50px' }}> 
             <h1>404 Not Found</h1> 

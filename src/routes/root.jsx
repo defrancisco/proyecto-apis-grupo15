@@ -36,13 +36,15 @@ export const UserProvider = ({ children }) => {
     );
 };
 
+
+
 export const loader = async () => { 
     return new Promise((resolve) => { 
-        setTimeout(() => { resolve({ data: 'Cargado correctamente :)' }); 
+        setTimeout(() => { 
+            resolve({ data: 'Cargado correctamente :)', firstLoad: true }); 
         }, 1000); // Simula un retraso de 1 segundo 
     }); 
 };
-
 
 
 

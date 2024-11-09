@@ -60,6 +60,7 @@ const router = createBrowserRouter([
             { path: "iniciarSesion/:loginCuenta", element: <LoginCuenta />},
             { path: "iniciarSesion/registroUsuario", element: <RegistroUsuario /> },
             { path: "iniciarSesion/registroEmpresa", element: <RegistroEmpresa /> },
+            
             { 
                 path: "userTab", 
                 element: (
@@ -68,6 +69,7 @@ const router = createBrowserRouter([
                     </CheckWrapper>
                 ),
             },
+            
             { 
                 path: "businessTab", 
                 element: (

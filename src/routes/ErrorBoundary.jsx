@@ -1,13 +1,27 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props);
         this.state = { hasError: false };
+        this.navigate = null;
     }
 
     static getDerivedStateFromError(error) {
         return { hasError: true };
+    }
+
+    componentDidMount() {
+        this.navigate = this.props.navigate; // Guarda la referencia a navigate
+    }
+
+    componentDidUpdate() {
+        if (this.state.hasError && this.navigate) {
+            setTimeout(() => {
+                this.navigate('/prePagina'); // Redirige a prePagina después de 2 segundos
+            }, 2000);
+        }
     }
 
     componentDidCatch(error, errorInfo) {
@@ -28,4 +42,12 @@ class ErrorBoundary extends React.Component {
     }
 }
 
-export default ErrorBoundary;
+// HOC para inyectar el hook de navegación
+const withNavigation = (Component) => {
+    return (props) => {
+        const navigate = useNavigate();
+        return <Component {...props} navigate={navigate} />;
+    };
+};
+
+export default withNavigation(ErrorBoundary);

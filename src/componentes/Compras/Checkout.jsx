@@ -1,12 +1,9 @@
 import React from 'react';
-import Header from '../Header';
-import Footer from '../Footer';
 import '../../styles/metododepago.css';
 
 function Checkout() {
     return (
         <div>
-            <Header />
             <div className="payment-method">
                 <div className="content">
                     <div className="payment-box">
@@ -56,7 +53,6 @@ function Checkout() {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }

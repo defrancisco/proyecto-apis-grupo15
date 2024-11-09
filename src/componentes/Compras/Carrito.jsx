@@ -1,10 +1,9 @@
 import React, { useState, useEffect }from 'react';
-import { Link } from 'react-router-dom';
+import {Link } from 'react-router-dom';
 import Producto from './Producto';
 import '../../styles/carritocompras.css';
 
 function Carrito() {
-
   const [cartItems, setCartItems] = useState([]);
   const [summary, setSummary] = useState({
     subtotal: 0,
@@ -12,6 +11,7 @@ function Carrito() {
     tax: 0,
     total: 0
   });
+
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -71,7 +71,7 @@ function Carrito() {
                 <strong>{summary.total.toFixed(2)}</strong>
               </li>
             </ul>
-            <button className="btn-transaction">
+            <button className="btn-transaction" >
               <Link to="/carrito/checkout">Continuar Transacción</Link>
             </button>
           </div>
