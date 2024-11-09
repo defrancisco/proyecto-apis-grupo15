@@ -5,6 +5,7 @@ import { formValidation } from './formValidation';
 import CambioContraseña from './recuperoContraseña/NuevaContraseña';
 import VerificacionIdentidad from './recuperoContraseña/VerificaciónID';
 import RecuperarContraseña from './recuperoContraseña/RecuperarContraseña';
+import { useAuth } from '../../routes/AuthContext';
 
 export const LoginCuenta = () => {
     const [isRecoveringPassword, setIsRecoveringPassword] = useState(false); // Modo de recuperación de contraseña
@@ -13,6 +14,7 @@ export const LoginCuenta = () => {
     const [code, setCode] = useState(Array(6).fill("")); // Estado para los dígitos del código
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     // Ejecuta la validación del formulario al montar el componente
     useEffect(() => {
@@ -86,12 +88,10 @@ export const LoginCuenta = () => {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('userType', data.userType);
                 
-                // Redirigir según el tipo de usuario
-                if (data.userType === 'business') {
-                    navigate('/businessTab');
-                } else if (data.userType === 'individual') {
-                    navigate('/userTab');
-                }
+                // Usar la función login del contexto
+                login(data.userType);
+                
+                // La redirección ahora la maneja el contexto de autenticación
             } else {
                 alert('Credenciales inválidas');
             }

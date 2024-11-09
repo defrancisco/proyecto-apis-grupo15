@@ -1,6 +1,7 @@
 import React from "react";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AuthProvider } from './routes/AuthContext';
 import Root, { loader as rootLoader } from "./routes/root";
 import NotFound from "./routes/NotFound";
 import CheckWrapper from "./routes/CheckWrapper.jsx";
@@ -36,7 +37,11 @@ import CreacionVideojuego from "./componentes/Empresa/CreacionJuego.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Root />,
+        element: (
+            <AuthProvider>
+                <Root />
+            </AuthProvider>
+        ),
         loader: rootLoader,
         errorElement: <NotFound />,
         children: [
