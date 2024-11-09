@@ -6,12 +6,14 @@ const {
   createReview,
   getGameReviews,
   updateReview,
-  deleteReview
+  deleteReview,
+  getGameById
 } = require('../controllers/gameController');
 const Game = require('../models/game');
 
-// Rutas públicas
+
 router.get('/', getAllGames);
+router.get('/:gameId', getGameById);
 router.get('/:gameId/reviews', getGameReviews);
 router.get('/:gameId/image', async (req, res) => {
   try {
@@ -30,11 +32,12 @@ router.get('/:gameId/image', async (req, res) => {
     });
   }
 });
-
-// Rutas que requieren autenticación
 router.use(authenticateToken);
 router.post('/reviews', createReview);
 router.put('/reviews/:reviewId', updateReview);
 router.delete('/reviews/:reviewId', deleteReview);
+
+
+
 
 module.exports = router; 

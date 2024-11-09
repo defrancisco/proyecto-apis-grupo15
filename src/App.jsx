@@ -45,12 +45,8 @@ const router = createBrowserRouter([
             { path: "ayuda", element: <Ayuda /> },
             { path: "consolas", element: <Consolas /> },
             { path: "contacto", element: <ContactForm /> },
-            { path: "catalogo", element: <Catalogo />,
-                children: [
-                    { path: "catalogo/:juego", element: <Juego /> },
-                    { path: "catalogo/:juego/:crearReseña", element: <Reseña />},
-                ]
-            },
+            { path: "catalogo", element: <Catalogo /> },
+            { path: "juego/:id", element: <Juego /> },
             { path: "carrito", element: <Carrito />,
                 children: [
                     { path: "carrito/:checkout", element: <Checkout /> },
