@@ -64,4 +64,4 @@ function Juego() {
     )
 }
 
-export default Juego;
+export default Juego

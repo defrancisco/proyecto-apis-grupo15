@@ -5,7 +5,6 @@ const User = require('../models/user');
 // Obtener todos los juegos
 const getAllGames = async (req, res) => {
   try {
-    console.log("obteniendo juegos...");
     const games = await Game.findAll({
       where: { isPublished: true },
       include: [{

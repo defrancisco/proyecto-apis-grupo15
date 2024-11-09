@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom';
 import videogames from '../../data/videogames';
 import Producto from './Producto';
@@ -6,68 +6,42 @@ import '../../styles/carritocompras.css';
 
 function Carrito() {
 
-  const [cartItems, setCartItems] = useState([]);
-  const [summary, setSummary] = useState({
-    subtotal: 0,
-    tax: 0,
-    total: 0
+  const videoGamesList = videogames.map(v => {
+    return <Producto image={v.image} title={v.title}
+      price={v.price} />;
   });
-
-  useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const response = await fetch('/api/cart', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}` // Asegúrate de que el token se maneja correctamente
-          }
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setCartItems(data.items);
-          setSummary(data.summary);
-        } else {
-          console.error('Error fetching cart:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-
-    fetchCart();
-  }, []);
 
   return (
     <div>
       <div className="cart-page">
+
         <div className="products-row">
           <div className="product">
-            {cartItems.map((item) => (
-              <Producto
-                title={item.Game.name}
-                price={item.Game.price}
-              />
-            ))}
+            {videoGamesList}
           </div>
           <div className="summary">
             <h5>Resumen de Compra</h5>
             <ul className="list">
               <li>
                 <span>Subtotal</span>
-                <span>{summary.subtotal.toFixed(2)}</span>
+                <span>"subtotal"</span>
+              </li>
+              <li>
+                <span>Shipping</span>
+                <span>"Shipping"</span>
               </li>
               <li>
                 <span>Tax</span>
-                <span>{summary.subtotal.toFixed(2)}</span>
+                <span>"Tax"</span>
               </li>
               <li className="total">
                 <strong>Total</strong>
-                <strong>{summary.total.toFixed(2)}</strong>
+                <strong>"Total"</strong>
               </li>
             </ul>
             <button className="btn-transaction">
               <Link to="carrito/checkout">Continuar Transacción</Link>
-            </button>
+              </button>
           </div>
         </div>
       </div>
