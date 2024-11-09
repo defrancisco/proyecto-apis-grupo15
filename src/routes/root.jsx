@@ -1,9 +1,9 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Header from '../componentes/Header';
 import Footer from '../componentes/Footer';
 import ErrorBoundary from './ErrorBoundary';
-
+import '../styles/mensajeBienvenida.css';
 
 // Crear contexto para el usuario
 const UserContext = createContext();
@@ -15,17 +15,15 @@ export const useUser = () => {
 
 // Proveedor de contexto para gestionar el tipo de usuario
 export const UserProvider = ({ children }) => {
-    const [userType, setUserType] = useState(null); // null, 'cliente', o 'empresa'
+    const [userType, setUserType] = useState(null);
     const navigate = useNavigate();
 
-    // Función para iniciar sesión que asigna el tipo de usuario
     const loginUser = (type) => {
         setUserType(type);
-        // Redirigir según el tipo de usuario
         if (type === 'cliente') {
-            navigate('/usuarioTab'); // Ruta para el cliente
+            navigate('/usuarioTab');
         } else if (type === 'empresa') {
-            navigate('/businessTab'); // Ruta para la empresa
+            navigate('/businessTab');
         }
     };
 
@@ -36,30 +34,38 @@ export const UserProvider = ({ children }) => {
     );
 };
 
-
-
-export const loader = async () => { 
-    return new Promise((resolve) => { 
-        setTimeout(() => { 
-            resolve({ data: 'Cargado correctamente :)', firstLoad: true }); 
-        }, 1000); // Simula un retraso de 1 segundo 
-    }); 
+// Función loader para simular la carga de datos
+export const loader = async () => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({ data: 'Cargado correctamente :)', firstLoad: true });
+        }, 1000);
+    });
 };
-
-
-
 
 // Componente Root principal que engloba toda la aplicación
 export default function Root() {
+    const [firstLoad, setFirstLoad] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setFirstLoad(false), 4000);
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <UserProvider>
             <ErrorBoundary>
-            <Header />
-                <Outlet />  {/* Punto de inserción para el contenido de las rutas hijas */}
-            <Footer />
+                <Header />
+                {firstLoad ? (
+                    <div className="mensaje-bienvenida">
+                        <h1>Inicia la aventura en Nintendo</h1>
+                        <p>¡Explora y descubre todo lo que tenemos para ofrecer!</p>
+                    </div>
+                ) : (
+                    <Outlet />
+                )}
+                <Footer />
             </ErrorBoundary>
         </UserProvider>
     );
 }
-
-// Rendizar el header y footer

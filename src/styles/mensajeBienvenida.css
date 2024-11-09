@@ -1,0 +1,29 @@
+.mensaje-bienvenida {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+    text-align: center;
+    color: #d22f27; /* Rojo estilo Nintendo */
+    font-family: Arial, sans-serif;
+    background-image: url('https://i.pinimg.com/originals/47/4d/b4/474db4c6e15feb55494d22f4bd254516.gif');
+    background-size: cover; /* Hace que el fondo cubra toda la pantalla */
+    background-position: center; /* Centra la imagen de fondo */
+    background-repeat: no-repeat; /* Evita que el fondo se repita */
+    padding: 0 20px;
+}
+
+.mensaje-bienvenida h1 {
+    font-size: 3em;
+    font-weight: bold;
+    margin: 0;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Sombra para mejorar la visibilidad */
+}
+
+.mensaje-bienvenida p {
+    font-size: 1.5em;
+    color: #333;
+    margin-top: 20px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Sombra para mejorar la visibilidad */
+}
