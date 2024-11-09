@@ -5,6 +5,7 @@ import { formValidation } from './formValidation';
 import CambioContraseña from './recuperoContraseña/NuevaContraseña';
 import VerificacionIdentidad from './recuperoContraseña/VerificaciónID';
 import RecuperarContraseña from './recuperoContraseña/RecuperarContraseña';
+import { useAuth } from '../../routes/AuthContext';
 
 export const LoginCuenta = () => {
     const [isRecoveringPassword, setIsRecoveringPassword] = useState(false); // Modo de recuperación de contraseña
@@ -13,6 +14,7 @@ export const LoginCuenta = () => {
     const [code, setCode] = useState(Array(6).fill("")); // Estado para los dígitos del código
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     // Ejecuta la validación del formulario al montar el componente
     useEffect(() => {
@@ -68,6 +70,37 @@ export const LoginCuenta = () => {
         }
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        try {
+            const response = await fetch('http://localhost:3000/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('userType', data.userType);
+                
+                // Usar la función login del contexto
+                login(data.userType);
+                
+                // La redirección ahora la maneja el contexto de autenticación
+            } else {
+                alert('Credenciales inválidas');
+            }
+        } catch (error) {
+            alert('Error al iniciar sesión');
+            console.error('Error:', error);
+        }
+    };
+
     return (
         <div>
             <main>
@@ -75,7 +108,7 @@ export const LoginCuenta = () => {
                     // Formulario de inicio de sesión
                     <div className="form">
                         <h1>Inicia Sesión</h1>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="email">Email</label>
                                 <input 

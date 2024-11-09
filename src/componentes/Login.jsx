@@ -10,7 +10,7 @@ function Login() {
 
   const handleLogin = (type) => {
     loginUser(type); // Llama a la función de login con el tipo de usuario
-    navigate(type === 'cliente' ? '/usuarioTab' : '/businessTab'); // Redirige según el tipo
+    navigate(type === 'individual' ? '/userTab' : '/businessTab');
   };
 
   return (

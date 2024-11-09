@@ -6,11 +6,11 @@ const CheckWrapper = ({ children, allowedAccountType }) => {
   const { auth } = useAuth();
 
   if (!auth.isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/iniciarSesion/loginCuenta" replace />;
   }
 
-  if (auth.accountType !== allowedAccountType) {
-    return <Navigate to="/" replace />; // Redirigir si el tipo de cuenta no coincide
+  if (auth.userType !== allowedAccountType) {
+    return <Navigate to="/prePagina" replace />;
   }
 
   return children;

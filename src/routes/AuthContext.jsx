@@ -1,61 +1,59 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error('useAuth debe ser usado dentro de un AuthProvider');
+    }
+    return context;
+};
 
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState({
-    isAuthenticated: false,
-    accountType: null, // 'cliente' o 'empresa'
-  });
-  const [recoveryCode, setRecoveryCode] = useState(null); // Código de recuperación generado
-  const navigate = useNavigate();
-
-  // Función para iniciar sesión
-  const login = (accountType) => {
-    setAuth({
-      isAuthenticated: true,
-      accountType,
+    const [auth, setAuth] = useState(() => {
+        // Recuperar estado de autenticación del localStorage al iniciar
+        const savedAuth = localStorage.getItem('auth');
+        return savedAuth ? JSON.parse(savedAuth) : {
+            isAuthenticated: false,
+            userType: null,
+        };
     });
-    // Redirigir dependiendo del tipo de cuenta
-    if (accountType === 'cliente') {
-      navigate('/userTab');
-    } else if (accountType === 'empresa') {
-      navigate('/businessTab');
-    }
-  };
+    
+    const navigate = useNavigate();
 
-  // Función para cerrar sesión
-  const logout = () => {
-    setAuth({ isAuthenticated: false, accountType: null });
-    navigate('/'); // Redirigir a la página principal o login
-  };
+    // Guardar estado de autenticación en localStorage cuando cambie
+    useEffect(() => {
+        localStorage.setItem('auth', JSON.stringify(auth));
+    }, [auth]);
 
-  // Función para enviar el código de recuperación
-  const sendRecoveryCode = (email) => {
-    // Aquí puedes agregar lógica para enviar el código al email del usuario
-    const generatedCode = '071726'; // Generamos un código estático o aleatorio para la prueba
-    setRecoveryCode(generatedCode);
-    console.log(`Código de recuperación enviado a ${email}: ${generatedCode}`);
-  };
+    const login = (userType) => {
+        setAuth({
+            isAuthenticated: true,
+            userType
+        });
+        
+        if (userType === 'business') {
+            navigate('/businessTab');
+        } else if (userType === 'individual') {
+            navigate('/userTab');
+        }
+    };
 
-  // Función para verificar el código de recuperación
-  const verifyRecoveryCode = (inputCode) => {
-    if (inputCode === recoveryCode) {
-      console.log("Código verificado correctamente.");
-      navigate('/userTab'); // Redirigir al perfil después de la verificación
-      return true;
-    } else {
-      console.log("Código incorrecto.");
-      return false;
-    }
-  };
+    const logout = () => {
+        localStorage.removeItem('auth');
+        localStorage.removeItem('token');
+        setAuth({
+            isAuthenticated: false,
+            userType: null
+        });
+        navigate('/prePagina');
+    };
 
-  return (
-    <AuthContext.Provider value={{ auth, login, logout, sendRecoveryCode, verifyRecoveryCode }}>
-      {children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={{ auth, login, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };

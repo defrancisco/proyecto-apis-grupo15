@@ -1,6 +1,7 @@
 import React from "react";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AuthProvider } from './routes/AuthContext';
 import Root, { loader as rootLoader } from "./routes/root";
 import NotFound from "./routes/NotFound";
 import CheckWrapper from "./routes/CheckWrapper.jsx";
@@ -36,7 +37,11 @@ import CreacionVideojuego from "./componentes/Empresa/CreacionJuego.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Root />,
+        element: (
+            <AuthProvider>
+                <Root />
+            </AuthProvider>
+        ),
         loader: rootLoader,
         errorElement: <NotFound />,
         children: [
@@ -45,12 +50,8 @@ const router = createBrowserRouter([
             { path: "ayuda", element: <Ayuda /> },
             { path: "consolas", element: <Consolas /> },
             { path: "contacto", element: <ContactForm /> },
-            { path: "catalogo", element: <Catalogo />,
-                children: [
-                    { path: "catalogo/:juego", element: <Juego /> },
-                    { path: "catalogo/:juego/:crearReseña", element: <Reseña />},
-                ]
-            },
+            { path: "catalogo", element: <Catalogo /> },
+            { path: "juego/:id", element: <Juego /> },
             { path: "carrito", element: <Carrito />,
                 children: [
                     { path: "carrito/checkout", element: <Checkout /> },
@@ -64,7 +65,7 @@ const router = createBrowserRouter([
             { 
                 path: "userTab", 
                 element: (
-                    <CheckWrapper allowedAccountType="user">
+                    <CheckWrapper allowedAccountType="individual">
                         <UserTab />
                     </CheckWrapper>
                 ),

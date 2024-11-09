@@ -1,24 +1,77 @@
 const Review = require('../models/review');
 const Game = require('../models/game');
 const User = require('../models/user');
+const { Op } = require('sequelize');
 
 // Obtener todos los juegos
 const getAllGames = async (req, res) => {
   try {
+    const { 
+      category, 
+      minPrice, 
+      maxPrice, 
+      sortBy = 'name',
+      order = 'ASC',
+      search
+    } = req.query;
+
+    let whereClause = { isPublished: true };
+    
+    // Filtro por categoría
+    if (category) {
+      whereClause = {
+        ...whereClause,
+        categories: {
+          [Op.like]: `%${category}%`
+        }
+      };
+    }
+
+    // Filtro por precio
+    if (minPrice || maxPrice) {
+      whereClause.price = {};
+      if (minPrice) whereClause.price[Op.gte] = minPrice;
+      if (maxPrice) whereClause.price[Op.lte] = maxPrice;
+    }
+
+    // Búsqueda por nombre
+    if (search) {
+      whereClause = {
+        ...whereClause,
+        [Op.or]: [
+          { name: { [Op.like]: `%${search}%` } },
+          { description: { [Op.like]: `%${search}%` } }
+        ]
+      };
+    }
+
     const games = await Game.findAll({
-      where: { isPublished: true },
+      where: whereClause,
       include: [{
         model: User,
         as: 'developer',
         attributes: ['businessName']
+      }, {
+        model: Review,
+        attributes: ['rating'],
+        required: false
       }],
       attributes: [
         'id', 'name', 'description', 'price', 'categories',
         'operatingSystem', 'languages', 'players',
-        'averageRating', 'imagePath'
-      ]
+        'averageRating', 'imageData', 'imageType',
+        'createdAt', 'updatedAt'
+      ],
+      order: [[sortBy, order]]
     });
-    res.json(games);
+
+    const formattedGames = games.map(game => ({
+      ...game.toJSON(),
+      imageData: undefined, 
+      hasImage: !!game.imageData
+    }));
+
+    res.json(formattedGames);
   } catch (error) {
     res.status(500).json({ 
       message: 'Error obteniendo juegos', 
@@ -69,7 +122,12 @@ const getGameReviews = async (req, res) => {
       include: [{
         model: User,
         attributes: ['name', 'businessName']
-      }]
+      }],
+      order: [['createdAt', 'DESC']],
+      attributes: [
+        'id', 'rating', 'content', 'createdAt',
+        'updatedAt'
+      ]
     });
     res.json(reviews);
   } catch (error) {
@@ -97,6 +155,18 @@ const updateReview = async (req, res) => {
     }
 
     await review.update({ rating, content });
+    
+    // Recalcular promedio
+    const gameReviews = await Review.findAll({
+      where: { gameId: review.gameId }
+    });
+    
+    const averageRating = gameReviews.reduce((acc, rev) => acc + rev.rating, 0) / gameReviews.length;
+    await Game.update(
+      { averageRating }, 
+      { where: { id: review.gameId } }
+    );
+
     res.json({ message: 'Reseña actualizada exitosamente', review });
   } catch (error) {
     res.status(500).json({ 
@@ -111,17 +181,31 @@ const deleteReview = async (req, res) => {
     const { reviewId } = req.params;
     const userId = req.user.userId;
 
-    const deleted = await Review.destroy({
+    const review = await Review.findOne({
       where: { id: reviewId, userId }
     });
 
-    if (deleted) {
-      res.json({ message: 'Reseña eliminada exitosamente' });
-    } else {
-      res.status(404).json({ 
-        message: 'Reseña no encontrada o no tienes permiso para eliminarla' 
+    if (!review) {
+      return res.status(404).json({
+        message: 'Reseña no encontrada o no tienes permiso para eliminarla'
       });
     }
+
+    const gameId = review.gameId;
+    await review.destroy();
+
+    // Recalcular promedio después de eliminar
+    const remainingReviews = await Review.findAll({
+      where: { gameId }
+    });
+
+    const averageRating = remainingReviews.length > 0 
+      ? remainingReviews.reduce((acc, rev) => acc + rev.rating, 0) / remainingReviews.length
+      : 0;
+
+    await Game.update({ averageRating }, { where: { id: gameId } });
+
+    res.json({ message: 'Reseña eliminada exitosamente' });
   } catch (error) {
     res.status(500).json({ 
       message: 'Error eliminando reseña', 
@@ -130,10 +214,47 @@ const deleteReview = async (req, res) => {
   }
 };
 
+const getGameById = async (req, res) => {
+    try {
+        const { gameId } = req.params;
+        const game = await Game.findOne({
+            where: { id: gameId },
+            include: [{
+                model: User,
+                as: 'developer',
+                attributes: ['businessName']
+            }],
+            attributes: [
+                'id', 'name', 'description', 'price', 'categories',
+                'operatingSystem', 'languages', 'players',
+                'averageRating', 'imageType',
+                'createdAt', 'updatedAt'
+            ]
+        });
+
+        if (!game) {
+            return res.status(404).json({ message: 'Juego no encontrado' });
+        }
+
+        const gameResponse = {
+            ...game.toJSON(),
+            imageData: undefined
+        };
+
+        res.json(gameResponse);
+    } catch (error) {
+        res.status(500).json({ 
+            message: 'Error obteniendo detalles del juego', 
+            error: error.message 
+        });
+    }
+};
+
 module.exports = {
   getAllGames,
   createReview,
   getGameReviews,
   updateReview,
-  deleteReview
+  deleteReview,
+  getGameById
 };
