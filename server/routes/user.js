@@ -12,8 +12,8 @@ const {
     addToCartFromWishlist
 } = require('../controllers/userController');
 
-router.get('/profile/individual/:individualId', authenticateToken, getUserProfile);
-router.get('/profile/business/:businessId', authenticateToken, getBusinessProfile);
+router.get('/profile', authenticateToken, getUserProfile);
+router.get('/profile/business', authenticateToken, getBusinessProfile);
 router.put('/profile/:userId', authenticateToken, updateUserProfile);
 router.post('/wishlist/:userId', authenticateToken, addToWishlist);
 router.delete('/wishlist/:userId/:gameId', authenticateToken, removeFromWishlist);
