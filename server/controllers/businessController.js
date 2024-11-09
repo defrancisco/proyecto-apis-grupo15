@@ -31,7 +31,13 @@ const createGame = async (req, res) => {
     const categories = JSON.parse(req.body.categories);
     const languages = JSON.parse(req.body.languages);
 
-    const imagePath = req.file ? req.file.path : null;
+    let imageData = null;
+    let imageType = null;
+    
+    if (req.file) {
+      imageData = req.file.buffer;
+      imageType = req.file.mimetype;
+    }
 
     const game = await Game.create({
       name,
@@ -44,12 +50,18 @@ const createGame = async (req, res) => {
       minRequirements,
       recommendedRequirements,
       developerId,
-      imagePath
+      imageData,
+      imageType
     });
+
+    const gameResponse = {
+      ...game.toJSON(),
+      imageData: undefined
+    };
 
     res.status(201).json({ 
       message: 'Game created successfully', 
-      game 
+      game: gameResponse 
     });
   } catch (error) {
     res.status(500).json({ 

@@ -111,8 +111,12 @@ const Game = sequelize.define('Game', {
     allowNull: false,
     defaultValue: false
   },
-  imagePath: {
-    type: DataTypes.STRING,
+  imageData: {
+    type: DataTypes.BLOB('long'),
+    allowNull: true
+  },
+  imageType: {
+    type: DataTypes.STRING(50),
     allowNull: true
   }
 }, {
