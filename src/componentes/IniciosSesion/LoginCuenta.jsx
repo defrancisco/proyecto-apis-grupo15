@@ -85,13 +85,13 @@ export const LoginCuenta = () => {
             const data = await response.json();
 
             if (response.ok) {
+                // Guardar token y tipo de usuario
                 localStorage.setItem('token', data.token);
-                localStorage.setItem('userType', data.userType);
                 
-                // Usar la función login del contexto
+                // Usar la función login del contexto con el tipo de usuario correcto
                 login(data.userType);
                 
-                // La redirección ahora la maneja el contexto de autenticación
+                // La redirección se maneja automáticamente en el AuthContext
             } else {
                 alert('Credenciales inválidas');
             }

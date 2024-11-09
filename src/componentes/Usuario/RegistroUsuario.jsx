@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/form.css';
 import { formValidation } from '../IniciosSesion/formValidation';
 
 export const RegistroUsuario = () => {
+    const navigate = useNavigate();
     const [form, setForm] = useState({
         mail: '',
         nombre: '',
@@ -13,6 +15,7 @@ export const RegistroUsuario = () => {
     });
 
     const [passwordMismatch, setPasswordMismatch] = useState(false);
+    const [error, setError] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -30,22 +33,61 @@ export const RegistroUsuario = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (passwordMismatch) return; // No envía el formulario si hay error de contraseña
-        console.log('Formulario enviado:', form);
+        if (passwordMismatch) {
+            setError('Las contraseñas no coinciden');
+            return;
+        }
+
+        // Validar campos requeridos
+        if (!form.mail || !form.nombre || !form.apellido || !form.fechaNacimiento || !form.contrasena) {
+            setError('Todos los campos son obligatorios');
+            return;
+        }
+        
+        try {
+            const userData = {
+                email: form.mail,
+                name: form.nombre,
+                surname: form.apellido,
+                dateOfBirth: form.fechaNacimiento,
+                password: form.contrasena,
+                userType: 'individual'
+            };
+
+            console.log('Enviando datos:', userData);
+
+            const response = await fetch('http://localhost:3000/api/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            });
+
+            const data = await response.json();
+            console.log('Respuesta del servidor:', data);
+
+            if (response.ok) {
+                localStorage.setItem('userType', 'individual');
+                alert('Usuario registrado exitosamente');
+                navigate('/iniciarSesion/loginCuenta');
+            } else {
+                throw new Error(data.message || 'Error al registrar usuario');
+            }
+        } catch (error) {
+            console.error('Error completo:', error);
+            setError(error.message || 'Error de conexión con el servidor');
+        }
     };
     
-    document.addEventListener('DOMContentLoaded', () => {
-        formValidation(); // Invoca la función
-    });
-    
-
     return (
         <>
             <main>
                 <div className="form">
                     <h2>Registro de Usuario</h2>
+                    {error && <div className="error-message">{error}</div>}
                     <form onSubmit={handleSubmit} noValidate>
                         <div className="form-group">
                             <label htmlFor="mail" className="form-label">Mail</label>
@@ -78,9 +120,6 @@ export const RegistroUsuario = () => {
                                 onChange={handleChange} 
                                 required 
                             />
-                            <div className="invalid-tooltip">
-                                {passwordMismatch ? 'Las contraseñas no coinciden.' : 'Por favor, confirma tu contraseña.'}
-                            </div>
                         </div>
                         <div className="form-group">
                             <button className="submit-btn" type="submit">Registrarse</button>

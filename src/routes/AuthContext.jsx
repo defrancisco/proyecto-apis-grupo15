@@ -34,6 +34,7 @@ export const AuthProvider = ({ children }) => {
             userType
         });
         
+        // Redirigir según el tipo de usuario
         if (userType === 'business') {
             navigate('/businessTab');
         } else if (userType === 'individual') {

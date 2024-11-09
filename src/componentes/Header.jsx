@@ -9,6 +9,33 @@ import { useAuth } from '../routes/AuthContext';
 function Header() {
     const { auth, logout } = useAuth();
 
+    const renderNavLinks = () => {
+        // Enlaces básicos que siempre se muestran
+        const basicLinks = [
+            { to: "/prePagina", text: "Inicio" },
+            { to: "/catalogo", text: "Catálogo" },
+            { to: "/quienesSomos", text: "Quienes somos" }
+        ];
+
+        // Enlaces adicionales para usuarios individuales
+        const individualLinks = [
+            { to: auth.isAuthenticated ? "/wishlist" : "/iniciarSesion/loginCuenta", text: "Wishlist" },
+            { to: "/consolas", text: "Consolas" },
+            { to: "/ayuda", text: "Ayuda" }
+        ];
+
+        // Determinar qué enlaces mostrar
+        const linksToShow = auth.userType === 'business' ? basicLinks : [...basicLinks, ...individualLinks];
+
+        return (
+            <ul>
+                {linksToShow.map((link, index) => (
+                    <li key={index}><Link to={link.to}>{link.text}</Link></li>
+                ))}
+            </ul>
+        );
+    };
+
     return (
         <header>
             <div className="header-container">
@@ -18,14 +45,7 @@ function Header() {
                     </Link>
 
                     <nav>
-                        <ul>
-                            <li><Link to="/prePagina">Inicio</Link></li>
-                            <li><Link to="/catalogo">Catálogo</Link></li>
-                            <li><Link to={auth.isAuthenticated ? "/wishlist" : "/iniciarSesion/loginCuenta"}>Wishlist</Link></li>
-                            <li><Link to="/consolas">Consolas</Link></li>
-                            <li><Link to="/quienesSomos">Quienes somos</Link></li>
-                            <li><Link to="/ayuda">Ayuda</Link></li>
-                        </ul>
+                        {renderNavLinks()}
                     </nav>
                 </div>
 
