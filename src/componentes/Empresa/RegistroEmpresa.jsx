@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import '../../styles/form.css';
 import { formValidation } from "../IniciosSesion/formValidation";
+import { useNavigate } from 'react-router-dom';
 
 const RegistroEmpresa = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,8 @@ const RegistroEmpresa = () => {
     nombre: '',
     contrasena: ''
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     formValidation();
@@ -21,9 +24,41 @@ const RegistroEmpresa = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Datos del formulario:", formData);
+    
+    try {
+      const userData = {
+        email: formData.mail,
+        password: formData.contrasena,
+        userType: 'business',
+        businessName: formData.nombre
+      };
+
+      console.log('Enviando datos:', userData);
+
+      const response = await fetch('http://localhost:3000/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      });
+
+      const data = await response.json();
+      console.log('Respuesta del servidor:', data);
+
+      if (response.ok) {
+        localStorage.setItem('userType', 'business');
+        alert('Empresa registrada exitosamente');
+        navigate('/iniciarSesion/loginCuenta');
+      } else {
+        throw new Error(data.message || 'Error al registrar empresa');
+      }
+    } catch (error) {
+      console.error('Error completo:', error);
+      alert(error.message || 'Error de conexión con el servidor');
+    }
   };
   
   return (
