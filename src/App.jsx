@@ -12,7 +12,6 @@ import Login from "./componentes/Login.jsx";
 import LoginCuenta  from "./componentes/IniciosSesion/LoginCuenta.jsx";
 import Catalogo from "./componentes/Compras/Catalogo.jsx";
 import Carrito from "./componentes/Compras/Carrito.jsx";
-import Reseña from "./componentes/Compras/Reseña.jsx";
 import Checkout from "./componentes/Compras/Checkout.jsx";
 import Juego from "./componentes/Compras/Juego.jsx";
 
@@ -46,6 +45,8 @@ const router = createBrowserRouter([
         errorElement: <NotFound />,
         children: [
             { path: "prePagina", element: <PrePagina /> },
+
+            // Header y Footer ~ reutilizamos :)
             { path: "quienesSomos", element: <QuienesSomos /> },
             { path: "ayuda", element: <Ayuda /> },
             { path: "consolas", element: <Consolas /> },
@@ -57,11 +58,19 @@ const router = createBrowserRouter([
                     { path: "carrito/checkout", element: <Checkout /> },
                 ]
             },
+
+            // Iniciar Sesión
             { path: "iniciarSesion", element: <Login /> },
+
+            // Opción 1: Ya tengo cuenta entonces inicio sesión
             { path: "iniciarSesion/:loginCuenta", element: <LoginCuenta />},
+
+            // Opción 2: No tengo cuenta entonces creo una dependiendo de mi rol
             { path: "iniciarSesion/registroUsuario", element: <RegistroUsuario /> },
             { path: "iniciarSesion/registroEmpresa", element: <RegistroEmpresa /> },
             
+
+            // Perfil de Usuario/Cliente
             { 
                 path: "userTab", 
                 element: (
@@ -71,6 +80,7 @@ const router = createBrowserRouter([
                 ),
             },
             
+            // Perfil de Empresa
             { 
                 path: "businessTab", 
                 element: (
