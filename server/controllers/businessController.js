@@ -231,11 +231,50 @@ const publishGame = async (req, res) => {
   }
 };
 
+const getBusinessGames = async (req, res) => {
+  try {
+    console.log('Usuario autenticado:', req.user); // Para depuración
+    const developerId = req.user.userId;
+
+    const games = await Game.findAll({
+      where: { developerId },
+      attributes: [
+        'id', 
+        'name',
+        'price',
+        'isPublished',
+        'imageType',
+        'imageData',
+        'createdAt',
+        'updatedAt'
+      ],
+      order: [['createdAt', 'DESC']]
+    });
+
+    console.log('Juegos encontrados:', games.length); // Para depuración
+    
+    const formattedGames = games.map(game => ({
+      ...game.toJSON(),
+      imageData: undefined,
+      hasImage: !!game.imageData
+    }));
+
+    res.json(formattedGames);
+  } catch (error) {
+    console.error('Error en getBusinessGames:', error);
+    res.status(500).json({ 
+      message: 'Error obteniendo juegos de la empresa', 
+      error: error.message 
+    });
+  }
+};
+
 module.exports = {
   createGame,
   updateGame,
   deleteGame,
   getGameAnalytics,
   unpublishGame,
-  publishGame
+  publishGame,
+  getBusinessGames
 };

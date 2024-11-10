@@ -15,6 +15,7 @@ function BusinessTab() {
     newPassword: '',
     confirmPassword: ''
   });
+  const [games, setGames] = useState([]);
 
   useEffect(() => {
     const sectionId = window.location.hash.substring(1);
@@ -47,6 +48,37 @@ function BusinessTab() {
 
     fetchProfileData();
   }, []);
+
+  useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        
+        const response = await fetch('http://localhost:3000/api/business/games', {
+          method: 'GET',
+          mode: 'cors',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Error al obtener los juegos');
+        }
+        
+        const data = await response.json();
+        setGames(data);
+      } catch (error) {
+        console.error('Error al cargar los juegos:', error);
+      }
+    };
+
+    if (activeSection === 'misJuegos') {
+      fetchGames();
+    }
+  }, [activeSection]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -282,23 +314,33 @@ function BusinessTab() {
             <button>
               <Link to="/businessTab/creacionVideojuego">Crear Juego</Link>
             </button>
-            <ul className="game-list">
-              <li>
-                <h3>Nombre del Juego</h3>
-                <button onClick={() => handleDeleteOrArchive("despublicar")}>Despublicar</button>
-                <button onClick={() => handleDeleteOrArchive("eliminar")}>Eliminar</button>
-              </li>
-              <li>
-                <h3>Nombre del Juego</h3>
-                <button onClick={() => handleDeleteOrArchive("despublicar")}>Despublicar</button>
-                <button onClick={() => handleDeleteOrArchive("eliminar")}>Eliminar</button>
-              </li>
-              <li>
-                <h3>Nombre del Juego</h3>
-                <button onClick={() => handleDeleteOrArchive("despublicar")}>Despublicar</button>
-                <button onClick={() => handleDeleteOrArchive("eliminar")}>Eliminar</button>
-              </li>
-            </ul>
+            <div className="games-list">
+              {games.map(game => (
+                <div key={game.id} className="game-item">
+                  <div className="game-info">
+                    <img 
+                      src={`http://localhost:3000/api/games/${game.id}/image`} 
+                      alt={game.name}
+                      style={{width: '100px', height: '100px', objectFit: 'cover'}}
+                    />
+                    <h3>{game.name}</h3>
+                    <p>Precio: ${game.price}</p>
+                    <p>Estado: {game.isPublished ? 'Publicado' : 'No publicado'}</p>
+                  </div>
+                  <div className="game-actions">
+                    <Link to={`/businessTab/modificacionJuego/${game.id}`}>
+                      <button>Editar</button>
+                    </Link>
+                    <button onClick={() => handleDeleteOrArchive(game.isPublished ? "despublicar" : "publicar", game.id)}>
+                      {game.isPublished ? 'Despublicar' : 'Publicar'}
+                    </button>
+                    <button onClick={() => handleDeleteOrArchive("eliminar", game.id)}>
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

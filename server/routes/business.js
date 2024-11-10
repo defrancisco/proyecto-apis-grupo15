@@ -9,7 +9,8 @@ const {
   deleteGame,
   getGameAnalytics,
   unpublishGame,
-  publishGame
+  publishGame,
+  getBusinessGames
 } = require('../controllers/businessController');
 
 // Todas las rutas requieren autenticación y ser usuario empresa
@@ -17,6 +18,7 @@ router.use(authenticateToken);
 router.use(isBusinessUser);
 
 // Rutas para gestión de juegos
+router.get('/games', getBusinessGames);
 router.post('/games', upload.single('imagen'), createGame);
 router.put('/games/:gameId', upload.single('imagen'), updateGame);
 router.delete('/games/:gameId', deleteGame);
