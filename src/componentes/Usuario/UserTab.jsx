@@ -189,21 +189,53 @@ function UserTab() {
 
   const handleAddToCart = async (gameId) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/users/wishlist/${gameId}/cart`, {
-        method: 'POST',
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('Debes iniciar sesión para agregar juegos al carrito');
+            return;
+        }
+
+        const response = await fetch('http://localhost:3000/api/cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ 
+                gameId: gameId,
+                quantity: 1
+            })
+        });
+
+        if (response.ok) {
+            alert('Juego agregado al carrito exitosamente');
+            // Opcional: Actualizar la wishlist después de agregar al carrito
+            const updatedWishlist = wishlist.filter(game => game.id !== gameId);
+            setWishlist(updatedWishlist);
+        } else {
+            const data = await response.json();
+            throw new Error(data.message || 'Error al agregar al carrito');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error al agregar al carrito: ' + error.message);
+    }
+};
+
+  const reloadWishlist = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/users/wishlist', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-
+      
       if (response.ok) {
-        alert('Juego agregado al carrito exitosamente');
-      } else {
-        throw new Error('Error al agregar al carrito');
+        const data = await response.json();
+        setWishlist(data.wishlist);
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('Error al agregar al carrito: ' + error.message);
+      console.error('Error al recargar la wishlist:', error);
     }
   };
 

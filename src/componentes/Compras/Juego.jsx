@@ -54,6 +54,38 @@ function Juego() {
         }
     };
 
+    const handleAddToCart = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Debes iniciar sesión para agregar juegos al carrito');
+                return;
+            }
+
+            const response = await fetch('http://localhost:3000/api/cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ 
+                    gameId: game.id,
+                    quantity: 1
+                })
+            });
+
+            if (response.ok) {
+                alert('Juego agregado al carrito exitosamente');
+            } else {
+                const data = await response.json();
+                throw new Error(data.message || 'Error al agregar al carrito');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert(error.message);
+        }
+    };
+
     if (loading) {
         return <p>Cargando...</p>;
     }
@@ -77,7 +109,13 @@ function Juego() {
 
 
                         <div className="button-group">
-                            <button type="button" className="btn primary-btn">Agregar al carrito</button>
+                            <button 
+                                type="button" 
+                                className="btn primary-btn"
+                                onClick={handleAddToCart}
+                            >
+                                Agregar al carrito
+                            </button>
                             <button 
                                 type="button" 
                                 className="btn secondary-btn"

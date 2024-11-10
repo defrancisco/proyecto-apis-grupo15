@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const Game = require('./game');
 
 const Cart = sequelize.define('Cart', {
   id: {
@@ -37,7 +38,7 @@ const Cart = sequelize.define('Cart', {
   },
   addedAt: {
     type: DataTypes.DATE,
-    defaultValue: sequelize.literal('GETDATE()')
+    defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
   }
 }, {
   tableName: 'Carts',
@@ -45,12 +46,15 @@ const Cart = sequelize.define('Cart', {
   timestamps: false
 });
 
+// Definir las asociaciones
+Cart.belongsTo(Game, { 
+  foreignKey: 'gameId',
+  as: 'Game'
+});
+
 Cart.associate = (models) => {
   Cart.belongsTo(models.User, {
     foreignKey: 'userId'
-  });
-  Cart.belongsTo(models.Game, {
-    foreignKey: 'gameId'
   });
 };
 
