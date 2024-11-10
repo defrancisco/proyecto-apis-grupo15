@@ -2,168 +2,392 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/userTab.css';
 
+function UserTab() {
+  const navigate = useNavigate();
+  const [activeSection, setActiveSection] = useState('perfil');
+  const [profileData, setProfileData] = useState({
+    email: '',
+    name: '',
+    lastName: '',
+    birthDate: ''
+  });
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
+  const [wishlist, setWishlist] = useState([]);
 
-
-// Componente Sidebar
-const Sidebar = ({ showSection }) => {
-  const navigate = useNavigate();  // Hook para la redirección
-  const handleLogout = () => {
-    // Acá limpio los datos de sesión si es necesario
-    navigate('/PrePagina');  // Redirige a la página de preinicio
-  };
-
-  return (
-    <div className="sidebar"> 
-      <h2>Mi Cuenta</h2> 
-      {/* Botones que permiten cambiar la sección activa mediante la función showSection */}
-      <button onClick={() => showSection('perfil')}>Perfil</button>
-      <button onClick={() => showSection('autenticacion')}>Autenticación</button>
-      <button onClick={() => showSection('wishlist')}>My Wishlist</button>
-      <button onClick={() => showSection('mediosPago')}>Medios de Pago</button>
-      <button onClick={handleLogout}>Salir</button> {/* Botón de salir con redirección */}
-    </div>
-  );
-};
-
-// Componente Perfil
-const Perfil = () => {
-  return (
-    <div className="section"> {/* Contenedor de la sección de perfil */}
-      <h2>Mis Datos</h2> {/* Título de la sección de datos */}
-      <form>
-        {/* Campos para actualizar datos del usuario */}
-        <label htmlFor="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Nombre Actual" required /><br />
-
-        <label htmlFor="apellido">Apellido:</label>
-        <input type="text" id="apellido" name="apellido" placeholder="Apellido Actual" required /><br />
-
-        <label htmlFor="mail">Mail:</label>
-        <input type="email" id="mail" name="mail" placeholder="ejemplo@correo.com" required /><br />
-
-        <label htmlFor="fecha_nacimiento">Fecha de nacimiento:</label>
-        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required /><br />
-
-        <button type="submit">Actualizar Datos</button> {/* Botón para enviar el formulario */}
-      </form>
-    </div>
-  );
-};
-
-// Componente Autenticación
-const Autenticacion = () => {
-  return (
-    <div className="section"> {/* Contenedor de la sección de autenticación */}
-      <h2>Cambio de Contraseña</h2> {/* Título de la sección */}
-      <form>
-        {/* Campos para cambio de contraseña */}
-        <label htmlFor="password_actual">Contraseña Actual:</label>
-        <input type="password" id="password_actual" name="password_actual" required /><br />
-
-        <label htmlFor="nueva_password">Nueva Contraseña:</label>
-        <input type="password" id="nueva_password" name="nueva_password" required /><br />
-
-        <label htmlFor="repetir_nueva_password">Repetir Nueva Contraseña:</label>
-        <input type="password" id="repetir_nueva_password" name="repetir_nueva_password" required /><br />
-
-        <button type="submit">Confirmar Contraseña</button> {/* Botón para enviar el formulario */}
-      </form>
-    </div>
-  );
-};
-
-// Componente Wishlist
-const Wishlist = () => {
-  return (
-    <div className="section"> {/* Contenedor de la sección de wishlist */}
-      <h2>My Wishlist</h2> {/* Título de la sección */}
-      {/* Ejemplo de items en la wishlist */}
-      <div className="wishlist-item">
-        <img src="ruta/juego1.jpg" alt="Juego 1" /> {/* Imagen del juego */}
-        <div>
-          <p>Nombre Del Juego 1</p> {/* Nombre del juego */}
-          <p>Precio: $59.99</p> {/* Precio del juego */}
-          <button>Agregar al carrito</button> {/* Botón para agregar al carrito */}
-        </div>
-      </div>
-      {/* Repetir para otros juegos en la wishlist */}
-      <div className="wishlist-item">
-        <img src="ruta/juego2.jpg" alt="Juego 2" />
-        <div>
-          <p>Nombre Del Juego 2</p>
-          <p>Precio: $49.99</p>
-          <button>Agregar al carrito</button>
-        </div>
-      </div>
-      <div className="wishlist-item">
-        <img src="ruta/juego3.jpg" alt="Juego 3" />
-        <div>
-          <p>Nombre Del Juego 3</p>
-          <p>Precio: $39.99</p>
-          <button>Agregar al carrito</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Componente MediosPago
-const MediosPago = () => {
-  return (
-    <div className="section"> {/* Contenedor de la sección de métodos de pago */}
-      <h2>Métodos de Pago</h2> {/* Título de la sección */}
-      <form>
-        {/* Campos para ingresar detalles de la tarjeta */}
-        <label htmlFor="card-number">Número de Tarjeta:</label>
-        <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" required /><br />
-
-        <label htmlFor="cardholder-name">Nombre del Titular:</label>
-        <input type="text" id="cardholder-name" name="cardholder-name" placeholder="Nombre Apellido" required /><br />
-
-        <label htmlFor="expiry-date">Fecha de vencimiento:</label>
-        <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required /><br />
-
-        <label htmlFor="security-code">Código de Seguridad:</label>
-        <input type="password" id="security-code" name="security-code" placeholder="123" required /><br />
-
-        <button type="submit">Actualizar datos</button> {/* Botón para enviar el formulario */}
-      </form>
-    </div>
-  );
-};
-
-// Componente principal UserTab
-const UserTab = () => {
-  const [section, setSection] = useState('perfil'); // Estado para la sección activa, comenzamos con 'perfil'
-
-  // Función para cambiar la sección activa
-  const showSection = (section) => {
-    setSection(section); // Actualiza el estado a la sección seleccionada
-  };
-
-  // useEffect para leer el hash de la URL al cargar el componente
   useEffect(() => {
-    const hash = window.location.hash.substring(1); // Remueve el '#' del hash de la URL
-    if (hash) {
-      setSection(hash); // Cambia la sección si hay un hash en la URL
+    const sectionId = window.location.hash.substring(1);
+    if (sectionId) {
+      setActiveSection(sectionId);
     }
   }, []);
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/users/profile', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Datos recibidos:', data);
+          setProfileData({
+            email: data.email,
+            name: data.name,
+            lastName: data.surname,
+            birthDate: data.dateOfBirth || ''
+          });
+        }
+      } catch (error) {
+        console.error('Error al cargar los datos del usuario:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/users/wishlist', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          setWishlist(data.wishlist);
+        }
+      } catch (error) {
+        console.error('Error al cargar la wishlist:', error);
+      }
+    };
+
+    if (activeSection === 'wishlist') {
+      fetchWishlist();
+    }
+  }, [activeSection]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProfileData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setPasswordData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleUpdateProfile = async () => {
+    try {
+      const userData = {
+        email: profileData.email,
+        name: profileData.name,
+        surname: profileData.lastName,
+        dateOfBirth: profileData.birthDate
+      };
+
+      console.log('Datos a enviar:', userData);
+
+      const response = await fetch('http://localhost:3000/api/users/profile/individual', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(userData)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error al actualizar el perfil');
+      }
+
+      alert('Perfil actualizado exitosamente');
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al actualizar el perfil: ' + error.message);
+    }
+  };
+
+  const handleUpdatePassword = async () => {
+    try {
+      if (passwordData.newPassword !== passwordData.confirmPassword) {
+        alert('Las contraseñas nuevas no coinciden');
+        return;
+      }
+
+      const response = await fetch('http://localhost:3000/api/users/profile/password', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          currentPassword: passwordData.currentPassword,
+          newPassword: passwordData.newPassword
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error al cambiar la contraseña');
+      }
+
+      alert('Contraseña actualizada exitosamente');
+      setPasswordData({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al cambiar la contraseña: ' + error.message);
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/prePagina');
+  };
+
+  const showSection = (section) => {
+    setActiveSection(section);
+    window.location.hash = section;
+  };
+
+  const handleAddToCart = async (gameId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/users/wishlist/${gameId}/cart`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      if (response.ok) {
+        alert('Juego agregado al carrito exitosamente');
+      } else {
+        throw new Error('Error al agregar al carrito');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al agregar al carrito: ' + error.message);
+    }
+  };
+
   return (
-    <div>
-      <main>
-        <Sidebar showSection={showSection} /> {/* Renderiza la barra lateral y le pasa la función para cambiar de sección */}
-        <div className="content">
-          {/* Renderiza la sección activa basada en el estado */}
-          {section === 'perfil' && <Perfil />} 
-          {section === 'autenticacion' && <Autenticacion />} 
-          {section === 'wishlist' && <Wishlist />} 
-          {section === 'mediosPago' && <MediosPago />} 
+    <div className="business-tab-container">
+      <div className="sidebar">
+        <h2>Mi Cuenta</h2>
+        <nav className="sidebar-nav">
+          <button onClick={() => showSection('perfil')} 
+                  className={activeSection === 'perfil' ? 'active' : ''}>
+            Perfil
+          </button>
+          <button onClick={() => showSection('autenticacion')} 
+                  className={activeSection === 'autenticacion' ? 'active' : ''}>
+            Autenticación
+          </button>
+          <button onClick={() => showSection('wishlist')} 
+                  className={activeSection === 'wishlist' ? 'active' : ''}>
+            My Wishlist
+          </button>
+          <button onClick={() => showSection('mediosPago')} 
+                  className={activeSection === 'mediosPago' ? 'active' : ''}>
+            Medios de Pago
+          </button>
+          <button onClick={handleLogout}>Salir</button>
+        </nav>
+      </div>
+
+      <div className="main-content">
+        {/* Sección Perfil */}
+        <div className={`section ${activeSection === 'perfil' ? 'active' : ''}`}>
+          <div className="content-card">
+            <h2>Mis datos</h2>
+            <div className="form-container">
+              <div className="form-group">
+                <label>Nombre</label>
+                <input 
+                  type="text" 
+                  name="name"
+                  value={profileData.name}
+                  onChange={handleInputChange}
+                  className="form-input"
+                />
+              </div>
+              <div className="form-group">
+                <label>Apellido</label>
+                <input 
+                  type="text" 
+                  name="lastName"
+                  value={profileData.lastName}
+                  onChange={handleInputChange}
+                  className="form-input"
+                />
+              </div>
+              <div className="form-group">
+                <label>Email</label>
+                <input 
+                  type="email" 
+                  name="email"
+                  value={profileData.email}
+                  onChange={handleInputChange}
+                  className="form-input"
+                  disabled
+                />
+              </div>
+              <div className="form-group">
+                <label>Fecha de nacimiento</label>
+                <input 
+                  type="date" 
+                  name="birthDate"
+                  value={profileData.birthDate}
+                  onChange={handleInputChange}
+                  className="form-input"
+                />
+              </div>
+              <button className="action-button" onClick={handleUpdateProfile}>
+                Actualizar datos
+              </button>
+            </div>
+          </div>
         </div>
-      </main>
+
+        {/* Sección Autenticación */}
+        <div className={`section ${activeSection === 'autenticacion' ? 'active' : ''}`}>
+          <div className="content-card">
+            <h2>Cambio de Contraseña</h2>
+            <div className="form-container">
+              <div className="form-group">
+                <label>Contraseña Actual</label>
+                <input 
+                  type="password" 
+                  name="currentPassword"
+                  value={passwordData.currentPassword}
+                  onChange={handlePasswordChange}
+                  className="form-input"
+                />
+              </div>
+              <div className="form-group">
+                <label>Nueva Contraseña</label>
+                <input 
+                  type="password" 
+                  name="newPassword"
+                  value={passwordData.newPassword}
+                  onChange={handlePasswordChange}
+                  className="form-input"
+                />
+              </div>
+              <div className="form-group">
+                <label>Repetir Nueva Contraseña</label>
+                <input 
+                  type="password" 
+                  name="confirmPassword"
+                  value={passwordData.confirmPassword}
+                  onChange={handlePasswordChange}
+                  className="form-input"
+                />
+              </div>
+              <button className="action-button" onClick={handleUpdatePassword}>
+                Confirmar Contraseña
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Sección Wishlist */}
+        <div className={`section ${activeSection === 'wishlist' ? 'active' : ''}`}>
+          <div className="content-card">
+            <h2>My Wishlist</h2>
+            <div className="wishlist-container">
+              {wishlist.length === 0 ? (
+                <p>No hay juegos en tu wishlist</p>
+              ) : (
+                wishlist.map(game => (
+                  <div key={game.id} className="wishlist-item">
+                    <img src={game.imageUrl} alt={game.name} />
+                    <div className="game-info">
+                      <p className="game-name">{game.name}</p>
+                      <p className="game-price">Precio: ${game.price}</p>
+                      <button 
+                        className="cart-button"
+                        onClick={() => handleAddToCart(game.id)}
+                      >
+                        Agregar al carrito
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Sección MediosPago */}
+        <div className={`section ${activeSection === 'mediosPago' ? 'active' : ''}`}>
+          <div className="content-card">
+            <h2>Métodos de Pago</h2>
+            <div className="form-container">
+              <div className="form-group">
+                <label>Número de Tarjeta</label>
+                <input 
+                  type="text" 
+                  name="card-number"
+                  placeholder="1234 5678 9012 3456"
+                  className="form-input"
+                />
+              </div>
+              <div className="form-group">
+                <label>Nombre del Titular</label>
+                <input 
+                  type="text" 
+                  name="cardholder-name"
+                  placeholder="Nombre Apellido"
+                  className="form-input"
+                />
+              </div>
+              <div className="form-group">
+                <label>Fecha de vencimiento</label>
+                <input 
+                  type="text" 
+                  name="expiry-date"
+                  placeholder="MM/YY"
+                  className="form-input"
+                />
+              </div>
+              <div className="form-group">
+                <label>Código de Seguridad</label>
+                <input 
+                  type="password" 
+                  name="security-code"
+                  placeholder="123"
+                  className="form-input"
+                />
+              </div>
+              <button className="action-button">
+                Actualizar datos
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
+}
 
-// Exportamos el componente UserTab para poder utilizarlo en otras partes de la aplicación
 export default UserTab;
