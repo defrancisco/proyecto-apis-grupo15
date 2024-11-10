@@ -1,0 +1,231 @@
+{
+    "Perfil de Empresa": {
+      "Actualizar Datos de la Cuenta": {
+        "endpoint": "/users/{userId}/profile",
+        "metodo": "PUT",
+        "parametros": {
+          "firstName": "newNombre",
+          "lastName": "newApellido",
+          "email": "newemail@example.com",
+          "birthDate": "2000-01-01"
+        },
+        "códigos_de_retorno": {
+          "200": "OK: Actualización de Usuario exitosa.",
+          "400": "Bad Request: Datos de entrada inválidos.",
+          "401": "Unauthorized: Credenciales inválidas.",
+          "404": "Not Found: Usuario no encontrado.",
+          "500": "Internal Server Error"
+        }
+      },
+      "Análisis de VideoJuegos": {
+        "corrección": "Eliminar este endpoint, ya que el redireccionamiento debe ser manejado por el frontend."
+      },
+      "Mis Juegos": {
+        "Crear Juego": {
+          "endpoint": "/games",
+          "metodo": "POST",
+          "parametros": {
+            "name": "NombreJuego",
+            "category": "CategoríaJuego",
+            "description": "DescripcionVideojuego",
+            "minimumRequirements": "RequerimientosMinimos",
+            "recommendedRequirements": "RequerimientosRecomendados",
+            "price": "PrecioVideojuego"
+          },
+          "códigos_de_retorno": {
+            "200": "OK: Creación de juego exitosa.",
+            "400": "Bad Request: Datos de entrada inválidos.",
+            "409": "Conflict: El juego ya está registrado en el sistema.",
+            "500": "Internal Server Error"
+          }
+        },
+        "Modificar Juego": {
+          "endpoint": "/games/{gameId}",
+          "metodo": "PUT",
+          "parametros": {
+            "name": "NuevoNombreJuego",
+            "category": "NuevaCategoríaJuego",
+            "description": "NuevaDescripcionVideojuego",
+            "minimumRequirements": "NuevosRequerimientosMinimos",
+            "recommendedRequirements": "NuevosRequerimientosRecomendados",
+            "price": "NuevoPrecioVideojuego"
+          },
+          "códigos_de_retorno": {
+            "200": "OK: Modificación del juego exitosa.",
+            "400": "Bad Request: Datos de entrada inválidos.",
+            "409": "Conflict: El juego ya está registrado en el sistema.",
+            "500": "Internal Server Error"
+          }
+        },
+        "Despublicar Juego": {
+          "endpoint": "/games/{gameId}/unpublish",
+          "metodo": "PATCH",
+          "parametros": {
+            "published": false
+          },
+          "códigos_de_retorno": {
+            "200": "OK: Despublicación del juego exitosa.",
+            "400": "Not Found: Juego no encontrado.",
+            "500": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "Perfil del Usuario": {
+      "Actualizar Datos de la Cuenta": {
+        "endpoint": "/users/{userId}/profile",
+        "metodo": "PUT",
+        "parametros": {
+          "firstName": "newNombre",
+          "lastName": "newApellido",
+          "email": "newemail@example.com",
+          "birthDate": "2000-01-01"
+        },
+        "códigos_de_retorno": {
+          "200": "OK: Actualización de Usuario exitosa.",
+          "400": "Bad Request: Datos de entrada inválidos.",
+          "401": "Unauthorized: Credenciales inválidas.",
+          "404": "Not Found: Usuario no encontrado.",
+          "500": "Internal Server Error"
+        }
+      },
+      "Recuperar Contraseña": {
+        "endpoint": "/password-recovery",
+        "metodo": "POST",
+        "parametros": {
+          "email": "iopatich@uade.edu.ar"
+        },
+        "códigos_de_retorno": {
+          "200": "OK: Mail de recuperación enviado exitosamente.",
+          "404": "Not Found: Mail no registrado.",
+          "500": "Internal Server Error"
+        }
+      },
+      "Botón Reenviar Código": {
+        "endpoint": "/identity-verification/resend-code",
+        "metodo": "POST",
+        "parametros": "Ninguno",
+        "códigos_de_retorno": {
+          "200": "OK: Código reenviado exitosamente.",
+          "404": "Not Found: Mail no registrado.",
+          "500": "Internal Server Error"
+        }
+      },
+      "Botón Confirmar Código de Identidad": {
+        "endpoint": "/identity-verification",
+        "metodo": "POST",
+        "parametros": {
+          "verificationCode": "123456"
+        },
+        "códigos_de_retorno": {
+          "200": "OK: Código de identidad confirmado.",
+          "404": "Not Found: Usuario no registrado.",
+          "500": "Internal Server Error"
+        }
+      },
+      "Cambio de Contraseña": {
+        "endpoint": "/password-change",
+        "metodo": "POST",
+        "parametros": {
+          "newPassword": "contraseña77",
+          "confirmPassword": "contraseña77"
+        },
+        "códigos_de_retorno": {
+          "200": "OK: Contraseña cambiada exitosamente.",
+          "400": "Bad Request: La solicitud está malformada.",
+          "500": "Internal Server Error"
+        }
+      },
+      "Agregar o Actualizar el Método de Pago del Usuario": {
+        "endpoint": "/users/{userId}/payment-method",
+        "metodo": "PUT o PATCH",
+        "parametros": {
+          "cardNumber": "4111111111111111",
+          "cardHolderName": "Antonio Wu",
+          "expirationDate": "2025-01-01",
+          "securityCode": "123"
+        },
+        "códigos_de_retorno": {
+          "200": "OK: Método de pago agregado o actualizado.",
+          "400": "Bad Request: Datos inválidos.",
+          "401": "Unauthorized: Credenciales inválidas.",
+          "404": "Not Found: Usuario o método de pago no encontrado.",
+          "500": "Internal Server Error"
+        }
+      },
+      "Agregar al Carrito desde Wishlist": {
+        "endpoint": "/users/{userId}/wishlist/cart",
+        "metodo": "POST",
+        "parametros": "Ninguno",
+        "códigos_de_retorno": {
+          "200": "OK: Juego agregado al carrito.",
+          "400": "Bad Request: Datos inválidos.",
+          "401": "Unauthorized: Credenciales inválidas.",
+          "404": "Not Found: Usuario no encontrado.",
+          "500": "Internal Server Error"
+        }
+      },
+      "Eliminar Juego de la Wishlist": {
+        "endpoint": "/users/{userId}/wishlist/{gameId}",
+        "metodo": "DELETE",
+        "parametros": "Ninguno",
+        "códigos_de_retorno": {
+          "200": "OK: Juego eliminado de la wishlist.",
+          "400": "Bad Request: Datos inválidos.",
+          "401": "Unauthorized: Credenciales inválidas.",
+          "404": "Not Found: Usuario o juego no encontrado.",
+          "500": "Internal Server Error"
+        }
+      }
+    },
+    "Header": {
+      "Registrar cuenta cliente": {
+        "endpoint": "/customers",
+        "metodo": "POST",
+        "parametros": {
+          "firstName": "Ignacio",
+          "lastName": "Opatich",
+          "email": "iopatich@uade.edu.ar",
+          "birthDate": "2004-01-07",
+          "password": "contraseña1234",
+          "confirmPassword": "contraseña1234"
+        },
+        "códigos_de_retorno": {
+          "201": "Created: Usuario creado exitosamente.",
+          "400": "Bad Request: Datos incorrectos.",
+          "409": "Conflict: El email ya está registrado.",
+          "500": "Internal Server Error"
+        }
+      },
+      "Registrar cuenta empresarial": {
+        "endpoint": "/companies",
+        "metodo": "POST",
+        "parametros": {
+          "email": "defrancisco@uade.edu.ar",
+          "username": "UADE",
+          "password": "contraseña1234"
+        },
+        "códigos_de_retorno": {
+          "201": "Created: Empresa registrada exitosamente.",
+          "400": "Bad Request: Datos incorrectos.",
+          "409": "Conflict: El email ya está registrado.",
+          "500": "Internal Server Error"
+        }
+      },
+      "Ingreso usuarios": {
+        "endpoint": "/login",
+        "metodo": "POST",
+        "parametros": {
+          "email": "anwu@uade.edu.ar",
+          "password": "contraseña1234"
+        },
+        "códigos_de_retorno": {
+          "200": "OK: Inicio de sesión exitoso.",
+          "400": "Bad Request: Datos incorrectos.",
+          "401": "Unauthorized: Credenciales inválidas.",
+          "500": "Internal Server Error"
+        }
+      }
+    }
+  }
+  
