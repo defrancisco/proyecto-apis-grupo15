@@ -1,4 +1,3 @@
-/* Contenedor principal */
 .infojuego-container {
   padding: 20px;
   max-width: 1200px;
@@ -8,20 +7,26 @@
 /* Sección de contenido */
 .infojuego-content {
   display: flex;
-  gap: 20px;
-  margin-bottom: 30px;
+  align-items: center;
+  /* Centra verticalmente imagen y detalles */
+  gap: 60px;
+  /* Mayor separación entre la imagen y los detalles */
+  margin-bottom: 40px;
 }
 
 /* Estilos para la imagen del juego */
 .infojuego-image-section {
-  flex: 1;
+  flex: 0.5;
 }
 
-.image-placeholder {
-  background-color: #f0f0f0;
-  height: 300px;
+.infojuego-image-section img {
   width: 100%;
-  border: 1px solid #ddd;
+  max-width: 400px;
+  /* Tamaño máximo de la imagen */
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  /* Sombra para darle profundidad */
 }
 
 /* Sección de detalles del juego */
@@ -30,7 +35,8 @@
 }
 
 .game-title {
-  font-size: 24px;
+  font-size: 28px;
+  /* Texto más grande */
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -39,47 +45,29 @@
   display: inline-block;
   background-color: #4CAF50;
   color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 5px 12px;
+  border-radius: 15px;
   font-size: 14px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .price {
   color: #333;
-  font-size: 20px;
-  margin: 10px 0;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 15px 0;
 }
 
-.company-logo-placeholder {
-  background-color: #e0e0e0;
-  height: 50px;
-  width: 150px;
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
-}
-
-.quantity-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.quantity-input {
-  width: 60px;
-  padding: 5px;
-  font-size: 16px;
-  margin-bottom: 15px;
-}
-
-/* Estilos para botones */
 .button-group {
   display: flex;
-  gap: 10px;
+  gap: 15px;
+  /* Mayor separación entre botones */
   margin-bottom: 20px;
 }
 
 .btn {
-  padding: 10px 15px;
+  padding: 12px 18px;
+  /* Tamaño más grande para los botones */
   font-size: 16px;
   cursor: pointer;
   border: none;
@@ -87,21 +75,26 @@
 }
 
 .primary-btn {
-  background-color: #007bff;
+  background-color: #333;
   color: white;
 }
 
 .secondary-btn {
-  background-color: #6c757d;
+  background-color: #333;
   color: white;
 }
 
 /* Sección de descripción */
 .description-section {
   margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  /* Fondo más claro */
 }
 
-/* Estilos para la sección de reseñas */
+
 .reviews-section {
   margin-top: 30px;
 }
@@ -113,17 +106,20 @@
   border-radius: 5px;
 }
 
-/* Estilos para el botón de crear reseña */
 .create-review-btn {
   display: block;
-    width: 200px; /* Reduce el ancho del botón */
-    padding: 10px;
-    background-color: #dc3545;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 20px auto; /* Centra el botón horizontalmente */
-    text-align: center;
+  width: 200px;
+  padding: 10px;
+  background-color: #e2172b;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.create-review-btn:hover {
+  background-color: #a02632;
 }

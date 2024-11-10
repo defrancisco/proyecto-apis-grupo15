@@ -60,6 +60,7 @@ const getAllGames = async (req, res) => {
         'id', 'name', 'description', 'price', 'categories',
         'operatingSystem', 'languages', 'players',
         'averageRating', 'imageData', 'imageType',
+        'minRequirements', 'recommendedRequirements',
         'createdAt', 'updatedAt'
       ],
       order: [[sortBy, order]]
@@ -228,6 +229,7 @@ const getGameById = async (req, res) => {
                 'id', 'name', 'description', 'price', 'categories',
                 'operatingSystem', 'languages', 'players',
                 'averageRating', 'imageType',
+                'minRequirements', 'recommendedRequirements',
                 'createdAt', 'updatedAt'
             ]
         });

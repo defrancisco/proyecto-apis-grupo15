@@ -1,26 +1,53 @@
-import React from 'react'
-import Header from '../Header'
-import Footer from '../Footer'
+import React, { useEffect, useState } from 'react'
 import '../../styles/infojuegos.css';
+import { useParams } from 'react-router-dom';
 
 function Juego() {
+    const { id } = useParams();
+    const [game, setGame] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetch(`http://localhost:3000/api/games/${id}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Game not found');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+                setGame(data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error(error);
+                setGame(null);
+                setLoading(false);
+            });
+    }, [id]);
+
+    if (loading) {
+        return <p>Cargando...</p>;
+    }
+
+    if (!game) {
+        return <p>Juego no encontrado</p>;
+    }
+
+
     return (
         <div>
-            <Header />
             <div className="infojuego-container">
                 <div className="infojuego-content">
                     <div className="infojuego-image-section">
-                        <div className="image-placeholder"></div>
+                    <img src={`http://localhost:3000/api/games/${game.id}/image`} alt={game.name} />
                     </div>
                     <div className="infojuego-details-section">
-                        <h2 className="game-title">NOMBRE DEL JUEGO</h2>
-                        <span className="category-label">Categoría</span>
-                        <h3 className="price">$PRECIO</h3>
+                        <h2 className="game-title">{game.name}</h2>
+                        <span className="category-label">{game.categories}</span>
+                        <h3 className="price">${game.price}</h3>
 
-                        <div className="company-logo-placeholder"></div>
-
-                        <label htmlFor="quantity" className="quantity-label">Cantidad</label>
-                        <input type="number" min="1" defaultValue="1" className="quantity-input" id="quantity" />
 
                         <div className="button-group">
                             <button type="button" className="btn primary-btn">Agregar al carrito</button>
@@ -29,11 +56,11 @@ function Juego() {
 
                         <div className="description-section">
                             <h4>Descripción</h4>
-                            <p>Descripción del videojuego text</p>
+                            <p>{game.description}</p>
                             <h5>Requisitos mínimos del sistema</h5>
-                            <p>Text</p>
+                            <p>{game.minRequirements}</p>
                             <h5>Requisitos recomendados del sistema</h5>
-                            <p>Text</p>
+                            <p>{game.recommendedRequirements}</p>
                         </div>
                     </div>
                 </div>
@@ -59,9 +86,8 @@ function Juego() {
 
                 <button type="button" className="btn create-review-btn">Crear Reseña</button>
             </div>
-            <Footer />
         </div>
     )
 }
 
-export default Juego
+export default Juego;
