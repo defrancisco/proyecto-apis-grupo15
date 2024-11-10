@@ -7,7 +7,7 @@ const NotFound = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             navigate('/prePagina'); // Redirige a prePagina después de 5 segundos
-        }, 3000);
+        }, 2000);
 
         return () => clearTimeout(timer); // Limpia el timer si el componente se desmonta
     }, [navigate]);
