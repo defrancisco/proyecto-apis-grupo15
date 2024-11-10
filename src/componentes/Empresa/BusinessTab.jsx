@@ -10,6 +10,11 @@ function BusinessTab() {
     email: '',
     businessName: ''
   });
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
 
   useEffect(() => {
     const sectionId = window.location.hash.substring(1);
@@ -107,6 +112,49 @@ function BusinessTab() {
     }
   };
 
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setPasswordData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleUpdatePassword = async () => {
+    try {
+      if (passwordData.newPassword !== passwordData.confirmPassword) {
+        alert('Las contraseñas nuevas no coinciden');
+        return;
+      }
+
+      const response = await fetch('http://localhost:3000/api/users/update-password', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          currentPassword: passwordData.currentPassword,
+          newPassword: passwordData.newPassword
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error al cambiar la contraseña');
+      }
+
+      alert('Contraseña actualizada exitosamente');
+      setPasswordData({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+      });
+    } catch (error) {
+      alert('Error al cambiar la contraseña: ' + error.message);
+    }
+  };
+
   return (
     <div className="business-tab-container">
       <div className="sidebar">
@@ -172,17 +220,37 @@ function BusinessTab() {
             <div className="form-container">
               <div className="form-group">
                 <label>Contraseña Actual</label>
-                <input type="password" placeholder="Contraseña" />
+                <input 
+                  type="password" 
+                  name="currentPassword"
+                  value={passwordData.currentPassword}
+                  onChange={handlePasswordChange}
+                  placeholder="Contraseña actual" 
+                />
               </div>
               <div className="form-group">
                 <label>Nueva Contraseña</label>
-                <input type="password" placeholder="Contraseña" />
+                <input 
+                  type="password" 
+                  name="newPassword"
+                  value={passwordData.newPassword}
+                  onChange={handlePasswordChange}
+                  placeholder="Nueva contraseña" 
+                />
               </div>
               <div className="form-group">
                 <label>Repetir Nueva Contraseña</label>
-                <input type="password" placeholder="Contraseña" />
+                <input 
+                  type="password" 
+                  name="confirmPassword"
+                  value={passwordData.confirmPassword}
+                  onChange={handlePasswordChange}
+                  placeholder="Confirmar nueva contraseña" 
+                />
               </div>
-              <button className="action-button">Confirmar Contraseña</button>
+              <button className="action-button" onClick={handleUpdatePassword}>
+                Confirmar Contraseña
+              </button>
             </div>
           </div>
         </div>

@@ -173,6 +173,32 @@ const addToCartFromWishlist = async (req, res) => {
   }
 };
 
+const updatePassword = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    const { currentPassword, newPassword } = req.body;
+    const isValidPassword = await user.comparePassword(currentPassword);
+
+    if (!isValidPassword) {
+      return res.status(401).json({ message: 'Contraseña actual incorrecta' });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.json({ message: 'Contraseña actualizada exitosamente' });
+  } catch (error) {
+    res.status(500).json({ 
+      message: 'Error al actualizar la contraseña', 
+      error: error.message 
+    });
+  }
+};
+
 module.exports = {
   getUserProfile,
   getBusinessProfile,
@@ -180,5 +206,6 @@ module.exports = {
   addToWishlist,
   removeFromWishlist,
   updatePaymentMethod,
-  addToCartFromWishlist
+  addToCartFromWishlist,
+  updatePassword
 };

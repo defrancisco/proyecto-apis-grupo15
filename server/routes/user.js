@@ -9,7 +9,8 @@ const {
     addToWishlist,
     removeFromWishlist,
     updatePaymentMethod,
-    addToCartFromWishlist
+    addToCartFromWishlist,
+    updatePassword,
 } = require('../controllers/userController');
 
 router.get('/profile', authenticateToken, getUserProfile);
@@ -19,4 +20,5 @@ router.post('/wishlist/:userId', authenticateToken, addToWishlist);
 router.delete('/wishlist/:userId/:gameId', authenticateToken, removeFromWishlist);
 router.put('/payment-method/:userId', authenticateToken, updatePaymentMethod);
 router.post('/cart/from-wishlist/:userId/:gameId', authenticateToken, addToCartFromWishlist);
+router.put('/update-password', authenticateToken, updatePassword);
 module.exports = router;
