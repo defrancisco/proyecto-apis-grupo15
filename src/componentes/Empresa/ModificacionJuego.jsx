@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../Header';
-import Footer from '../Footer'; 
+import Footer from '../Footer';
 import '../../styles/gameForm.css';
 
 function ModificacionVideojuego() {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [gameData, setGameData] = useState({
     nombre: '',
     categoria: '',
@@ -12,27 +15,52 @@ function ModificacionVideojuego() {
     descripcion: '',
     reqMinimos: '',
     reqRecomendados: '',
-    imagen: null
+    imagen: null,
+    sistemaOperativo: ''
   });
 
   useEffect(() => {
-    // Simular la carga de datos del juego desde la base de datos
-    const fetchGameData = () => {
-      // Agarrar datos de la base de datos, llamada
-      const mockGameData = {
-        nombre: '',
-        categoria: '',
-        precio: '',
-        idioma: '',
-        descripcion: '', 
-        reqMinimos: '',
-        reqRecomendados: ''
-      };
-      setGameData(mockGameData);
+    const fetchGameData = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/business/games/${id}`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Error al obtener datos del juego');
+        }
+
+        const data = await response.json();
+        console.log('Sistema Operativo recibido:', data.operatingSystem);
+        console.log('Datos completos recibidos:', data);
+        
+        setGameData({
+          nombre: data.name,
+          categoria: data.categories,
+          precio: data.price,
+          idioma: data.languages,
+          descripcion: data.description,
+          reqMinimos: data.minRequirements,
+          reqRecomendados: data.recommendedRequirements,
+          imagen: null,
+          sistemaOperativo: data.operatingSystem
+        });
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error al cargar los datos del juego');
+      }
     };
 
-    fetchGameData();
-  }, []);
+    if (id) {
+      fetchGameData();
+    }
+  }, [id]);
+
+  useEffect(() => {
+    console.log('Estado actual del juego:', gameData);
+  }, [gameData]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -49,27 +77,59 @@ function ModificacionVideojuego() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData();
-    for (const key in gameData) {
-      data.append(key, gameData[key]);
+    const form = new FormData();
+    
+    // Mapear los nombres de campos del frontend al backend
+    form.append('name', gameData.nombre);
+    form.append('category', gameData.categoria);
+    form.append('price', gameData.precio);
+    form.append('description', gameData.descripcion);
+    form.append('operatingSystem', gameData.sistemaOperativo);
+    form.append('language', gameData.idioma);
+    form.append('minRequirements', gameData.reqMinimos);
+    form.append('recommendedRequirements', gameData.reqRecomendados);
+    
+    if (gameData.imagen) {
+      form.append('imagen', gameData.imagen);
     }
-    console.log('Datos del juego actualizados:', gameData);
-    // Aquí iría la lógica para enviar los datos actualizados al servidor
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/business/games/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: form
+      });
+
+      if (response.ok) {
+        console.log('Juego actualizado exitosamente');
+        navigate('/businessTab#misJuegos');
+      } else {
+        const error = await response.json();
+        console.error('Error al actualizar el juego:', error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header/>
-      <main>
-        <div className="game-edit-container">
-          <div className="game-image">
-            <img src="/placeholder-image.jpg" alt="Imagen del juego" />
-            <p>Última modificación: {new Date().toLocaleDateString()}</p>
+      <main className="game-modification-container">
+        <h2 className="modification-title">Modificación de Videojuego</h2>
+        <div className="game-edit-layout">
+          <div className="game-image-section">
+            <img 
+              src={`http://localhost:3000/api/games/${id}/image`} 
+              alt="Imagen del juego" 
+              className="game-preview-image"
+            />
+            <p className="last-modified">Última modificación: {new Date().toLocaleDateString()}</p>
           </div>
           <form className="game-form" onSubmit={handleSubmit}>
-            <h2>Modificación de Videojuego</h2>
             <div className="form-group">
               <label htmlFor="nombre">Nombre</label>
               <input
@@ -116,6 +176,18 @@ function ModificacionVideojuego() {
                   value={gameData.idioma}
                   onChange={handleInputChange}
                   placeholder="Idioma del juego"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="sistemaOperativo">Sistema Operativo</label>
+                <input
+                  type="text"
+                  id="sistemaOperativo"
+                  name="sistemaOperativo"
+                  value={gameData.sistemaOperativo}
+                  onChange={handleInputChange}
+                  placeholder="Sistema Operativo del juego"
                   required
                 />
               </div>
@@ -170,8 +242,6 @@ function ModificacionVideojuego() {
           </form>
         </div>
       </main>
-
-    <Footer/>
     </div>
   );
 }
