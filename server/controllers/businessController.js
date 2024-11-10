@@ -161,28 +161,31 @@ const getGameAnalytics = async (req, res) => {
     const developerId = req.user.userId;
 
     const games = await Game.findAll({
-      where: { developerId },
-      include: [{
-        model: Review,
-        as: 'reviews',
-        attributes: ['rating', 'content', 'createdAt']
-      }],
+      where: { 
+        developerId,
+        isPublished: true 
+      },
       attributes: [
-        'id', 'name', 'views', 'purchases', 
-        'wishlistCount', 'averageRating'
-      ]
+        'id', 
+        'name', 
+        'views', 
+        'purchases', 
+        'wishlistCount',
+        'createdAt'
+      ],
+      order: [['createdAt', 'DESC']]
     });
 
     if (!games.length) {
       return res.status(404).json({ 
-        message: 'No games found for this developer' 
+        message: 'No se encontraron juegos para este desarrollador' 
       });
     }
 
     res.json(games);
   } catch (error) {
     res.status(500).json({ 
-      message: 'Error getting game analytics', 
+      message: 'Error obteniendo analytics de juegos', 
       error: error.message 
     });
   }
@@ -228,11 +231,50 @@ const publishGame = async (req, res) => {
   }
 };
 
+const getBusinessGames = async (req, res) => {
+  try {
+    console.log('Usuario autenticado:', req.user); // Para depuración
+    const developerId = req.user.userId;
+
+    const games = await Game.findAll({
+      where: { developerId },
+      attributes: [
+        'id', 
+        'name',
+        'price',
+        'isPublished',
+        'imageType',
+        'imageData',
+        'createdAt',
+        'updatedAt'
+      ],
+      order: [['createdAt', 'DESC']]
+    });
+
+    console.log('Juegos encontrados:', games.length); // Para depuración
+    
+    const formattedGames = games.map(game => ({
+      ...game.toJSON(),
+      imageData: undefined,
+      hasImage: !!game.imageData
+    }));
+
+    res.json(formattedGames);
+  } catch (error) {
+    console.error('Error en getBusinessGames:', error);
+    res.status(500).json({ 
+      message: 'Error obteniendo juegos de la empresa', 
+      error: error.message 
+    });
+  }
+};
+
 module.exports = {
   createGame,
   updateGame,
   deleteGame,
   getGameAnalytics,
   unpublishGame,
-  publishGame
+  publishGame,
+  getBusinessGames
 };
