@@ -217,3 +217,14 @@ footer ul li a:hover {
 button {
     font-weight: bold;
 }
+
+.profile-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-type {
+    color: #333;
+    font-size: 14px;
+}

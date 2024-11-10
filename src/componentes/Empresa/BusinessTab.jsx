@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../styles/userTab.css';
 
 function BusinessTab() {
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('perfil');
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [confirmAction, setConfirmAction] = useState(null); // "despublicar" o "eliminar"
@@ -258,6 +259,11 @@ function BusinessTab() {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/prePagina');
+  };
+
   return (
     <div className="business-tab-container">
       <div className="sidebar">
@@ -279,7 +285,7 @@ function BusinessTab() {
                   className={activeSection === 'misJuegos' ? 'active' : ''}>
             Mis juegos
           </button>
-          <button>Salir</button>
+          <button onClick={handleLogout}>Salir</button>
         </nav>
       </div>
 
