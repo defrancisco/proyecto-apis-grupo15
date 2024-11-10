@@ -10,6 +10,28 @@ const path = require('path');
 const { User, Game, RecoveryCode, Cart, Wishlist, models, setupAssociations } = require('./models');
 const cors = require('cors');
 
+// Swagger ~ endpoints
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger'); // Importa el archivo que configuraste para Swagger
+
+// Configura el endpoint de Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Rutas
+app.use('/api/auth', authRoutes); // Rutas de autenticación
+
+
+
+
+// Otros middlewares y configuraciones
+app.use('/uploads', express.static('uploads'));
+
+// Manejo de errores global
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong!' });
+});
+
 app.use(express.json());
 
 // Configurar CORS
@@ -30,22 +52,23 @@ app.use('/api/games', gameRoutes);
 
 // Después de las configuraciones de CORS
 app.use('/uploads', express.static('uploads'));
+
 // Manejo de errores global
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
+  res.status(500).json({ message: 'Something went wrong! :(' });
 });
 
+// Conexióna a la base de datos y arranque del servidor
 const PORT = process.env.PORT || 3000;
 
 // Sincronizar modelos en orden inverso al definido en models/index.js
 const syncDatabase = async () => {
   try {
     await sequelize.sync();
-    
     // Configurar asociaciones
     setupAssociations();
-    console.log('Database synced successfully');
+    console.log('Database synced successfully :)');
   } catch (error) {
     console.error('Error syncing database:', error);
   }
@@ -53,6 +76,6 @@ const syncDatabase = async () => {
 
 syncDatabase().then(() => {
   app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT} :)`);
   });
 });
