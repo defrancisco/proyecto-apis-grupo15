@@ -46,11 +46,17 @@ export const loader = async () => {
 // Componente Root principal que engloba toda la aplicación
 export default function Root() {
     const [firstLoad, setFirstLoad] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const timer = setTimeout(() => setFirstLoad(false), 4000);
+        // Simular carga inicial
+        const timer = setTimeout(() => {
+            setFirstLoad(false);
+            navigate('/prePagina'); // Redirige a /prePagina después de la carga inicial
+        }, 4000);
+
         return () => clearTimeout(timer);
-    }, []);
+    }, [navigate]);
 
     return (
         <UserProvider>

@@ -1,158 +1,92 @@
-const { sendRecoveryEmail } = require('../utils/emailService.js');
-require('dotenv').config();
-
+const User = require('../models/user'); // Importar el modelo de usuario
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
-const RecoveryCode = require('../models/recoveryCode');
-const JWT_SECRET = process.env.JWT_SECRET;
+const jwt = require('jsonwebtoken'); // Para generar el token de autenticación
 
-const register = async (req, res) => {
+// Registrar un nuevo usuario
+exports.register = async (req, res) => {
+  const { email, password, userType, name, surname } = req.body;
+
   try {
-    const { email, password, userType } = req.body;
-
+    // Verificar si el usuario ya existe
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({ message: 'El usuario ya existe' });
     }
 
-    let userData = {
-      email,
-      password,
-      userType
-    };
-
-    if (userType === 'individual') {
-      const { name, surname, dateOfBirth } = req.body;
-      Object.assign(userData, {
-        name,
-        surname,
-        dateOfBirth: new Date(dateOfBirth)
-      });
-    } else if (userType === 'business') {
-      const { businessName } = req.body;
-      Object.assign(userData, { businessName });
-    } else {
-      return res.status(400).json({ message: 'Invalid user type' });
-    }
-
-    const newUser = await User.create(userData);
-    res.status(201).json({ message: 'User registered successfully' });
+    // Crear el nuevo usuario
+    const newUser = await User.create({ email, password, userType, name, surname });
+    return res.status(201).json({ message: 'Usuario registrado exitosamente', user: newUser });
   } catch (error) {
-    res.status(500).json({ message: 'Error registering user', error: error.message });
+    console.error('Error al registrar el usuario:', error);
+    return res.status(500).json({ message: 'Error en el servidor' });
   }
 };
 
-const login = async (req, res) => {
+// Iniciar sesión
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const { email, password } = req.body;
     const user = await User.findOne({ where: { email } });
 
-    if (!user || !(await user.comparePassword(password))) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+    if (!user) {
+      return res.status(401).json({ message: 'Credenciales incorrectas' });
     }
 
-    const token = jwt.sign(
-      { userId: user.id, userType: user.userType },
-      JWT_SECRET,
-      { expiresIn: '1h' }
-    );
+    const isPasswordValid = await user.comparePassword(password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Credenciales incorrectas' });
+    }
 
-    res.json({ token, userType: user.userType });
+    // Crear un token JWT
+    const token = jwt.sign({ userId: user.id, userType: user.userType }, 'your-secret-key', { expiresIn: '1h' });
+
+    return res.status(200).json({
+      message: 'Login exitoso',
+      token,
+      user: {
+        email: user.email,
+        userType: user.userType,
+        name: user.name,
+        surname: user.surname,
+      }
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Error logging in', error: error.message });
+    console.error('Error al iniciar sesión:', error);
+    return res.status(500).json({ message: 'Error en el servidor' });
   }
 };
 
-const recoverPassword = async (req, res) => {
+// Recuperar contraseña
+exports.recoverPassword = async (req, res) => {
+  const { email } = req.body;
+
   try {
-    const { email } = req.body;
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    const recoveryCode = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiresAt = new Date();
-    expiresAt.setHours(expiresAt.getHours() + 1);
-
-    await RecoveryCode.destroy({ where: { email } });
+    // Generar un código de recuperación (simulación)
+    const recoveryCode = '123456'; // Esto es solo un ejemplo, en un caso real generarías un código dinámico
+    // Aquí deberías enviar el código al correo del usuario (por ejemplo, con nodemailer)
     
-    await RecoveryCode.create({
-      email,
-      code: recoveryCode,
-      expiresAt
-    });
-
-    await sendRecoveryEmail(email, recoveryCode);
-    res.json({ message: 'Código de recuperación enviado al correo' });
+    return res.status(200).json({ message: 'Email de recuperación enviado', recoveryCode });
   } catch (error) {
-    console.error('Error completo:', error);
-    res.status(500).json({ 
-      message: 'Error enviando código de recuperación', 
-      error: error.message 
-    });
+    console.error('Error al recuperar contraseña:', error);
+    return res.status(500).json({ message: 'Error en el servidor' });
   }
 };
 
-const verifyCode = async (req, res) => {
-  try {
-    const { email, code } = req.body;
-    const recoveryCode = await RecoveryCode.findOne({
-      where: { email, code }
-    });
+// Verificar código de recuperación
+exports.verifyRecoveryCode = async (req, res) => {
+  const { email, recoveryCode } = req.body;
 
-    if (!recoveryCode) {
-      return res.status(400).json({ message: 'Invalid recovery code' });
-    }
-
-    await RecoveryCode.destroy({ where: { email } });
-    res.json({ message: 'Code verified successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error verifying code', error: error.message });
+  // Simulación de verificación de código
+  if (recoveryCode === '123456') {
+    return res.status(200).json({ message: 'Código de verificación correcto' });
+  } else {
+    return res.status(400).json({ message: 'Código de verificación incorrecto' });
   }
-};
-
-const changePassword = async (req, res) => {
-  try {
-    const { email, newPassword, code } = req.body;
-    
-    // Verificar si existe un código de recuperación válido
-    const recoveryCode = await RecoveryCode.findOne({
-      where: { email, code }
-    });
-
-    if (!recoveryCode) {
-      return res.status(400).json({ 
-        message: 'Código de verificación inválido o expirado' 
-      });
-    }
-
-    const user = await User.findOne({ where: { email } });
-    if (!user) {
-      return res.status(404).json({ message: 'Usuario no encontrado' });
-    }
-
-    user.password = newPassword;
-    await user.save();
-    
-    // Eliminar el código de recuperación usado
-    await RecoveryCode.destroy({ where: { email } });
-
-    res.json({ message: 'Contraseña cambiada exitosamente' });
-  } catch (error) {
-    res.status(500).json({ 
-      message: 'Error cambiando contraseña', 
-      error: error.message 
-    });
-  }
-};
-
-module.exports = {
-  register,
-  login,
-  recoverPassword,
-  verifyCode,
-  changePassword
 };
