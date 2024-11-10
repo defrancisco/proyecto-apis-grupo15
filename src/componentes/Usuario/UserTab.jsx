@@ -52,6 +52,29 @@ function UserTab() {
     fetchUserData();
   }, []);
 
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/users/wishlist', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          setWishlist(data.wishlist);
+        }
+      } catch (error) {
+        console.error('Error al cargar la wishlist:', error);
+      }
+    };
+
+    if (activeSection === 'wishlist') {
+      fetchWishlist();
+    }
+  }, [activeSection]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfileData(prev => ({
@@ -107,7 +130,7 @@ function UserTab() {
         return;
       }
 
-      const response = await fetch('http://localhost:3000/api/users/update-password', {
+      const response = await fetch('http://localhost:3000/api/users/profile/password', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -131,6 +154,7 @@ function UserTab() {
         confirmPassword: ''
       });
     } catch (error) {
+      console.error('Error:', error);
       alert('Error al cambiar la contraseña: ' + error.message);
     }
   };
@@ -143,6 +167,26 @@ function UserTab() {
   const showSection = (section) => {
     setActiveSection(section);
     window.location.hash = section;
+  };
+
+  const handleAddToCart = async (gameId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/users/wishlist/${gameId}/cart`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      if (response.ok) {
+        alert('Juego agregado al carrito exitosamente');
+      } else {
+        throw new Error('Error al agregar al carrito');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al agregar al carrito: ' + error.message);
+    }
   };
 
   return (
@@ -270,31 +314,26 @@ function UserTab() {
         <div className={`section ${activeSection === 'wishlist' ? 'active' : ''}`}>
           <div className="content-card">
             <h2>My Wishlist</h2>
-            {/* Ejemplo de items en la wishlist */}
-            <div className="wishlist-item">
-              <img src="ruta/juego1.jpg" alt="Juego 1" /> {/* Imagen del juego */}
-              <div>
-                <p>Nombre Del Juego 1</p> {/* Nombre del juego */}
-                <p>Precio: $59.99</p> {/* Precio del juego */}
-                <button>Agregar al carrito</button> {/* Botón para agregar al carrito */}
-              </div>
-            </div>
-            {/* Repetir para otros juegos en la wishlist */}
-            <div className="wishlist-item">
-              <img src="ruta/juego2.jpg" alt="Juego 2" />
-              <div>
-                <p>Nombre Del Juego 2</p>
-                <p>Precio: $49.99</p>
-                <button>Agregar al carrito</button>
-              </div>
-            </div>
-            <div className="wishlist-item">
-              <img src="ruta/juego3.jpg" alt="Juego 3" />
-              <div>
-                <p>Nombre Del Juego 3</p>
-                <p>Precio: $39.99</p>
-                <button>Agregar al carrito</button>
-              </div>
+            <div className="wishlist-container">
+              {wishlist.length === 0 ? (
+                <p>No hay juegos en tu wishlist</p>
+              ) : (
+                wishlist.map(game => (
+                  <div key={game.id} className="wishlist-item">
+                    <img src={game.imageUrl} alt={game.name} />
+                    <div className="game-info">
+                      <p className="game-name">{game.name}</p>
+                      <p className="game-price">Precio: ${game.price}</p>
+                      <button 
+                        className="cart-button"
+                        onClick={() => handleAddToCart(game.id)}
+                      >
+                        Agregar al carrito
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
