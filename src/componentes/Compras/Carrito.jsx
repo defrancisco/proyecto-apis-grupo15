@@ -12,6 +12,39 @@ function Carrito() {
     total: 0
   });
 
+  const handleRemoveFromCart = async (gameId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/cart/${gameId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      if (response.ok) {
+        // Actualizar el estado local eliminando el item
+        const updatedItems = cartItems.filter(item => item.gameId !== gameId);
+        setCartItems(updatedItems);
+        
+        // Recargar el carrito para actualizar el resumen
+        const cartResponse = await fetch('http://localhost:3000/api/cart', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        
+        if (cartResponse.ok) {
+          const data = await cartResponse.json();
+          setSummary(data.summary);
+        }
+      } else {
+        throw new Error('Error al eliminar el juego del carrito');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert(error.message);
+    }
+  };
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -51,6 +84,7 @@ function Carrito() {
                   price={item.Game ? item.Game.price : 0} 
                   quantity={item.quantity}
                   subtotal={item.subtotal}
+                  onRemove={() => handleRemoveFromCart(item.gameId)}
                 />
               ))
             ) : (
