@@ -76,7 +76,7 @@ function BusinessTab() {
 
   const handleUpdateProfile = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/users/profile', {
+      const response = await fetch('http://localhost:3000/api/users/profile/business', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -88,12 +88,21 @@ function BusinessTab() {
         })
       });
 
-      if (response.ok) {
-        alert('Perfil actualizado exitosamente');
-      } else {
-        throw new Error('Error al actualizar el perfil');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error al actualizar el perfil');
       }
+
+      const data = await response.json();
+      alert('Perfil actualizado exitosamente');
+      
+      // Actualizar el estado con los datos actualizados
+      setProfileData({
+        email: data.user.email,
+        businessName: data.user.businessName
+      });
     } catch (error) {
+      console.error('Error completo:', error);
       alert('Error al actualizar el perfil: ' + error.message);
     }
   };
