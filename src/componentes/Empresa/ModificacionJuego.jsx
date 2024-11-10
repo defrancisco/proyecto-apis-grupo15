@@ -237,7 +237,13 @@ function ModificacionVideojuego() {
             </div>
             <div className="form-actions">
               <button type="submit" className="btn-submit">Guardar cambios</button>
-              <button type="button" className="btn-cancel">Cancelar</button>
+              <button 
+                type="button" 
+                className="btn-cancel" 
+                onClick={() => navigate('/businessTab#misJuegos')}
+              >
+                Cancelar
+              </button>
             </div>
           </form>
         </div>
