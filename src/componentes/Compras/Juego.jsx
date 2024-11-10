@@ -27,6 +27,33 @@ function Juego() {
             });
     }, [id]);
 
+    const handleAddToWishlist = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Debes iniciar sesión para agregar juegos a tu lista de deseos');
+                return;
+            }
+
+            const response = await fetch(`http://localhost:3000/api/users/wishlist/${game.id}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                alert('Juego agregado a la lista de deseos exitosamente');
+            } else {
+                const data = await response.json();
+                throw new Error(data.message || 'Error al agregar a la lista de deseos');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert(error.message);
+        }
+    };
+
     if (loading) {
         return <p>Cargando...</p>;
     }
@@ -51,7 +78,13 @@ function Juego() {
 
                         <div className="button-group">
                             <button type="button" className="btn primary-btn">Agregar al carrito</button>
-                            <button type="button" className="btn secondary-btn">Agregar a la lista de deseos</button>
+                            <button 
+                                type="button" 
+                                className="btn secondary-btn"
+                                onClick={handleAddToWishlist}
+                            >
+                                Agregar a la lista de deseos
+                            </button>
                         </div>
 
                         <div className="description-section">
