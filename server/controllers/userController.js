@@ -78,21 +78,32 @@ const updateUserProfile = async (req, res) => {
 
 const addToWishlist = async (req, res) => {
   try {
-    const { gameId } = req.body;
+    const gameId = req.params.gameId;
     const userId = req.user.userId;
 
-    const [wishlist, created] = await Wishlist.findOrCreate({
+    // Verificar si el juego ya está en la wishlist
+    const existingWishlistItem = await Wishlist.findOne({
       where: { userId, gameId }
     });
 
-    if (created) {
-      await Game.increment('wishlistCount', { where: { id: gameId } });
-      res.json({ message: 'Game added to wishlist' });
-    } else {
-      res.status(400).json({ message: 'Game already in wishlist' });
+    if (existingWishlistItem) {
+      return res.status(400).json({ message: 'El juego ya está en tu lista de deseos' });
     }
+
+    // Crear nuevo item en wishlist
+    await Wishlist.create({
+      userId,
+      gameId,
+      addedAt: new Date()
+    });
+
+    // Incrementar el contador de wishlist del juego
+    await Game.increment('wishlistCount', { where: { id: gameId } });
+
+    res.status(201).json({ message: 'Juego agregado a la lista de deseos exitosamente' });
   } catch (error) {
-    res.status(500).json({ message: 'Error adding game to wishlist', error: error.message });
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Error al agregar el juego a la lista de deseos', error: error.message });
   }
 };
 
@@ -222,6 +233,42 @@ const updatePassword = async (req, res) => {
   }
 };
 
+const getWishlist = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+
+        const wishlistItems = await Wishlist.findAll({
+            where: { userId },
+            include: [{
+                model: Game,
+                attributes: [
+                    'id',
+                    'name',
+                    'price',
+                    'imageType'
+                ]
+            }],
+            order: [['addedAt', 'DESC']]
+        });
+
+        const formattedWishlist = wishlistItems.map(item => ({
+            id: item.Game.id,
+            name: item.Game.name,
+            price: item.Game.price,
+            imageUrl: `http://localhost:3000/api/games/${item.Game.id}/image`,
+            addedAt: item.addedAt
+        }));
+
+        res.json({ wishlist: formattedWishlist });
+    } catch (error) {
+        console.error('Error al obtener wishlist:', error);
+        res.status(500).json({ 
+            message: 'Error al obtener la lista de deseos', 
+            error: error.message 
+        });
+    }
+};
+
 module.exports = {
   getUserProfile,
   getBusinessProfile,
@@ -230,5 +277,6 @@ module.exports = {
   removeFromWishlist,
   updatePaymentMethod,
   addToCartFromWishlist,
-  updatePassword
+  updatePassword,
+  getWishlist
 };
