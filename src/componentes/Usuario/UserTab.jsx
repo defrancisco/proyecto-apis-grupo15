@@ -102,7 +102,7 @@ function UserTab() {
 
       console.log('Datos a enviar:', userData);
 
-      const response = await fetch('http://localhost:3000/api/users/profile/individual', {
+      const response = await fetch('http://localhost:3000/api/users/update-password', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -125,12 +125,28 @@ function UserTab() {
 
   const handleUpdatePassword = async () => {
     try {
+      // Validaciones del frontend
+      if (!passwordData.currentPassword || !passwordData.newPassword || !passwordData.confirmPassword) {
+        alert('Por favor complete todos los campos');
+        return;
+      }
+
+      if (passwordData.newPassword.length < 8) {
+        alert('La nueva contraseña debe tener al menos 8 caracteres');
+        return;
+      }
+
       if (passwordData.newPassword !== passwordData.confirmPassword) {
         alert('Las contraseñas nuevas no coinciden');
         return;
       }
 
-      const response = await fetch('http://localhost:3000/api/users/profile/password', {
+      if (passwordData.currentPassword === passwordData.newPassword) {
+        alert('La nueva contraseña debe ser diferente a la actual');
+        return;
+      }
+
+      const response = await fetch('http://localhost:3000/api/users/update-password', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -142,9 +158,11 @@ function UserTab() {
         })
       });
 
+      const data = await response.json();
+      console.log('Respuesta del servidor:', data); // Para debugging
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Error al cambiar la contraseña');
+        throw new Error(data.message || 'Error al cambiar la contraseña');
       }
 
       alert('Contraseña actualizada exitosamente');
@@ -154,8 +172,8 @@ function UserTab() {
         confirmPassword: ''
       });
     } catch (error) {
-      console.error('Error:', error);
-      alert('Error al cambiar la contraseña: ' + error.message);
+      console.error('Error completo:', error);
+      alert(error.message || 'Error al cambiar la contraseña');
     }
   };
 

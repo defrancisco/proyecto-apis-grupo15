@@ -181,10 +181,33 @@ const updatePassword = async (req, res) => {
     }
 
     const { currentPassword, newPassword } = req.body;
-    const isValidPassword = await user.comparePassword(currentPassword);
 
+    // Validar que se proporcionaron ambas contraseñas
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ 
+        message: 'Se requieren tanto la contraseña actual como la nueva' 
+      });
+    }
+
+    // Validar la contraseña actual
+    const isValidPassword = await user.comparePassword(currentPassword);
     if (!isValidPassword) {
       return res.status(401).json({ message: 'Contraseña actual incorrecta' });
+    }
+
+    // Validar que la nueva contraseña sea diferente
+    const isSamePassword = await user.comparePassword(newPassword);
+    if (isSamePassword) {
+      return res.status(400).json({ 
+        message: 'La nueva contraseña debe ser diferente a la actual' 
+      });
+    }
+
+    // Validar requisitos de la nueva contraseña
+    if (newPassword.length < 8) {
+      return res.status(400).json({ 
+        message: 'La nueva contraseña debe tener al menos 8 caracteres' 
+      });
     }
 
     user.password = newPassword;
