@@ -2,14 +2,15 @@ import React from "react";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from './routes/AuthContext';
-import Root, { loader as rootLoader } from "./routes/root";
+import Root from "./routes/root";
 import NotFound from "./routes/NotFound";
 import CheckWrapper from "./routes/CheckWrapper.jsx";
+import { loader as rootLoader } from "./routes/root"; // Asegúrate de importar el loader correctamente
 
 // Componentes
 import PrePagina from "./componentes/PrePagina.jsx";
 import Login from "./componentes/Login.jsx";
-import LoginCuenta  from "./componentes/IniciosSesion/LoginCuenta.jsx";
+import LoginCuenta from "./componentes/IniciosSesion/LoginCuenta.jsx";
 import Catalogo from "./componentes/Compras/Catalogo.jsx";
 import Carrito from "./componentes/Compras/Carrito.jsx";
 import Checkout from "./componentes/Compras/Checkout.jsx";
@@ -26,7 +27,7 @@ import UserTab from "./componentes/Usuario/UserTab.jsx";
 import { RegistroUsuario } from "./componentes/Usuario/RegistroUsuario";
 
 // Empresa
-import BusinessTab from "./componentes/Empresa/BusinessTab.jsx"; 
+import BusinessTab from "./componentes/Empresa/BusinessTab.jsx";
 import ModificacionVideojuego from "./componentes/Empresa/ModificacionJuego.jsx";
 import RegistroEmpresa from "./componentes/Empresa/RegistroEmpresa.jsx";
 import CreacionVideojuego from "./componentes/Empresa/CreacionJuego.jsx";
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
                 <Root />
             </AuthProvider>
         ),
-        loader: rootLoader,
+        loader: rootLoader, 
         errorElement: <NotFound />,
         children: [
             { path: "prePagina", element: <PrePagina /> },
@@ -55,7 +56,7 @@ const router = createBrowserRouter([
             { path: "juego/:id", element: <Juego /> },
             { path: "carrito", element: <Carrito />,
                 children: [
-                    { path: "carrito/checkout", element: <Checkout /> },
+                    { path: "carrito/:checkout", element: <Checkout /> },
                 ]
             },
 
