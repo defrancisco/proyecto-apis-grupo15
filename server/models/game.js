@@ -63,7 +63,7 @@ const Game = sequelize.define('Game', {
     defaultValue: 0,
     validate: {
       min: 1,
-      max: 8
+      max: 10
     }
   },
   minRequirements: {
