@@ -17,9 +17,6 @@ const swaggerSpec = require('./config/swagger'); // Importa el archivo que confi
 // Configura el endpoint de Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Rutas
-app.use('/api/auth', authRoutes); // Rutas de autenticación
-
 
 
 
