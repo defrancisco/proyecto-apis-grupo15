@@ -3,6 +3,7 @@ import Header from '../Header';
 import Footer from '../Footer'; 
 import '../../styles/gameForm.css'
 import { formValidation } from "../IniciosSesion/formValidation";
+import { useNavigate } from 'react-router-dom';
 
 
 function CreacionVideojuego() {
@@ -14,8 +15,12 @@ function CreacionVideojuego() {
     descripcion: '',
     reqMinimos: '',
     reqRecomendados: '',
-    imagen: null
+    imagen: null,
+    operatingSystem: '',
+    players: ''
   });
+
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -36,15 +41,27 @@ function CreacionVideojuego() {
     e.preventDefault();
     const form = new FormData();
     
-    // Mapear los nombres de campos del frontend al backend
+    // Validar categoría
+    const validCategories = ['Accion', 'Aventura', 'RPG', 'Estrategia', 'Deporte', 'Simulacion', 'Acertijos'];
+    if (!validCategories.includes(formData.categoria)) {
+      alert('Categoría inválida. Las categorías permitidas son: ' + validCategories.join(', '));
+      return;
+    }
+
+    // Validar sistema operativo
+    const validOS = ['Windows', 'MacOS', 'Linux', 'Android', 'iOS', 'Nintendo'];
+    if (!validOS.includes(formData.operatingSystem)) {
+      alert('Sistema operativo inválido. Los sistemas permitidos son: ' + validOS.join(', '));
+      return;
+    }
+
     form.append('name', formData.nombre);
-    form.append('category', formData.categoria);
+    form.append('categories', JSON.stringify([formData.categoria]));
     form.append('price', formData.precio);
     form.append('description', formData.descripcion);
-    form.append('operatingSystem', 'Windows');
-    form.append('language', formData.idioma);
-    form.append('players', '1');
-    form.append('rating', 'E');
+    form.append('operatingSystem', formData.operatingSystem);
+    form.append('languages', JSON.stringify([formData.idioma]));
+    form.append('players', formData.players);
     form.append('minRequirements', formData.reqMinimos);
     form.append('recommendedRequirements', formData.reqRecomendados);
     
@@ -61,14 +78,17 @@ function CreacionVideojuego() {
         body: form
       });
 
+      const data = await response.json();
+      
       if (response.ok) {
-        console.log('Juego creado exitosamente');
-
+        alert('Juego creado exitosamente');
+        navigate('/empresa/juegos');
       } else {
-        const error = await response.json();
-        console.error('Error al crear el juego:', error);
+        alert(`Error al crear el juego: ${data.message}`);
+        console.error('Error detallado:', data.error);
       }
     } catch (error) {
+      alert('Error al conectar con el servidor');
       console.error('Error:', error);
     }
 
@@ -80,8 +100,6 @@ function CreacionVideojuego() {
 
   return (
     <div className="flex flex-col min-h-screen">
-        <Header/>
-
       <main>
         <form className="game-form justify-content-center" onSubmit={handleSubmit}>
           <h2>Creación de Videojuego</h2>
@@ -179,11 +197,40 @@ function CreacionVideojuego() {
               required
             />
           </div>
-          <button type="submit" className="btn-submit">Publicar</button>
+          <div className="form-group">
+            <label htmlFor="operatingSystem">Sistema Operativo</label>
+            <select
+              id="operatingSystem"
+              name="operatingSystem"
+              value={formData.operatingSystem}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="">Seleccionar Sistema Operativo</option>
+              <option value="Windows">Windows</option>
+              <option value="MacOS">MacOS</option>
+              <option value="Linux">Linux</option>
+              <option value="Android">Android</option>
+              <option value="iOS">iOS</option>
+              <option value="Nintendo">Nintendo</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="players">Número de Jugadores</label>
+            <input
+              type="number"
+              id="players"
+              name="players"
+              value={formData.players}
+              onChange={handleInputChange}
+              placeholder="Número de jugadores"
+              min="1"
+              required
+            />
+          </div>
+          <button type="submit" className="btn-submit">Crear Juego</button>
         </form>
       </main>
-
-    <Footer/>
     </div>
   );
 }
