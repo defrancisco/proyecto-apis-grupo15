@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../styles/userTab.css';
 
 function BusinessTab() {
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('perfil');
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [confirmAction, setConfirmAction] = useState(null); // "despublicar" o "eliminar"
@@ -121,18 +122,33 @@ function BusinessTab() {
   };
 
   // Pop ups de confirmación
-  const handleDeleteOrArchive = (action) => {
-    setConfirmAction(action);
+  const handleDeleteOrArchive = (action, gameId) => {
+    setConfirmAction({ type: action, gameId });
     setShowConfirmPopup(true);
   };
 
-  const confirmActionHandler = () => {
-    if (confirmAction === "eliminar") {
-      // Lógica para eliminar el juego
-      console.log("Juego eliminado");
-    } else if (confirmAction === "despublicar") {
-      // Lógica para despublicar el juego
-      console.log("Juego despublicado");
+  const confirmActionHandler = async () => {
+    if (confirmAction.type === "eliminar") {
+      try {
+        const response = await fetch(`http://localhost:3000/api/business/games/${confirmAction.gameId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Error al eliminar el juego');
+        }
+
+        // Actualizar el estado local eliminando el juego
+        setGames(games.filter(game => game.id !== confirmAction.gameId));
+        alert('Juego eliminado exitosamente');
+      } catch (error) {
+        console.error('Error:', error);
+        alert(error.message);
+      }
     }
     setShowConfirmPopup(false);
     setConfirmAction(null);
@@ -214,6 +230,40 @@ function BusinessTab() {
     }
   };
 
+  const handlePublishUnpublish = async (gameId, isPublished) => {
+    try {
+      const action = isPublished ? 'unpublish' : 'publish';
+      const response = await fetch(`http://localhost:3000/api/business/games/${gameId}/${action}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error al ${isPublished ? 'despublicar' : 'publicar'} el juego`);
+      }
+
+      // Actualizar el estado local de los juegos
+      setGames(games.map(game => {
+        if (game.id === gameId) {
+          return { ...game, isPublished: !isPublished };
+        }
+        return game;
+      }));
+
+    } catch (error) {
+      console.error('Error:', error);
+      alert(error.message);
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/prePagina');
+  };
+
   return (
     <div className="business-tab-container">
       <div className="sidebar">
@@ -235,7 +285,7 @@ function BusinessTab() {
                   className={activeSection === 'misJuegos' ? 'active' : ''}>
             Mis juegos
           </button>
-          <button>Salir</button>
+          <button onClick={handleLogout}>Salir</button>
         </nav>
       </div>
 
@@ -377,7 +427,7 @@ function BusinessTab() {
                     <Link to={`/businessTab/modificacionJuego/${game.id}`}>
                       <button>Editar</button>
                     </Link>
-                    <button onClick={() => handleDeleteOrArchive(game.isPublished ? "despublicar" : "publicar", game.id)}>
+                    <button onClick={() => handlePublishUnpublish(game.id, game.isPublished)}>
                       {game.isPublished ? 'Despublicar' : 'Publicar'}
                     </button>
                     <button onClick={() => handleDeleteOrArchive("eliminar", game.id)}>
@@ -395,10 +445,12 @@ function BusinessTab() {
       {showConfirmPopup && (
         <div className="confirm-popup">
           <div className="confirm-popup-content">
-            <h3>Atención</h3>
-            <p>¿Estás seguro que quiere {confirmAction === "eliminar" ? "eliminar" : "despublicar"} este juego?</p>
-            <button onClick={confirmActionHandler}>Sí</button>
-            <button onClick={() => setShowConfirmPopup(false)}>No</button>
+            <h3>¿Estás seguro?</h3>
+            <p>¿Deseas eliminar este juego?</p>
+            <div className="confirm-popup-buttons">
+              <button onClick={confirmActionHandler}>Sí, eliminar</button>
+              <button onClick={() => setShowConfirmPopup(false)}>Cancelar</button>
+            </div>
           </div>
         </div>
       )}

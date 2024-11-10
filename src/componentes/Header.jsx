@@ -53,11 +53,24 @@ function Header() {
                     {auth.isAuthenticated ? (
                         <>
                             <Link to={auth.userType === 'business' ? '/businessTab' : '/userTab'}>
-                                <img src={profile} alt="Perfil" className="profile-icon" /> 
+                                <div className="profile-container">
+                                    <img src={profile} alt="Perfil" className="profile-icon" />
+                                    <span className="user-name">
+                                        {console.log('auth:', auth)}
+                                        {auth.userType === 'business' 
+                                            ? (auth.businessName || 'Empresa') 
+                                            : (auth.name || 'Usuario')}
+                                    </span>
+                                </div>
                             </Link>
                             <button onClick={logout} className="logout-btn">
                                 Cerrar sesión
                             </button>
+                            {auth.userType !== 'business' && (
+                                <Link to="/carrito" className="logo">
+                                    <img src={shoppingcart} alt="Cart Logo" />
+                                </Link>
+                            )}
                         </>
                     ) : (
                         <>
@@ -67,11 +80,11 @@ function Header() {
                             <Link to="/iniciarSesion">
                                 <button id="register-btn">Registrarse</button>
                             </Link>
+                            <Link to="/carrito" className="logo">
+                                <img src={shoppingcart} alt="Cart Logo" />
+                            </Link>
                         </>
                     )}
-                    <Link to="/carrito" className="logo">
-                        <img src={shoppingcart} alt="Cart Logo" />
-                    </Link>
                 </div>
             </div>
         </header>
