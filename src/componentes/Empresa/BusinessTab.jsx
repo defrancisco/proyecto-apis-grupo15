@@ -6,6 +6,10 @@ function BusinessTab() {
   const [activeSection, setActiveSection] = useState('perfil');
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [confirmAction, setConfirmAction] = useState(null); // "despublicar" o "eliminar"
+  const [profileData, setProfileData] = useState({
+    email: '',
+    businessName: ''
+  });
 
   useEffect(() => {
     const sectionId = window.location.hash.substring(1);
@@ -13,6 +17,39 @@ function BusinessTab() {
       setActiveSection(sectionId);
     }
   }, []);
+
+  useEffect(() => {
+    // Cargar datos del perfil al montar el componente
+    const fetchProfileData = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/users/profile/business', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          setProfileData({
+            email: data.email,
+            businessName: data.businessName
+          });
+        }
+      } catch (error) {
+        console.error('Error al cargar el perfil:', error);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProfileData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const showSection = (section) => {
     setActiveSection(section);
@@ -35,6 +72,30 @@ function BusinessTab() {
     }
     setShowConfirmPopup(false);
     setConfirmAction(null);
+  };
+
+  const handleUpdateProfile = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/users/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          email: profileData.email,
+          businessName: profileData.businessName
+        })
+      });
+
+      if (response.ok) {
+        alert('Perfil actualizado exitosamente');
+      } else {
+        throw new Error('Error al actualizar el perfil');
+      }
+    } catch (error) {
+      alert('Error al actualizar el perfil: ' + error.message);
+    }
   };
 
   return (
@@ -72,7 +133,9 @@ function BusinessTab() {
                 <label>Mail</label>
                 <input 
                   type="email" 
-                  placeholder="Mail" 
+                  name="email"
+                  value={profileData.email}
+                  onChange={handleInputChange}
                   className="form-input"
                 />
               </div>
@@ -80,11 +143,15 @@ function BusinessTab() {
                 <label>Nombre de empresa</label>
                 <input 
                   type="text" 
-                  placeholder="Nombre de empresa" 
+                  name="businessName"
+                  value={profileData.businessName}
+                  onChange={handleInputChange}
                   className="form-input"
                 />
               </div>
-              <button className="action-button">Actualizar datos</button>
+              <button className="action-button" onClick={handleUpdateProfile}>
+                Actualizar datos
+              </button>
             </div>
           </div>
         </div>
