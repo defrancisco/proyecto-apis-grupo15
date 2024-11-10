@@ -3,24 +3,32 @@ main {
     margin: 20px;
 }
 .sidebar {
-    width: 200px;
+    width: 280px;
     background-color: white;
-    padding: 20px;
+    padding: 40px 30px;
     border-radius: 5px;
 }
 .sidebar button {
     display: block;
     width: 100%;
-    padding: 10px;
+    padding: 12px 20px;
     margin-bottom: 10px;
     background-color: #333;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+.sidebar button:hover {
+    transform: translateX(5px);
+    background-color: #444;
 }
 .sidebar button.active {
     background-color: #e60012;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .content {
     flex-grow: 1;
@@ -99,5 +107,205 @@ body, html {
   
   .confirm-popup-content button:last-child {
     background-color: #ddd; /* Color gris para cancelar */
+  }
+  
+  .business-tab-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+  }
+  
+  .sidebar {
+    width: 280px;
+    padding: 40px 30px;
+    background-color: #f5f5f5;
+    position: absolute;
+    left: 0;
+  }
+  
+  .sidebar h2 {
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: bold;
+    padding-left: 12px;
+  }
+  
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .sidebar button {
+    width: 100%;
+    padding: 12px 20px;
+    text-align: left;
+    border: none;
+    border-radius: 8px;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .sidebar button:hover {
+    transform: translateX(5px);
+    background-color: #444;
+  }
+  
+  .sidebar button.active {
+    background-color: #e60012;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .main-content {
+    margin-left: 320px;
+    flex: 1;
+    padding: 40px 60px;
+    max-width: 1200px;
+  }
+  
+  .content-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    min-height: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  }
+  
+  .section {
+    display: none;
+  }
+  
+  .section.active {
+    display: block;
+  }
+  
+  /* Estilos para formularios */
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .form-group input {
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 16px;
+  }
+  
+  .action-button {
+    align-self: flex-end;
+    background-color: #e60000;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  /* Estilos para análisis de juegos */
+  .game-analysis-card {
+    background-color: white;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 30px;
+  }
+  
+  .game-image-placeholder {
+    width: 100px;
+    height: 100px;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .stats-row {
+    display: flex;
+    gap: 30px;
+    margin-top: 10px;
+  }
+  
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  /* Estilos para lista de juegos */
+  .search-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+  
+  .search-bar {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .search-bar input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .games-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .game-item {
+    background-color: white;
+    padding: 15px 20px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .action-select {
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  /* Ajustes para mantener consistencia en todas las secciones */
+  h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+  
+  .form-group {
+    margin-bottom: 25px;
+  }
+  
+  .form-group label {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 500;
   }
   

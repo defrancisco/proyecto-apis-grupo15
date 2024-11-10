@@ -38,54 +38,82 @@ function BusinessTab() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <main>
-        <div className="sidebar">
-          <h2>Mi Perfil</h2>
-          <button onClick={() => showSection('perfil')} className={activeSection === 'perfil' ? 'active' : ''}>Perfil</button>
-          <button onClick={() => showSection('autenticacion')} className={activeSection === 'autenticacion' ? 'active' : ''}>Autenticación</button>
-          <button onClick={() => showSection('analisis')} className={activeSection === 'analisis' ? 'active' : ''}>Análisis de Videojuegos</button>
-          <button onClick={() => showSection('misJuegos')} className={activeSection === 'misJuegos' ? 'active' : ''}>Mis juegos</button>
+    <div className="business-tab-container">
+      <div className="sidebar">
+        <h2>Mi Perfil</h2>
+        <nav className="sidebar-nav">
+          <button onClick={() => showSection('perfil')} 
+                  className={activeSection === 'perfil' ? 'active' : ''}>
+            Perfil
+          </button>
+          <button onClick={() => showSection('autenticacion')} 
+                  className={activeSection === 'autenticacion' ? 'active' : ''}>
+            Autenticación
+          </button>
+          <button onClick={() => showSection('analisis')} 
+                  className={activeSection === 'analisis' ? 'active' : ''}>
+            Análisis de Videojuegos
+          </button>
+          <button onClick={() => showSection('misJuegos')} 
+                  className={activeSection === 'misJuegos' ? 'active' : ''}>
+            Mis juegos
+          </button>
           <button>Salir</button>
+        </nav>
+      </div>
+
+      <div className="main-content">
+        {/* Sección Perfil */}
+        <div className={`section ${activeSection === 'perfil' ? 'active' : ''}`}>
+          <div className="content-card">
+            <h2>Mis datos</h2>
+            <div className="form-container">
+              <div className="form-group">
+                <label>Mail</label>
+                <input 
+                  type="email" 
+                  placeholder="Mail" 
+                  className="form-input"
+                />
+              </div>
+              <div className="form-group">
+                <label>Nombre de empresa</label>
+                <input 
+                  type="text" 
+                  placeholder="Nombre de empresa" 
+                  className="form-input"
+                />
+              </div>
+              <button className="action-button">Actualizar datos</button>
+            </div>
+          </div>
         </div>
 
-        <div className="content">
-          <div id="perfil" className={`section ${activeSection === 'perfil' ? 'active' : ''}`}>
-            <h2>Mis datos</h2>
-            <form>
-              <label htmlFor="mail">Mail:</label>
-              <input type="email" id="mail" name="mail" placeholder="Mail" />
-              
-              <label htmlFor="nombre">Nombre:</label>
-              <input type="text" id="nombre" name="nombre" placeholder="Nombre" />
-              
-              <label htmlFor="apellido">Apellido:</label>
-              <input type="text" id="apellido" name="apellido" placeholder="Apellido" />
-              
-              <label htmlFor="fecha_nacimiento">Fecha nacimiento:</label>
-              <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" />
-              
-              <button type="submit">Actualizar datos</button>
-            </form>
-          </div>
-
-          <div id="autenticacion" className={`section ${activeSection === 'autenticacion' ? 'active' : ''}`}>
+        {/* Sección Autenticación */}
+        <div className={`section ${activeSection === 'autenticacion' ? 'active' : ''}`}>
+          <div className="content-card">
             <h2>Cambio de Contraseña</h2>
-            <form>
-              <label htmlFor="password_actual">Contraseña Actual:</label>
-              <input type="password" id="password_actual" name="password_actual" placeholder="Contraseña" />
-              
-              <label htmlFor="nueva_password">Nueva Contraseña:</label>
-              <input type="password" id="nueva_password" name="nueva_password" placeholder="Contraseña" />
-              
-              <label htmlFor="repetir_nueva_password">Repetir Nueva Contraseña:</label>
-              <input type="password" id="repetir_nueva_password" name="repetir_nueva_password" placeholder="Contraseña" />
-              
-              <button type="submit">Confirmar Contraseña</button>
-            </form>
+            <div className="form-container">
+              <div className="form-group">
+                <label>Contraseña Actual</label>
+                <input type="password" placeholder="Contraseña" />
+              </div>
+              <div className="form-group">
+                <label>Nueva Contraseña</label>
+                <input type="password" placeholder="Contraseña" />
+              </div>
+              <div className="form-group">
+                <label>Repetir Nueva Contraseña</label>
+                <input type="password" placeholder="Contraseña" />
+              </div>
+              <button className="action-button">Confirmar Contraseña</button>
+            </div>
           </div>
+        </div>
 
-          <div id="analisis" className={`section ${activeSection === 'analisis' ? 'active' : ''}`}>
+        {/* Sección Análisis */}
+        <div className={`section ${activeSection === 'analisis' ? 'active' : ''}`}>
+          <div className="content-card">
             <h2>Análisis de Videojuegos</h2>
             <div className="game-analysis">
               <img src="/placeholder.svg?height=100&width=100" alt="Juego 1" />
@@ -97,8 +125,11 @@ function BusinessTab() {
               </div>
             </div>
           </div>
+        </div>
 
-          <div id="misJuegos" className={`section ${activeSection === 'misJuegos' ? 'active' : ''}`}>
+        {/* Sección Mis Juegos */}
+        <div className={`section ${activeSection === 'misJuegos' ? 'active' : ''}`}>
+          <div className="content-card">
             <h2>Mis juegos</h2>
             <div className="search-bar">
               <input type="text" placeholder="Nombre del Juego" />
@@ -126,18 +157,19 @@ function BusinessTab() {
             </ul>
           </div>
         </div>
-         {/* Popup de confirmación */}
-         {showConfirmPopup && (
-          <div className="confirm-popup">
-            <div className="confirm-popup-content">
-              <h3>Atención</h3>
-              <p>¿Estás seguro que quiere {confirmAction === "eliminar" ? "eliminar" : "despublicar"} este juego?</p>
-              <button onClick={confirmActionHandler}>Sí</button>
-              <button onClick={() => setShowConfirmPopup(false)}>No</button>
-            </div>
+      </div>
+
+      {/* Popup de confirmación */}
+      {showConfirmPopup && (
+        <div className="confirm-popup">
+          <div className="confirm-popup-content">
+            <h3>Atención</h3>
+            <p>¿Estás seguro que quiere {confirmAction === "eliminar" ? "eliminar" : "despublicar"} este juego?</p>
+            <button onClick={confirmActionHandler}>Sí</button>
+            <button onClick={() => setShowConfirmPopup(false)}>No</button>
           </div>
-        )}
-      </main>
+        </div>
+      )}
     </div>
   );
 }
