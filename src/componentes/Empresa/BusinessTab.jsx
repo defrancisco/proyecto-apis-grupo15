@@ -214,6 +214,35 @@ function BusinessTab() {
     }
   };
 
+  const handlePublishUnpublish = async (gameId, isPublished) => {
+    try {
+      const action = isPublished ? 'unpublish' : 'publish';
+      const response = await fetch(`http://localhost:3000/api/business/games/${gameId}/${action}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error al ${isPublished ? 'despublicar' : 'publicar'} el juego`);
+      }
+
+      // Actualizar el estado local de los juegos
+      setGames(games.map(game => {
+        if (game.id === gameId) {
+          return { ...game, isPublished: !isPublished };
+        }
+        return game;
+      }));
+
+    } catch (error) {
+      console.error('Error:', error);
+      alert(error.message);
+    }
+  };
+
   return (
     <div className="business-tab-container">
       <div className="sidebar">
@@ -377,7 +406,7 @@ function BusinessTab() {
                     <Link to={`/businessTab/modificacionJuego/${game.id}`}>
                       <button>Editar</button>
                     </Link>
-                    <button onClick={() => handleDeleteOrArchive(game.isPublished ? "despublicar" : "publicar", game.id)}>
+                    <button onClick={() => handlePublishUnpublish(game.id, game.isPublished)}>
                       {game.isPublished ? 'Despublicar' : 'Publicar'}
                     </button>
                     <button onClick={() => handleDeleteOrArchive("eliminar", game.id)}>
