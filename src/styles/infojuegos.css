@@ -4,17 +4,13 @@
   margin: 0 auto;
 }
 
-/* Sección de contenido */
 .infojuego-content {
   display: flex;
   align-items: center;
-  /* Centra verticalmente imagen y detalles */
   gap: 60px;
-  /* Mayor separación entre la imagen y los detalles */
   margin-bottom: 40px;
 }
 
-/* Estilos para la imagen del juego */
 .infojuego-image-section {
   flex: 0.5;
 }
@@ -22,21 +18,17 @@
 .infojuego-image-section img {
   width: 100%;
   max-width: 400px;
-  /* Tamaño máximo de la imagen */
   height: auto;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  /* Sombra para darle profundidad */
 }
 
-/* Sección de detalles del juego */
 .infojuego-details-section {
   flex: 1;
 }
 
 .game-title {
   font-size: 28px;
-  /* Texto más grande */
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -61,13 +53,11 @@
 .button-group {
   display: flex;
   gap: 15px;
-  /* Mayor separación entre botones */
   margin-bottom: 20px;
 }
 
 .btn {
   padding: 12px 18px;
-  /* Tamaño más grande para los botones */
   font-size: 16px;
   cursor: pointer;
   border: none;
@@ -84,14 +74,12 @@
   color: white;
 }
 
-/* Sección de descripción */
 .description-section {
   margin-top: 20px;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
-  /* Fondo más claro */
 }
 
 
@@ -104,6 +92,7 @@
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
+  background-color: white;
 }
 
 .create-review-btn {
