@@ -16,6 +16,7 @@ function BusinessTab() {
     confirmPassword: ''
   });
   const [games, setGames] = useState([]);
+  const [analytics, setAnalytics] = useState([]);
 
   useEffect(() => {
     const sectionId = window.location.hash.substring(1);
@@ -77,6 +78,32 @@ function BusinessTab() {
 
     if (activeSection === 'misJuegos') {
       fetchGames();
+    }
+  }, [activeSection]);
+
+  useEffect(() => {
+    const fetchAnalytics = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/business/games/analytics', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Error al obtener analytics');
+        }
+        
+        const data = await response.json();
+        setAnalytics(data);
+      } catch (error) {
+        console.error('Error al cargar analytics:', error);
+      }
+    };
+
+    if (activeSection === 'analisis') {
+      fetchAnalytics();
     }
   }, [activeSection]);
 
@@ -291,14 +318,33 @@ function BusinessTab() {
         <div className={`section ${activeSection === 'analisis' ? 'active' : ''}`}>
           <div className="content-card">
             <h2>Análisis de Videojuegos</h2>
-            <div className="game-analysis">
-              <img src="/placeholder.svg?height=100&width=100" alt="Juego 1" />
-              <div className="game-info-1">
-                <h3>Nombre del juego</h3>
-                <p>Visualizaciones: 1</p>
-                <p>Compras: 1</p>
-                <p>Deseados: 1</p>
-              </div>
+            <div className="analytics-container">
+              {analytics.map(game => (
+                <div key={game.id} className="game-analysis">
+                  <img 
+                    src={`http://localhost:3000/api/games/${game.id}/image`} 
+                    alt={game.name} 
+                    style={{width: '100px', height: '100px', objectFit: 'cover'}}
+                  />
+                  <div className="game-info">
+                    <h3>{game.name}</h3>
+                    <div className="stats">
+                      <div className="stat-item">
+                        <span className="stat-label">Visualizaciones:</span>
+                        <span className="stat-value">{game.views}</span>
+                      </div>
+                      <div className="stat-item">
+                        <span className="stat-label">Compras:</span>
+                        <span className="stat-value">{game.purchases}</span>
+                      </div>
+                      <div className="stat-item">
+                        <span className="stat-label">Lista de deseos:</span>
+                        <span className="stat-value">{game.wishlistCount}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
