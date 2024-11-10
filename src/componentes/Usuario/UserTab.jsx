@@ -36,6 +36,7 @@ function UserTab() {
         
         if (response.ok) {
           const data = await response.json();
+          console.log('Datos recibidos:', data);
           setProfileData({
             email: data.email,
             name: data.name,
@@ -75,6 +76,8 @@ function UserTab() {
         surname: profileData.lastName,
         dateOfBirth: profileData.birthDate
       };
+
+      console.log('Datos a enviar:', userData);
 
       const response = await fetch('http://localhost:3000/api/users/profile/individual', {
         method: 'PUT',
