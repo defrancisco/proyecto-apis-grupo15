@@ -67,3 +67,16 @@ form {
     text-align: center;
 }
 
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.main-content {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+}
+
