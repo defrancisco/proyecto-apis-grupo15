@@ -233,7 +233,6 @@ const publishGame = async (req, res) => {
 
 const getBusinessGames = async (req, res) => {
   try {
-    console.log('Usuario autenticado:', req.user); // Para depuración
     const developerId = req.user.userId;
 
     const games = await Game.findAll({
@@ -245,13 +244,12 @@ const getBusinessGames = async (req, res) => {
         'isPublished',
         'imageType',
         'imageData',
+        'operatingSystem',
         'createdAt',
         'updatedAt'
       ],
       order: [['createdAt', 'DESC']]
     });
-
-    console.log('Juegos encontrados:', games.length); // Para depuración
     
     const formattedGames = games.map(game => ({
       ...game.toJSON(),
@@ -269,6 +267,56 @@ const getBusinessGames = async (req, res) => {
   }
 };
 
+const getGameById = async (req, res) => {
+  try {
+    const { gameId } = req.params;
+    const developerId = req.user.userId;
+
+    const game = await Game.findOne({
+      where: { 
+        id: gameId,
+        developerId 
+      },
+      attributes: [
+        'id',
+        'name',
+        'categories',
+        'price',
+        'languages',
+        'description',
+        'minRequirements',
+        'recommendedRequirements',
+        'operatingSystem',
+        'imageType',
+        'imageData',
+        'isPublished'
+      ]
+    });
+
+    if (!game) {
+      return res.status(404).json({ message: 'Juego no encontrado' });
+    }
+
+    res.json({
+      id: game.id,
+      name: game.name,
+      categories: game.categories,
+      price: game.price,
+      languages: game.languages,
+      description: game.description,
+      minRequirements: game.minRequirements,
+      recommendedRequirements: game.recommendedRequirements,
+      operatingSystem: game.operatingSystem,
+      isPublished: game.isPublished
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      message: 'Error obteniendo detalles del juego', 
+      error: error.message 
+    });
+  }
+};
+
 module.exports = {
   createGame,
   updateGame,
@@ -276,5 +324,6 @@ module.exports = {
   getGameAnalytics,
   unpublishGame,
   publishGame,
-  getBusinessGames
+  getBusinessGames,
+  getGameById
 };

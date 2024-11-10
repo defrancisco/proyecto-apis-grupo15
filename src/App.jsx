@@ -87,12 +87,10 @@ const router = createBrowserRouter([
                     <CheckWrapper allowedAccountType="business">
                         <BusinessTab />
                     </CheckWrapper>
-                ),
-                children: [
-                    { path: "businessTab/:creacionVideojuego", element: <CreacionVideojuego /> },
-                    { path: "businessTab/:modificacionVideoJuego", element: <ModificacionVideojuego /> }
-                ]
+                )
             },
+            { path: "businessTab/creacionVideojuego", element: <CreacionVideojuego /> },
+            { path: "businessTab/modificacionJuego/:id", element: <ModificacionVideojuego /> }
         ]
     },
 ]);
