@@ -18,8 +18,6 @@ const swaggerSpec = require('./config/swagger'); // Importa el archivo que confi
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
-
-
 // Otros middlewares y configuraciones
 app.use('/uploads', express.static('uploads'));
 
