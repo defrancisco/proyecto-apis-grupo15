@@ -12,7 +12,8 @@ const getAllGames = async (req, res) => {
       maxPrice, 
       sortBy = 'name',
       order = 'ASC',
-      search
+      search,
+      operatingSystem
     } = req.query;
 
     let whereClause = { isPublished: true };
@@ -32,6 +33,17 @@ const getAllGames = async (req, res) => {
       whereClause.price = {};
       if (minPrice) whereClause.price[Op.gte] = minPrice;
       if (maxPrice) whereClause.price[Op.lte] = maxPrice;
+    }
+
+    // Filtro por sistema operativo
+    if (operatingSystem) {
+      const osArray = Array.isArray(operatingSystem) 
+        ? operatingSystem 
+        : operatingSystem.split(',');
+
+      whereClause.operatingSystem = {
+        [Op.or]: osArray.map(os => ({ [Op.like]: `%${os}%` }))
+      };
     }
 
     // Búsqueda por nombre

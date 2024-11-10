@@ -4,6 +4,7 @@
   gap: 40px;
   padding: 20px;
   min-height: 80vh;
+  align-items: flex-start;
 }
 
 .catalog-content {
@@ -17,7 +18,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
-  
+  min-height: 500px;
 }
 
 .videogames div {
@@ -59,11 +60,17 @@
   font-size: 16px;
 }
 
+.search-bar button:hover {
+  background-color: #333;
+}
+
 .filter-bar {
   width: 250px;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  position: sticky;
+  top: 20px;
 }
 
 .filter-btn {

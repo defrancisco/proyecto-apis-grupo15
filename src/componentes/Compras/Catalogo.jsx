@@ -24,11 +24,17 @@ const Catalogo = () => {
     try {
       let queryParams = new URLSearchParams();
 
-      // Agregar filtros a los parámetros de consulta
+      // Agregar filtros de categoría, sistema operativo e idiomas a la consulta
       if (filters.category.length) queryParams.append('category', filters.category.join(','));
-      if (filters.minPrice) queryParams.append('minPrice', filters.minPrice);
-      if (filters.maxPrice) queryParams.append('maxPrice', filters.maxPrice);
-      if (filters.search) queryParams.append('search', filters.search);
+      if (filters.operatingSystem.length) queryParams.append('operatingSystem', filters.operatingSystem.join(','));
+      if (filters.languages.length) queryParams.append('languages', filters.languages.join(','));
+
+      // Agregar filtros de precio
+      if (filters.minPrice !== null) queryParams.append('minPrice', filters.minPrice);
+      if (filters.maxPrice !== null) queryParams.append('maxPrice', filters.maxPrice);
+
+      // Agregar filtro de búsqueda
+      if (filters.search.trim() !== '') queryParams.append('search', filters.search);
 
       const response = await fetch(`http://localhost:3000/api/games?${queryParams}`);
       const data = await response.json();
