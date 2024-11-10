@@ -7,7 +7,7 @@ export default function Videojuego(props) {
       <div className="Videojuego">
         <img src={props.image} alt={props.title} />
         <p>{props.title}</p>
-        <p>{props.price}</p>
+        <p>${props.price}</p>
       </div>
     </div>
   )
