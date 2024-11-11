@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../../styles/infojuegos.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function Juego() {
     const { id } = useParams();
