@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import '../../styles/infojuegos.css';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function Juego() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
     const [userType, setUserType] = useState(null);
@@ -169,8 +170,8 @@ function Juego() {
                         <p>Review body</p>
                     </div>
                 </div>
-
-                <button type="button" className="btn create-review-btn">Crear Reseña</button>
+                <button type="button" className="btn create-review-btn"
+                onClick={() => navigate(`/juego/${game.id}/reseña`)}>Crear Reseña</button>
             </div>
         </div>
     )
