@@ -52,12 +52,6 @@ function Checkout() {
 
   const handlePurchase = async () => {
     try {
-      // Validar que los campos del método de pago estén completos
-      if (!paymentData.cardNumber || !paymentData.cardHolderName || !paymentData.expiryDate || !paymentData.cvv) {
-        alert('Por favor complete todos los campos del método de pago');
-        return;
-      }
-
       const response = await fetch('http://localhost:3000/api/cart/checkout', {
         method: 'POST',
         headers: {
@@ -66,11 +60,8 @@ function Checkout() {
       });
 
       if (response.ok) {
-        // Mostrar un mensaje más atractivo
-        const result = await response.json();
-        alert(`¡Compra realizada exitosamente!\nSe compraron ${result.purchasedItems} juegos.`);
-        
-        // Redirigir al usuario a la página de juegos
+        alert('¡Compra realizada exitosamente!');
+        // Redirigir al usuario a la página principal o de juegos
         navigate('/games');
       } else {
         const error = await response.json();
