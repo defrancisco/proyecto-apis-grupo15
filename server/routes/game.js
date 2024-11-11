@@ -35,7 +35,7 @@ router.get('/:gameId/image', async (req, res) => {
 });
 router.post('/:gameId/views', incrementGameViews);
 router.use(authenticateToken);
-router.post('/reviews', createReview);
+router.post('/:gameId/reviews', createReview);
 router.put('/reviews/:reviewId', updateReview);
 router.delete('/reviews/:reviewId', deleteReview);
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../../styles/infojuegos.css';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 function Juego() {
     const { id } = useParams();
@@ -178,8 +178,8 @@ function Juego() {
                         <p>Review body</p>
                     </div>
                 </div>
-
-                <button type="button" className="btn create-review-btn">Crear Reseña</button>
+                <button type="button" className="btn create-review-btn"
+                onClick={() => navigate(`/juego/${game.id}/reseña`)}>Crear Reseña</button>
             </div>
         </div>
     )

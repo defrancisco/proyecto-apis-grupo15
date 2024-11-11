@@ -33,7 +33,9 @@ import ModificacionVideojuego from "./componentes/Empresa/ModificacionJuego.jsx"
 import RegistroEmpresa from "./componentes/Empresa/RegistroEmpresa.jsx";
 import CreacionVideojuego from "./componentes/Empresa/CreacionJuego.jsx";
 
-// Contexto de Autenticación
+// Nuevo componente Endpoints
+import Endpoints from "./componentes/Endpoints.jsx"; // Asegúrate de tener esta ruta correcta
+
 
 const router = createBrowserRouter([
     {
@@ -54,11 +56,8 @@ const router = createBrowserRouter([
             { path: "consolas", element: <Consolas /> },
             { path: "contacto", element: <ContactForm /> },
             { path: "catalogo", element: <Catalogo /> },
-            { path: "juego/:id", element: <Juego />, 
-                children: [
-                    {path: "juego/:id/reseña", element: <Reseña />}
-                ]
-            },
+            { path: "juego/:id", element: <Juego />, },
+            { path: "juego/:id/reseña", element: <Reseña /> },
             { path: "carrito", element: <Carrito />,
                 children: [
                     { path: "carrito/:checkout", element: <Checkout /> },
@@ -96,7 +95,12 @@ const router = createBrowserRouter([
                 )
             },
             { path: "businessTab/creacionVideojuego", element: <CreacionVideojuego /> },
-            { path: "businessTab/modificacionJuego/:id", element: <ModificacionVideojuego /> }
+            { path: "businessTab/modificacionJuego/:id", element: <ModificacionVideojuego /> },
+            
+            // Nueva ruta para Endpoints
+            { path: "endpoints", element: <Endpoints /> }
+    
+        
         ]
     },
 ]);
