@@ -4,7 +4,7 @@ import '../../styles/metododepago.css';
 
 function Checkout() {
   const location = useLocation();
-  const { cartItems = [], summary = { 
+  const { summary = { 
     subtotal: 0, 
     tax: 0, 
     total: 0 } } = location.state || {};
@@ -12,7 +12,7 @@ function Checkout() {
 
   return (
     <div>
-      <div className="payment-method">
+      <div className="payment">
         <div className="content">
           <div className="payment-box">
             <h5>Método de Pago</h5>

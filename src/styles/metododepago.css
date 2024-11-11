@@ -1,4 +1,4 @@
-.payment-method {
+.payment {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -100,12 +100,4 @@
 
 .btn-transaction:hover {
     background-color: #cc0010;
-}
-
-.footer {
-    text-align: center;
-    padding: 1rem;
-    font-size: 0.875rem;
-    color: #666;
-    border-top: 1px solid #e0e0e0;
 }
