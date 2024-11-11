@@ -26,11 +26,10 @@ swaggerDocs(app);
 // Middlewares
 app.use(express.json());
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3001'],
+  origin: ['https://tu-frontend-url.onrender.com', process.env.FRONTEND_URL],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-  exposedHeaders: ['Access-Control-Allow-Origin']
+  credentials: true
 }));
 app.use('/uploads', express.static('uploads'));
 

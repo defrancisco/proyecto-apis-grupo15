@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: nintendo-api
+    env: node
+    buildCommand: npm install
+    startCommand: node server/app.js
