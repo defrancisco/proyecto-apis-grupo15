@@ -7,7 +7,8 @@ const {
   getGameReviews,
   updateReview,
   deleteReview,
-  getGameById
+  getGameById,
+  incrementGameViews
 } = require('../controllers/gameController');
 const Game = require('../models/game');
 
@@ -32,6 +33,7 @@ router.get('/:gameId/image', async (req, res) => {
     });
   }
 });
+router.post('/:gameId/views', incrementGameViews);
 router.use(authenticateToken);
 router.post('/reviews', createReview);
 router.put('/reviews/:reviewId', updateReview);

@@ -97,8 +97,8 @@ const addToWishlist = async (req, res) => {
       addedAt: new Date()
     });
 
-    // Incrementar el contador de wishlist del juego
-    await Game.increment('wishlistCount', { where: { id: gameId } });
+    // Incrementar el contador de wishlist y views del juego
+    await Game.increment(['wishlistCount', 'views'], { where: { id: gameId } });
 
     res.status(201).json({ message: 'Juego agregado a la lista de deseos exitosamente' });
   } catch (error) {

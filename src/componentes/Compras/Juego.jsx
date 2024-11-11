@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import '../../styles/infojuegos.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function Juego() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
     const [userType, setUserType] = useState(null);
@@ -26,6 +27,7 @@ function Juego() {
                 console.log(data);
                 setGame(data);
                 setLoading(false);
+
             })
             .catch((error) => {
                 console.error(error);
@@ -105,6 +107,13 @@ function Juego() {
     return (
         <div>
             <div className="infojuego-container">
+                <button 
+                    onClick={() => navigate(-1)} 
+                    className="back-button"
+                >
+                    ← Volver
+                </button>
+                
                 <div className="infojuego-content">
                     <div className="infojuego-image-section">
                     <img src={`http://localhost:3000/api/games/${game.id}/image`} alt={game.name} />

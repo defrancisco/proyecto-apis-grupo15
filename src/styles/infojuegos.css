@@ -122,3 +122,21 @@
     text-align: center;
     margin: 10px 0;
 }
+
+.back-button {
+    position: absolute;
+    top: 80px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #E60012;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #cc0010;
+}

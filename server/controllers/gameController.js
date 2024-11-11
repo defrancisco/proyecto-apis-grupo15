@@ -264,11 +264,25 @@ const getGameById = async (req, res) => {
     }
 };
 
+const incrementGameViews = async (req, res) => {
+  try {
+    const { gameId } = req.params;
+    await Game.increment('views', { where: { id: gameId } });
+    res.json({ message: 'Views incremented successfully' });
+  } catch (error) {
+    res.status(500).json({ 
+      message: 'Error incrementando vistas', 
+      error: error.message 
+    });
+  }
+};
+
 module.exports = {
   getAllGames,
   createReview,
   getGameReviews,
   updateReview,
   deleteReview,
-  getGameById
+  getGameById,
+  incrementGameViews
 };
