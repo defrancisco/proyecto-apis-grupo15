@@ -11,6 +11,7 @@ const {
     addToCartFromWishlist,
     updatePassword,
     getWishlist,
+    getPaymentMethod,
 } = require('../controllers/userController');
 
 router.get('/profile', authenticateToken, getUserProfile);
@@ -21,5 +22,6 @@ router.put('/payment-method', authenticateToken, updatePaymentMethod);
 router.post('/cart/from-wishlist/:userId/:gameId', authenticateToken, addToCartFromWishlist);
 router.put('/update-password', authenticateToken, updatePassword);
 router.get('/wishlist', authenticateToken, getWishlist);
+router.get('/payment-method', authenticateToken, getPaymentMethod);
 
 module.exports = router;

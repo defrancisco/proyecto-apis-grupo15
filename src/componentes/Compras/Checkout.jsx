@@ -1,14 +1,86 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../../styles/metododepago.css';
 
 function Checkout() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { summary = { 
     subtotal: 0, 
     tax: 0, 
     total: 0 } } = location.state || {};
 
+  const [paymentData, setPaymentData] = useState({
+    cardNumber: '',
+    cardHolderName: '',
+    expiryDate: '',
+    cvv: ''
+  });
+
+  useEffect(() => {
+    const fetchPaymentMethod = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/users/payment-method', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          setPaymentData({
+            cardNumber: data.cardNumber || '',
+            cardHolderName: data.cardHolderName || '',
+            expiryDate: data.cardExpirationDate || '',
+            cvv: ''
+          });
+        }
+      } catch (error) {
+        console.error('Error al cargar método de pago:', error);
+      }
+    };
+
+    fetchPaymentMethod();
+  }, []);
+
+  const handleInputChange = (e) => {
+    setPaymentData({
+      ...paymentData,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  const handlePurchase = async () => {
+    try {
+      // Validar que los campos del método de pago estén completos
+      if (!paymentData.cardNumber || !paymentData.cardHolderName || !paymentData.expiryDate || !paymentData.cvv) {
+        alert('Por favor complete todos los campos del método de pago');
+        return;
+      }
+
+      const response = await fetch('http://localhost:3000/api/cart/checkout', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      if (response.ok) {
+        // Mostrar un mensaje más atractivo
+        const result = await response.json();
+        alert(`¡Compra realizada exitosamente!\nSe compraron ${result.purchasedItems} juegos.`);
+        
+        // Redirigir al usuario a la página de juegos
+        navigate('/games');
+      } else {
+        const error = await response.json();
+        alert(error.message || 'Error al procesar la compra');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al procesar la compra');
+    }
+  };
 
   return (
     <div>
@@ -19,20 +91,48 @@ function Checkout() {
             <form>
               <div className="form-group">
                 <label htmlFor="card-number">Número de Tarjeta</label>
-                <input type="text" className="form-control" id="card-number" placeholder="Ingrese los números" />
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  id="cardNumber" 
+                  placeholder="Ingrese los números"
+                  value={paymentData.cardNumber}
+                  onChange={handleInputChange}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="cardholder-name">Nombre del Titular (como aparece en la tarjeta)</label>
-                <input type="text" className="form-control" id="cardholder-name" placeholder="Nombre" />
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  id="cardHolderName" 
+                  placeholder="Nombre"
+                  value={paymentData.cardHolderName}
+                  onChange={handleInputChange}
+                />
               </div>
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="expiry-date">Fecha de vencimiento</label>
-                  <input type="text" className="form-control" id="expiry-date" placeholder="dd/yy" />
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    id="expiryDate" 
+                    placeholder="dd/yy"
+                    value={paymentData.expiryDate}
+                    onChange={handleInputChange}
+                  />
                 </div>
                 <div className="form-group">
                   <label htmlFor="cvv">Código de Seguridad</label>
-                  <input type="text" className="form-control" id="cvv" placeholder="***" />
+                  <input 
+                    type="password" 
+                    className="form-control" 
+                    id="cvv" 
+                    placeholder="***"
+                    value={paymentData.cvv}
+                    onChange={handleInputChange}
+                  />
                 </div>
               </div>
             </form>
@@ -53,7 +153,12 @@ function Checkout() {
                 <strong>${summary.total.toFixed(2)}</strong>
               </li>
             </ul>
-            <button className="btn-transaction">Comprar</button>
+            <button 
+              className="btn-transaction" 
+              onClick={handlePurchase}
+            >
+              Comprar
+            </button>
           </div>
         </div>
       </div>

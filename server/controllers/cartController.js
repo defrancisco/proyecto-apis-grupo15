@@ -112,9 +112,54 @@ const removeFromCart = async (req, res) => {
   }
 };
 
+const processCheckout = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    
+    // Obtener todos los items del carrito
+    const cartItems = await Cart.findAll({
+      where: { userId },
+      include: [{ model: Game }]
+    });
+
+    if (cartItems.length === 0) {
+      return res.status(400).json({ 
+        message: 'El carrito está vacío' 
+      });
+    }
+
+    // Incrementar purchases para cada juego y guardar historial
+    for (const item of cartItems) {
+      await Game.increment('purchases', { 
+        where: { id: item.gameId }
+      });
+
+      // Aquí podrías guardar el historial de compras si lo necesitas
+    }
+
+    // Vaciar el carrito
+    await Cart.destroy({
+      where: { userId }
+    });
+
+    res.json({ 
+      message: 'Compra realizada exitosamente',
+      purchasedItems: cartItems.length
+    });
+
+  } catch (error) {
+    console.error('Error en checkout:', error);
+    res.status(500).json({ 
+      message: 'Error al procesar la compra', 
+      error: error.message 
+    });
+  }
+};
+
 module.exports = {
   getCart,
   addToCart,
   updateCartItem,
-  removeFromCart
+  removeFromCart,
+  processCheckout
 };

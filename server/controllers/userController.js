@@ -281,6 +281,30 @@ const getWishlist = async (req, res) => {
     }
 };
 
+const getPaymentMethod = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const user = await User.findByPk(userId, {
+      attributes: ['cardNumber', 'cardHolderName', 'cardExpirationDate']
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    res.json({
+      cardNumber: user.cardNumber || '',
+      cardHolderName: user.cardHolderName || '',
+      cardExpirationDate: user.cardExpirationDate || ''
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      message: 'Error al obtener método de pago', 
+      error: error.message 
+    });
+  }
+};
+
 module.exports = {
   getUserProfile,
   getBusinessProfile,
@@ -290,5 +314,6 @@ module.exports = {
   updatePaymentMethod,
   addToCartFromWishlist,
   updatePassword,
-  getWishlist
+  getWishlist,
+  getPaymentMethod
 };

@@ -82,6 +82,34 @@ function UserTab() {
     }
   }, [activeSection]);
 
+  useEffect(() => {
+    const fetchPaymentMethod = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/users/payment-method', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          setPaymentData({
+            number: data.cardNumber || '',
+            name: data.cardHolderName || '',
+            expiryDate: data.cardExpirationDate || '',
+            cvv: ''  // Por seguridad, el CVV nunca se devuelve
+          });
+        }
+      } catch (error) {
+        console.error('Error al cargar método de pago:', error);
+      }
+    };
+
+    if (activeSection === 'mediosPago') {
+      fetchPaymentMethod();
+    }
+  }, [activeSection]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfileData(prev => ({

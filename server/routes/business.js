@@ -21,7 +21,12 @@ router.use(isBusinessUser);
 // Rutas para gestión de juegos
 router.get('/games', getBusinessGames);
 router.post('/games', upload.single('imagen'), createGame);
-router.put('/games/:gameId', authenticateToken, upload.single('imagen'), updateGame);
+router.put('/games/:gameId', 
+  authenticateToken, 
+  isBusinessUser,
+  upload.single('imagen'),
+  updateGame
+);
 router.delete('/games/:gameId', deleteGame);
 router.get('/games/analytics', getGameAnalytics);
 router.put('/games/:gameId/unpublish', unpublishGame);

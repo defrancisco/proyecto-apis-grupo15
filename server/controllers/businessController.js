@@ -75,17 +75,6 @@ const updateGame = async (req, res) => {
   try {
     const { gameId } = req.params;
     const developerId = req.user.userId;
-    const {
-      name,
-      categories,
-      price,
-      description,
-      operatingSystem,
-      languages,
-      players,
-      minRequirements,
-      recommendedRequirements
-    } = req.body;
 
     const game = await Game.findOne({
       where: { 
@@ -96,32 +85,38 @@ const updateGame = async (req, res) => {
 
     if (!game) {
       return res.status(404).json({ 
-        message: 'Game not found or you do not have permission to modify it' 
+        message: 'Juego no encontrado o no tienes permisos para modificarlo' 
       });
     }
 
-    const imagePath = req.file ? req.file.path : game.imagePath;
+    // Actualizar la imagen si se proporciona una nueva
+    if (req.file) {
+      await game.update({
+        imageData: req.file.buffer,
+        imageType: req.file.mimetype
+      });
+    }
 
+    // Actualizar los demás campos
     await game.update({
-      name,
-      categories,
-      price,
-      description,
-      operatingSystem,
-      languages,
-      players,
-      minRequirements,
-      recommendedRequirements,
-      imagePath
+      name: req.body.name,
+      categories: req.body.category,
+      price: req.body.price,
+      description: req.body.description,
+      operatingSystem: req.body.operatingSystem,
+      languages: req.body.language,
+      minRequirements: req.body.minRequirements,
+      recommendedRequirements: req.body.recommendedRequirements
     });
 
     res.json({ 
-      message: 'Game updated successfully', 
-      game 
+      message: 'Juego actualizado exitosamente',
+      hasImage: !!game.imageData
     });
   } catch (error) {
+    console.error('Error en updateGame:', error);
     res.status(500).json({ 
-      message: 'Error updating game', 
+      message: 'Error al actualizar el juego', 
       error: error.message 
     });
   }

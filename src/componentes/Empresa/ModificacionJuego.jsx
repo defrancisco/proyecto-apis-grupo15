@@ -81,7 +81,6 @@ function ModificacionVideojuego() {
     e.preventDefault();
     const form = new FormData();
     
-    // Mapear los nombres de campos del frontend al backend
     form.append('name', gameData.nombre);
     form.append('category', gameData.categoria);
     form.append('price', gameData.precio);
@@ -105,14 +104,15 @@ function ModificacionVideojuego() {
       });
 
       if (response.ok) {
-        console.log('Juego actualizado exitosamente');
+        alert('Juego actualizado exitosamente');
         navigate('/businessTab#misJuegos');
       } else {
         const error = await response.json();
-        console.error('Error al actualizar el juego:', error);
+        alert(`Error al actualizar el juego: ${error.message}`);
       }
     } catch (error) {
       console.error('Error:', error);
+      alert('Error al actualizar el juego');
     }
   };
 
