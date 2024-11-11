@@ -19,7 +19,7 @@ export const LoginCuenta = () => {
     // Ejecuta la validación del formulario al montar el componente
     useEffect(() => {
         formValidation();
-    }, []);
+    }, []); // Solo se ejecuta al montar el componente
 
     const handleEmailSubmit = async (email) => {
         try {
@@ -132,6 +132,13 @@ export const LoginCuenta = () => {
 
             if (response.ok) {
                 alert('Contraseña actualizada exitosamente');
+                // Limpiar todos los estados
+                setEmail('');
+                setPassword('');
+                setCode(Array(6).fill(""));
+                setStep(1);
+                setIsRecoveringPassword(false);
+                // Redirigir al login
                 navigate('/iniciarSesion/loginCuenta');
             } else {
                 alert(data.message || 'Error al cambiar la contraseña');
@@ -142,14 +149,36 @@ export const LoginCuenta = () => {
         }
     };
 
+    const handleBack = () => {
+        if (step > 1) {
+            setStep(step - 1);
+        } else {
+            setIsRecoveringPassword(false);
+            setStep(1);
+        }
+    };
+
     const renderStep = () => {
         switch (step) {
             case 1:
-                return <RecuperarContraseña onSubmit={handleEmailSubmit} onResend={handleResendCode} />;
+                return <RecuperarContraseña 
+                    onSubmit={handleEmailSubmit} 
+                    onResend={handleResendCode}
+                    onBack={() => setIsRecoveringPassword(false)}
+                />;
             case 2:
-                return <VerificacionIdentidad code={code} onCodeChange={handleCodeChange} onSubmit={handleCodeSubmit} />;
+                return <VerificacionIdentidad 
+                    code={code} 
+                    onCodeChange={handleCodeChange} 
+                    onSubmit={handleCodeSubmit}
+                    onResend={handleResendCode}
+                    onBack={() => setStep(1)}
+                />;
             case 3:
-                return <CambioContraseña onSubmit={handlePasswordSubmit} />;
+                return <CambioContraseña 
+                    onSubmit={handlePasswordSubmit}
+                    onBack={() => setStep(2)}
+                />;
             default:
                 return null;
         }

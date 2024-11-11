@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/headeryfooter.css'; 
 import logo from './imagenes/logo.png';
 import shoppingcart from './imagenes/shoppingcart.jpg';
@@ -8,6 +8,13 @@ import { useAuth } from '../routes/AuthContext';
 
 function Header() {
     const { auth, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLoginClick = () => {
+        navigate('/iniciarSesion/loginCuenta');
+        // Forzar recarga del componente
+        window.location.reload();
+    };
 
     const renderNavLinks = () => {
         // Enlaces básicos que siempre se muestran

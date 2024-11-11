@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../routes/AuthContext';
 import '../../../styles/usuario/verificacionID.css';
 
-const VerificacionIdentidad = ({ code, onCodeChange, onSubmit, onResend }) => {
+const VerificacionIdentidad = ({ code, onCodeChange, onSubmit, onResend, onBack }) => {
     const handleInputChange = (index, value) => {
         if (value.length <= 1 && /^\d*$/.test(value)) {
             const newCode = [...code];
@@ -27,6 +27,9 @@ const VerificacionIdentidad = ({ code, onCodeChange, onSubmit, onResend }) => {
 
     return (
         <div className="form">
+            <button className="back-btn" onClick={onBack}>
+                ← Volver
+            </button>
             <h1>Verificación de Identidad</h1>
             <p>Ingrese el código de 6 dígitos enviado a su email</p>
             <div className="code-input">
