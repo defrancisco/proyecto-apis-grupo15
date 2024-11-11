@@ -36,19 +36,23 @@ function Reseña() {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 },
-                body: JSON.stringify({ rating, content }),
+                body: JSON.stringify({ 
+                    gameId: id,  
+                    rating, 
+                    content 
+                }),
             });
 
             if (response.ok) {
                 alert('Reseña enviada con éxito');
-                setRating(0);
-                setContent('');
+                window.history.back(); 
             } else {
-                throw new Error('Error al enviar la reseña');
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Error al enviar la reseña');
             }
         } catch (error) {
             console.error(error);
-            alert('Ocurrió un error al enviar la reseña.');
+            alert(error.message || 'Ocurrió un error al enviar la reseña.');
         }
     };
 

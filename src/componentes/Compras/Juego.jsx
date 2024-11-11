@@ -8,6 +8,7 @@ function Juego() {
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
     const [userType, setUserType] = useState(null);
+    const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -34,6 +35,11 @@ function Juego() {
                 setGame(null);
                 setLoading(false);
             });
+
+        fetch(`http://localhost:3000/api/games/${id}/reviews`)
+            .then((response) => response.json())
+            .then((data) => setReviews(data))
+            .catch((error) => console.error('Error fetching reviews:', error));
     }, [id]);
 
     const handleAddToWishlist = async () => {
@@ -160,24 +166,23 @@ function Juego() {
                     </div>
                 </div>
 
-                <div className="reviews-section">
-                    <h4>Últimas reseñas</h4>
-                    <div className="review-entry">
-                        <h5>Review title</h5>
-                        <p>Reviewer name - Date</p>
-                        <p>Review body</p>
+                {reviews.length > 0 && (
+                    <div className="reviews-section">
+                        <h4>Últimas reseñas</h4>
+                        {reviews.map(review => (
+                            <div key={review.id} className="review-entry">
+                                <div className="rating">
+                                    {'★'.repeat(review.rating)}{'☆'.repeat(5-review.rating)}
+                                </div>
+                                <p>{review.User?.name || review.User?.businessName}</p>
+                                <p>{review.content}</p>
+                                <p className="review-date">
+                                    {new Date(review.createdAt).toLocaleDateString()}
+                                </p>
+                            </div>
+                        ))}
                     </div>
-                    <div className="review-entry">
-                        <h5>Review title</h5>
-                        <p>Reviewer name - Date</p>
-                        <p>Review body</p>
-                    </div>
-                    <div className="review-entry">
-                        <h5>Review title</h5>
-                        <p>Reviewer name - Date</p>
-                        <p>Review body</p>
-                    </div>
-                </div>
+                )}
                 <button type="button" className="btn create-review-btn"
                 onClick={() => navigate(`/juego/${game.id}/reseña`)}>Crear Reseña</button>
             </div>
