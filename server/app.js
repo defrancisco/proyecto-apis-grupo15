@@ -26,7 +26,7 @@ swaggerDocs(app);
 // Middlewares
 app.use(express.json());
 app.use(cors({
-  origin: ['https://tu-frontend-url.onrender.com', process.env.FRONTEND_URL],
+  origin: ['https://proyecto-apis-grupo15.onrender.com', process.env.FRONTEND_URL],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
