@@ -29,3 +29,35 @@ const swaggerDocs = (app) => {
 };
 
 module.exports = swaggerDocs;
+
+/**
+ * @swagger
+ * /api/contact-requests:
+ *   post:
+ *     summary: Enviar una solicitud de contacto
+ *     tags:
+ *       - Contacto
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Juan Pérez
+ *               email:
+ *                 type: string
+ *                 example: juan.perez@example.com
+ *               message:
+ *                 type: string
+ *                 example: "Hola, me gustaría obtener más información sobre su producto."
+ *     responses:
+ *       200:
+ *         description: Mensaje enviado con éxito
+ *       400:
+ *         description: Todos los campos son obligatorios
+ *       500:
+ *         description: Error en el servidor
+ */

@@ -1,35 +1,30 @@
 const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const swaggerUi = require('swagger-ui-express');
 const app = express();
+
+// Rutas
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const cartRoutes = require('./routes/cart');
 const businessRoutes = require('./routes/business');
 const gameRoutes = require('./routes/game');
+const socialRoutes = require('./routes/social');
+const contactRoutes = require('./routes/contact');
+
+
+// Base de datos y modelos
 const sequelize = require('./config/database');
-const path = require('path');
-const { User, Game, RecoveryCode, Cart, Wishlist, models, setupAssociations } = require('./models');
-const cors = require('cors');
+const { setupAssociations } = require('./models');
 
-// Swagger ~ endpoints
-const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./config/swagger'); // Importa el archivo que configuraste para Swagger
+// Configuración de Swagger
+const swaggerSpec = require('./config/swagger'); // Importa el archivo de configuración de Swagger
+const swaggerDocs = require('./config/swagger');
+swaggerDocs(app);
 
-// Configura el endpoint de Swagger UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-
-// Otros middlewares y configuraciones
-app.use('/uploads', express.static('uploads'));
-
-// Manejo de errores global
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
-});
-
+// Middlewares
 app.use(express.json());
-
-// Configurar CORS
 app.use(cors({
   origin: ['http://localhost:5173', 'http://localhost:3001'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -37,16 +32,21 @@ app.use(cors({
   credentials: true,
   exposedHeaders: ['Access-Control-Allow-Origin']
 }));
+app.use('/uploads', express.static('uploads'));
 
-// Rutas
+// Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Rutas de la API
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/business', businessRoutes);
 app.use('/api/games', gameRoutes);
+app.use('/api/social', socialRoutes); // Corregido el path para socialRoutes
+app.use('/api/', contactRoutes);
 
-// Después de las configuraciones de CORS
-app.use('/uploads', express.static('uploads'));
+
 
 // Manejo de errores global
 app.use((err, req, res, next) => {
@@ -54,14 +54,12 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong! :(' });
 });
 
-// Conexióna a la base de datos y arranque del servidor
+// Conexión a la base de datos y configuración del servidor
 const PORT = process.env.PORT || 3000;
 
-// Sincronizar modelos en orden inverso al definido en models/index.js
 const syncDatabase = async () => {
   try {
     await sequelize.sync();
-    // Configurar asociaciones
     setupAssociations();
     console.log('Database synced successfully :)');
   } catch (error) {
