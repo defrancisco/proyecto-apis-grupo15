@@ -34,7 +34,9 @@
     "build": "npm install",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "eslint": "eslint ."
+    "eslint": "eslint .",
+    "dev": "vite",
+    "preview": "vite preview"
   },
   "eslintConfig": {
     "extends": [
@@ -54,8 +56,10 @@
     ]
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.3",
     "eslint": "^8.57.1",
     "eslint-config-react-app": "^7.0.1",
-    "eslint-plugin-react": "^7.37.2"
+    "eslint-plugin-react": "^7.37.2",
+    "vite": "^5.4.10"
   }
 }
