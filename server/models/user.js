@@ -39,27 +39,20 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING(200)
   },
   cardNumber: {
-    type: DataTypes.STRING(16),
-    validate: {
-      isNumeric: true,
-      len: [16, 16]
-    }
+    type: DataTypes.STRING,
+    allowNull: true
   },
   cardHolderName: {
-    type: DataTypes.STRING(100)
+    type: DataTypes.STRING,
+    allowNull: true
   },
   cardExpirationDate: {
-    type: DataTypes.STRING(5), // Formato: MM/YY
-    validate: {
-      is: /^(0[1-9]|1[0-2])\/([0-9]{2})$/
-    }
+    type: DataTypes.STRING,
+    allowNull: true
   },
   cardSecurityCode: {
-    type: DataTypes.STRING(3),
-    validate: {
-      isNumeric: true,
-      len: [3, 3]
-    }
+    type: DataTypes.STRING,
+    allowNull: true
   },
   createdAt: {
     type: DataTypes.DATE,

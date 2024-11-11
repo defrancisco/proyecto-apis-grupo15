@@ -6,8 +6,15 @@ function Juego() {
     const { id } = useParams();
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [userType, setUserType] = useState(null);
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const decodedToken = JSON.parse(atob(token.split('.')[1]));
+            setUserType(decodedToken.userType);
+        }
+
         fetch(`http://localhost:3000/api/games/${id}`)
             .then((response) => {
                 if (!response.ok) {
@@ -109,20 +116,28 @@ function Juego() {
 
 
                         <div className="button-group">
-                            <button 
-                                type="button" 
-                                className="btn primary-btn"
-                                onClick={handleAddToCart}
-                            >
-                                Agregar al carrito
-                            </button>
-                            <button 
-                                type="button" 
-                                className="btn secondary-btn"
-                                onClick={handleAddToWishlist}
-                            >
-                                Agregar a la lista de deseos
-                            </button>
+                            {userType === 'individual' ? (
+                                <>
+                                    <button 
+                                        type="button" 
+                                        className="btn primary-btn"
+                                        onClick={handleAddToCart}
+                                    >
+                                        Agregar al carrito
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        className="btn secondary-btn"
+                                        onClick={handleAddToWishlist}
+                                    >
+                                        Agregar a la lista de deseos
+                                    </button>
+                                </>
+                            ) : (
+                                <p className="text-warning">
+                                    Solo usuarios individuales pueden agregar juegos al carrito o a la lista de deseos
+                                </p>
+                            )}
                         </div>
 
                         <div className="description-section">

@@ -129,13 +129,14 @@ const removeFromWishlist = async (req, res) => {
 
 const updatePaymentMethod = async (req, res) => {
   try {
-    const user = await User.findByPk(req.user.userId);
+    const userId = req.user.userId;
+    const { cardNumber, cardHolderName, cardExpirationDate, cardSecurityCode } = req.body;
+
+    const user = await User.findByPk(userId);
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    const { cardNumber, cardHolderName, cardExpirationDate, cardSecurityCode } = req.body;
-    
     await user.update({
       cardNumber,
       cardHolderName,
@@ -143,9 +144,20 @@ const updatePaymentMethod = async (req, res) => {
       cardSecurityCode
     });
 
-    res.json({ message: 'Payment method updated successfully' });
+    res.json({ 
+      message: 'Método de pago actualizado exitosamente',
+      paymentMethod: {
+        cardNumber,
+        cardHolderName,
+        cardExpirationDate
+      }
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Error updating payment method', error: error.message });
+    console.error('Error:', error);
+    res.status(500).json({ 
+      message: 'Error al actualizar el método de pago', 
+      error: error.message 
+    });
   }
 };
 

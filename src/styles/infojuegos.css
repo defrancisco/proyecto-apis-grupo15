@@ -112,3 +112,13 @@
 .create-review-btn:hover {
   background-color: #a02632;
 }
+
+.text-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    margin: 10px 0;
+}
