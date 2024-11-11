@@ -9,7 +9,7 @@ function Carrito() {
   const [summary, setSummary] = useState({
     subtotal: 0,
     tax: 0,
-    total: 0,
+    total: 0
   });
 
   useEffect(() => {
@@ -69,15 +69,15 @@ function Carrito() {
             <ul className="list">
               <li>
                 <span>Subtotal</span>
-                <span>{summary.subtotal.toFixed(2)}</span>
+                <span>${summary.subtotal.toFixed(2)}</span>
               </li>
               <li>
                 <span>Impuesto</span>
-                <span>{summary.tax.toFixed(2)}</span>
+                <span>${summary.tax.toFixed(2)}</span>
               </li>
               <li className="total">
                 <strong>Total</strong>
-                <strong>{summary.total.toFixed(2)}</strong>
+                <strong>${summary.total.toFixed(2)}</strong>
               </li>
             </ul>
             <button className="btn-transaction" onClick={checkout}>Continuar Transacción

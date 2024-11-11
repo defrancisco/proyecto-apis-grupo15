@@ -14,18 +14,16 @@ const getCart = async (req, res) => {
       }]
     });
 
-    const total = cartItems.reduce((sum, item) => sum + Number(item.subtotal), 0);
-    const shipping = 3.99;
-    const tax = Number((total * 0.08).toFixed(2));
-    const finalTotal = Number((total + shipping + tax).toFixed(2));
+    const subtotal = cartItems.reduce((sum, item) => sum + Number(item.subtotal), 0);
+    const tax = Number((subtotal * 0.08).toFixed(2));
+    const total = Number((subtotal + tax).toFixed(2));
 
     res.json({
       items: cartItems,
       summary: {
-        subtotal: total,
-        shipping,
+        subtotal: Number(subtotal.toFixed(2)),
         tax,
-        total: finalTotal
+        total
       }
     });
   } catch (error) {
@@ -116,10 +114,13 @@ const processCheckout = async (req, res) => {
   try {
     const userId = req.user.userId;
     
-    // Obtener todos los items del carrito
+    // Obtener todos los items del carrito con el alias correcto
     const cartItems = await Cart.findAll({
       where: { userId },
-      include: [{ model: Game }]
+      include: [{
+        model: Game,
+        as: 'Game'  // Especificamos el alias que definimos en el modelo
+      }]
     });
 
     if (cartItems.length === 0) {
@@ -128,13 +129,11 @@ const processCheckout = async (req, res) => {
       });
     }
 
-    // Incrementar purchases para cada juego y guardar historial
+    // Incrementar purchases para cada juego
     for (const item of cartItems) {
       await Game.increment('purchases', { 
-        where: { id: item.gameId }
+        where: { id: item.Game.id }  // Usamos item.Game.id
       });
-
-      // Aquí podrías guardar el historial de compras si lo necesitas
     }
 
     // Vaciar el carrito
