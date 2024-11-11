@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import '../../styles/infojuegos.css';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function Juego() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [userType, setUserType] = useState(null);
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const decodedToken = JSON.parse(atob(token.split('.')[1]));
+            setUserType(decodedToken.userType);
+        }
+
         fetch(`http://localhost:3000/api/games/${id}`)
             .then((response) => {
                 if (!response.ok) {
@@ -54,6 +62,38 @@ function Juego() {
         }
     };
 
+    const handleAddToCart = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Debes iniciar sesión para agregar juegos al carrito');
+                return;
+            }
+
+            const response = await fetch('http://localhost:3000/api/cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ 
+                    gameId: game.id,
+                    quantity: 1
+                })
+            });
+
+            if (response.ok) {
+                alert('Juego agregado al carrito exitosamente');
+            } else {
+                const data = await response.json();
+                throw new Error(data.message || 'Error al agregar al carrito');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert(error.message);
+        }
+    };
+
     if (loading) {
         return <p>Cargando...</p>;
     }
@@ -77,14 +117,28 @@ function Juego() {
 
 
                         <div className="button-group">
-                            <button type="button" className="btn primary-btn">Agregar al carrito</button>
-                            <button 
-                                type="button" 
-                                className="btn secondary-btn"
-                                onClick={handleAddToWishlist}
-                            >
-                                Agregar a la lista de deseos
-                            </button>
+                            {userType === 'individual' ? (
+                                <>
+                                    <button 
+                                        type="button" 
+                                        className="btn primary-btn"
+                                        onClick={handleAddToCart}
+                                    >
+                                        Agregar al carrito
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        className="btn secondary-btn"
+                                        onClick={handleAddToWishlist}
+                                    >
+                                        Agregar a la lista de deseos
+                                    </button>
+                                </>
+                            ) : (
+                                <p className="text-warning">
+                                    Solo usuarios individuales pueden agregar juegos al carrito o a la lista de deseos
+                                </p>
+                            )}
                         </div>
 
                         <div className="description-section">
@@ -116,8 +170,8 @@ function Juego() {
                         <p>Review body</p>
                     </div>
                 </div>
-
-                <button type="button" className="btn create-review-btn">Crear Reseña</button>
+                <button type="button" className="btn create-review-btn"
+                onClick={() => navigate(`/juego/${game.id}/reseña`)}>Crear Reseña</button>
             </div>
         </div>
     )

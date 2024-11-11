@@ -1,15 +1,18 @@
 import React from 'react'
 
-export default function Producto(props) {
+const Producto = ({ image, title, price, quantity, subtotal, onRemove }) => {
   return (
-    <div className="product">
-        <img src={props.image} alt={props.title} />
-        <div className="product-info">
-            <h5>{props.title}</h5>
-        </div>
-        <div className="product-price">
-            <span className="price">{props.price}</span>
-        </div>
+    <div className="cart-item">
+      <button className="remove-button" onClick={onRemove}>×</button>
+      <img src={image} alt={title} className="cart-item-image" />
+      <div className="cart-item-details">
+        <h3>{title}</h3>
+        <p>Precio unitario: ${price}</p>
+        <p>Cantidad: {quantity}</p>
+        <p>Subtotal: ${subtotal}</p>
+      </div>
     </div>
-  )
-}
+  );
+};
+
+export default Producto;

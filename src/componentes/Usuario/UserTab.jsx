@@ -17,6 +17,13 @@ function UserTab() {
     confirmPassword: ''
   });
   const [wishlist, setWishlist] = useState([]);
+  const [paymentMethod, setPaymentMethod] = useState('');
+  const [paymentData, setPaymentData] = useState({
+    number: '',
+    name: '',
+    expiryDate: '',
+    cvv: ''
+  });
 
   useEffect(() => {
     const sectionId = window.location.hash.substring(1);
@@ -189,22 +196,124 @@ function UserTab() {
 
   const handleAddToCart = async (gameId) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/users/wishlist/${gameId}/cart`, {
-        method: 'POST',
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('Debes iniciar sesión para agregar juegos al carrito');
+            return;
+        }
+
+        const response = await fetch('http://localhost:3000/api/cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ 
+                gameId: gameId,
+                quantity: 1
+            })
+        });
+
+        if (response.ok) {
+            alert('Juego agregado al carrito exitosamente');
+            // Opcional: Actualizar la wishlist después de agregar al carrito
+            const updatedWishlist = wishlist.filter(game => game.id !== gameId);
+            setWishlist(updatedWishlist);
+        } else {
+            const data = await response.json();
+            throw new Error(data.message || 'Error al agregar al carrito');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error al agregar al carrito: ' + error.message);
+    }
+};
+
+  const reloadWishlist = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/users/wishlist', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-
+      
       if (response.ok) {
-        alert('Juego agregado al carrito exitosamente');
-      } else {
-        throw new Error('Error al agregar al carrito');
+        const data = await response.json();
+        setWishlist(data.wishlist);
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('Error al agregar al carrito: ' + error.message);
+      console.error('Error al recargar la wishlist:', error);
     }
+  };
+
+  const handleUpdatePaymentMethod = async () => {
+    try {
+      // Validar los datos antes de enviar
+      if (!paymentData.number || !paymentData.name || !paymentData.expiryDate || !paymentData.cvv) {
+        alert('Por favor complete todos los campos');
+        return;
+      }
+
+      const paymentMethodData = {
+        cardNumber: paymentData.number,
+        cardHolderName: paymentData.name,
+        cardExpirationDate: paymentData.expiryDate,
+        cardSecurityCode: paymentData.cvv
+      };
+
+      const response = await fetch('http://localhost:3000/api/users/payment-method', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(paymentMethodData)
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+
+      alert('Método de pago actualizado exitosamente');
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al actualizar el método de pago: ' + error.message);
+    }
+  };
+
+  const handlePaymentChange = (e) => {
+    const { id, value } = e.target;
+    const field = id.replace('card-', '');
+    
+    let validatedValue = value;
+    
+    switch (field) {
+      case 'number':
+        // Solo permitir números y limitar a 16 dígitos
+        validatedValue = value.replace(/[^\d]/g, '').slice(0, 16);
+        break;
+      case 'name':
+        // Permitir letras, espacios y algunos caracteres especiales
+        validatedValue = value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+        break;
+      case 'expiryDate':
+        // Formato MM/YY
+        validatedValue = value.replace(/[^\d]/g, '').slice(0, 4);
+        if (validatedValue.length > 2) {
+          validatedValue = validatedValue.slice(0, 2) + '/' + validatedValue.slice(2);
+        }
+        break;
+      case 'cvv':
+        // Solo números y limitar a 3 dígitos
+        validatedValue = value.replace(/[^\d]/g, '').slice(0, 3);
+        break;
+    }
+
+    setPaymentData(prev => ({
+      ...prev,
+      [field]: validatedValue
+    }));
   };
 
   return (
@@ -359,46 +468,59 @@ function UserTab() {
         {/* Sección MediosPago */}
         <div className={`section ${activeSection === 'mediosPago' ? 'active' : ''}`}>
           <div className="content-card">
-            <h2>Métodos de Pago</h2>
-            <div className="form-container">
+            <h2>Método de Pago</h2>
+            <div className="payment-form">
               <div className="form-group">
-                <label>Número de Tarjeta</label>
+                <label htmlFor="card-number">Número de Tarjeta</label>
                 <input 
                   type="text" 
-                  name="card-number"
+                  id="card-number" 
+                  className="form-input"
                   placeholder="1234 5678 9012 3456"
-                  className="form-input"
+                  value={paymentData.number || ''}
+                  onChange={handlePaymentChange}
+                  maxLength="16"
                 />
               </div>
               <div className="form-group">
-                <label>Nombre del Titular</label>
+                <label htmlFor="card-name">Nombre en la Tarjeta</label>
                 <input 
                   type="text" 
-                  name="cardholder-name"
-                  placeholder="Nombre Apellido"
+                  id="card-name" 
                   className="form-input"
+                  placeholder="Como aparece en la tarjeta"
+                  value={paymentData.name || ''}
+                  onChange={handlePaymentChange}
                 />
               </div>
-              <div className="form-group">
-                <label>Fecha de vencimiento</label>
-                <input 
-                  type="text" 
-                  name="expiry-date"
-                  placeholder="MM/YY"
-                  className="form-input"
-                />
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="card-expiryDate">Fecha de vencimiento</label>
+                  <input 
+                    type="text" 
+                    id="card-expiryDate" 
+                    className="form-input"
+                    placeholder="MM/YY"
+                    value={paymentData.expiryDate || ''}
+                    onChange={handlePaymentChange}
+                    maxLength="5"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="card-cvv">CVV</label>
+                  <input 
+                    type="text" 
+                    id="card-cvv" 
+                    className="form-input"
+                    placeholder="***"
+                    value={paymentData.cvv || ''}
+                    onChange={handlePaymentChange}
+                    maxLength="3"
+                  />
+                </div>
               </div>
-              <div className="form-group">
-                <label>Código de Seguridad</label>
-                <input 
-                  type="password" 
-                  name="security-code"
-                  placeholder="123"
-                  className="form-input"
-                />
-              </div>
-              <button className="action-button">
-                Actualizar datos
+              <button className="action-button" onClick={handleUpdatePaymentMethod}>
+                Guardar Método de Pago
               </button>
             </div>
           </div>

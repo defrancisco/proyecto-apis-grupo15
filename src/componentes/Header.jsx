@@ -19,7 +19,7 @@ function Header() {
 
         // Enlaces adicionales para usuarios individuales
         const individualLinks = [
-            { to: auth.isAuthenticated ? "/wishlist" : "/iniciarSesion/loginCuenta", text: "Wishlist" },
+            { to: auth.isAuthenticated ? "/userTab#wishlist" : "/iniciarSesion/loginCuenta", text: "Wishlist" },
             { to: "/consolas", text: "Consolas" },
             { to: "/ayuda", text: "Ayuda" }
         ];

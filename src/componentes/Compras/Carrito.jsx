@@ -12,14 +12,47 @@ function Carrito() {
     total: 0
   });
 
+  const handleRemoveFromCart = async (gameId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/cart/${gameId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      if (response.ok) {
+        // Actualizar el estado local eliminando el item
+        const updatedItems = cartItems.filter(item => item.gameId !== gameId);
+        setCartItems(updatedItems);
+        
+        // Recargar el carrito para actualizar el resumen
+        const cartResponse = await fetch('http://localhost:3000/api/cart', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        
+        if (cartResponse.ok) {
+          const data = await cartResponse.json();
+          setSummary(data.summary);
+        }
+      } else {
+        throw new Error('Error al eliminar el juego del carrito');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert(error.message);
+    }
+  };
 
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const response = await fetch('/api/cart', {
+        const response = await fetch('http://localhost:3000/api/cart', {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}` // Asegúrate de que el token se maneja correctamente
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         });
         if (response.ok) {
@@ -42,14 +75,21 @@ function Carrito() {
       <div className="cart-page">
         <div className="products-row">
           <div className="product">
-            {cartItems.map((item) => (
-              <Producto 
-                key={item.id} 
-                image={item.Game.image} 
-                title={item.Game.name} 
-                price={item.Game.price} 
-              />
-            ))}
+            {cartItems.length > 0 ? (
+              cartItems.map((item) => (
+                <Producto 
+                  key={item.id} 
+                  image={`http://localhost:3000/api/games/${item.gameId}/image`}
+                  title={item.Game ? item.Game.name : 'Juego no encontrado'} 
+                  price={item.Game ? item.Game.price : 0} 
+                  quantity={item.quantity}
+                  subtotal={item.subtotal}
+                  onRemove={() => handleRemoveFromCart(item.gameId)}
+                />
+              ))
+            ) : (
+              <p>No hay items en el carrito</p>
+            )}
           </div>
           <div className="summary">
             <h5>Resumen de Compra</h5>
