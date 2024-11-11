@@ -15,6 +15,7 @@ import Catalogo from "./componentes/Compras/Catalogo.jsx";
 import Carrito from "./componentes/Compras/Carrito.jsx";
 import Checkout from "./componentes/Compras/Checkout.jsx";
 import Juego from "./componentes/Compras/Juego.jsx";
+import Reseña from "./componentes/Compras/Reseña.jsx";
 
 // Header y Footer
 import Ayuda from "./componentes/extras/Ayuda.jsx";
@@ -53,7 +54,11 @@ const router = createBrowserRouter([
             { path: "consolas", element: <Consolas /> },
             { path: "contacto", element: <ContactForm /> },
             { path: "catalogo", element: <Catalogo /> },
-            { path: "juego/:id", element: <Juego /> },
+            { path: "juego/:id", element: <Juego />, 
+                children: [
+                    {path: "juego/:id/reseña", element: <Reseña />}
+                ]
+            },
             { path: "carrito", element: <Carrito />,
                 children: [
                     { path: "carrito/:checkout", element: <Checkout /> },
