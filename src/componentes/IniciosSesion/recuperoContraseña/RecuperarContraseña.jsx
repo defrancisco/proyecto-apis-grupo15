@@ -5,15 +5,18 @@ const RecuperarContraseña = ({ onSubmit, onResend }) => {
     const [email, setEmail] = useState('');
     const [codeSent, setCodeSent] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setCodeSent(true);
-        onSubmit(email);
+        try {
+            await onSubmit(email);
+            setCodeSent(true); // Solo se establece en true si la petición es exitosa
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     const handleResend = () => {
         onResend(email);
-        setCodeSent(true); // Si deseas que al reenvío también se marque como enviado
     };
 
     return (

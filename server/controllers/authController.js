@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const RecoveryCode = require('../models/recoveryCode');
 const JWT_SECRET = process.env.JWT_SECRET;
+const { Op } = require('sequelize');
 
 const register = async (req, res) => {
   try {
@@ -73,11 +74,32 @@ const recoverPassword = async (req, res) => {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
+    // Buscar códigos existentes
+    const existingCodes = await RecoveryCode.findAll({ 
+      where: { email },
+      order: [['createdAt', 'DESC']]
+    });
+
+    // Si hay más de un código, eliminar todos excepto el más reciente
+    if (existingCodes.length > 0) {
+      const mostRecentCode = existingCodes[0];
+      const timeSinceLastCode = Date.now() - mostRecentCode.createdAt.getTime();
+      
+      // Si el último código tiene menos de 1 minuto
+      if (timeSinceLastCode < 60000) { // 60000 ms = 1 minuto
+        return res.status(429).json({ 
+          message: 'Por favor espere un minuto antes de solicitar un nuevo código' 
+        });
+      }
+
+      // Eliminar todos los códigos anteriores
+      await RecoveryCode.destroy({ where: { email } });
+    }
+
+    // Crear nuevo código
     const recoveryCode = Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = new Date();
     expiresAt.setHours(expiresAt.getHours() + 1);
-
-    await RecoveryCode.destroy({ where: { email } });
     
     await RecoveryCode.create({
       email,
@@ -104,13 +126,13 @@ const verifyCode = async (req, res) => {
     });
 
     if (!recoveryCode) {
-      return res.status(400).json({ message: 'Invalid recovery code' });
+      return res.status(400).json({ message: 'Código de verificación inválido' });
     }
 
-    await RecoveryCode.destroy({ where: { email } });
+    // No eliminamos el código aquí, lo mantenemos para el cambio de contraseña
     res.json({ message: 'Code verified successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Error verifying code', error: error.message });
+    res.status(500).json({ message: 'Error verificando código', error: error.message });
   }
 };
 
@@ -118,9 +140,14 @@ const changePassword = async (req, res) => {
   try {
     const { email, newPassword, code } = req.body;
     
-    // Verificar si existe un código de recuperación válido
     const recoveryCode = await RecoveryCode.findOne({
-      where: { email, code }
+      where: { 
+        email, 
+        code,
+        expiresAt: {
+          [Op.gt]: new Date() // Verifica que no haya expirado
+        }
+      }
     });
 
     if (!recoveryCode) {
@@ -137,7 +164,7 @@ const changePassword = async (req, res) => {
     user.password = newPassword;
     await user.save();
     
-    // Eliminar el código de recuperación usado
+    // Ahora sí eliminamos el código después de cambiar la contraseña
     await RecoveryCode.destroy({ where: { email } });
 
     res.json({ message: 'Contraseña cambiada exitosamente' });

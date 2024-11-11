@@ -3,28 +3,26 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../routes/AuthContext';
 import '../../../styles/usuario/verificacionID.css';
 
-const VerificacionIdentidad = ({ code, setCode, onSubmit, onResend }) => {
-    const [inputCode, setInputCode] = useState('');
-    const { auth } = useAuth();
-    const navigate = useNavigate();
+const VerificacionIdentidad = ({ code, onCodeChange, onSubmit, onResend }) => {
+    const handleInputChange = (index, value) => {
+        if (value.length <= 1 && /^\d*$/.test(value)) {
+            const newCode = [...code];
+            newCode[index] = value;
+            onCodeChange(index, value);
 
-    
-    const handleConfirm = () => {
-        if (inputCode === '071726') {
-            if (auth.accountType === 'client') {
-                navigate('/profile/client');
-            } else if (auth.accountType === 'business') {
-                navigate('/profile/business');
+            // Mover al siguiente input
+            if (value && index < 5) {
+                const nextInput = document.getElementById(`code-${index + 1}`);
+                if (nextInput) nextInput.focus();
             }
-        } else {
-            alert('Código incorrecto');
         }
-        onSubmit(inputCode);
     };
 
-    const handleResend = () => {
-        onResend();
-        setCode(Array(6).fill("")); // Limpiar el código enviado
+    const handleKeyDown = (index, e) => {
+        if (e.key === 'Backspace' && !code[index] && index > 0) {
+            const prevInput = document.getElementById(`code-${index - 1}`);
+            if (prevInput) prevInput.focus();
+        }
     };
 
     return (
@@ -38,14 +36,19 @@ const VerificacionIdentidad = ({ code, setCode, onSubmit, onResend }) => {
                         id={`code-${index}`}
                         type="text"
                         maxLength="1"
-                        value={inputCode[index] || ''}
-                        onChange={(e) => setInputCode((prev) => prev.slice(0, index) + e.target.value + prev.slice(index + 1))}
+                        value={code[index]}
+                        onChange={(e) => handleInputChange(index, e.target.value)}
+                        onKeyDown={(e) => handleKeyDown(index, e)}
                     />
                 ))}
             </div>
             <div className="buttons">
-                <button className="confirm" onClick={handleConfirm}>Confirmar</button>
-                <button className="resend" onClick={handleResend}>Reenviar Código</button>
+                <button className="confirm" onClick={onSubmit}>
+                    Confirmar
+                </button>
+                <button className="resend" onClick={onResend}>
+                    Reenviar Código
+                </button>
             </div>
         </div>
     );

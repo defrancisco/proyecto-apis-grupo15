@@ -21,14 +21,58 @@ export const LoginCuenta = () => {
         formValidation();
     }, []);
 
-    const handleEmailSubmit = (email) => {
-        alert(`Código enviado a ${email}`);
-        setEmail(email);
-        setStep(2);
+    const handleEmailSubmit = async (email) => {
+        try {
+            const response = await fetch('http://localhost:3000/api/auth/recover-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert('Código enviado al correo electrónico');
+                setEmail(email);
+                setStep(2);
+                return Promise.resolve();
+            } else {
+                alert(data.message || 'Error al enviar el código');
+                return Promise.reject(data.message);
+            }
+        } catch (error) {
+            alert('Error de conexión');
+            console.error(error);
+            return Promise.reject(error);
+        }
     };
 
-    const handleResendCode = () => {
-        alert(`Código reenviado a ${email}`);
+    const handleResendCode = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/api/auth/recover-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email })
+            });
+
+            const data = await response.json();
+
+            if (response.status === 429) {
+                alert('Por favor espere un minuto antes de solicitar un nuevo código');
+            } else if (response.ok) {
+                alert('Código reenviado exitosamente');
+                setCode(Array(6).fill("")); 
+            } else {
+                alert(data.message || 'Error al reenviar el código');
+            }
+        } catch (error) {
+            alert('Error de conexión');
+            console.error(error);
+        }
     };
 
     const handleCodeChange = (index, value) => {
@@ -37,23 +81,64 @@ export const LoginCuenta = () => {
         setCode(updatedCode);
     };
 
-    const handleCodeSubmit = () => {
-        const inputCode = code.join(""); // Unir los valores del código ingresado
-        const actualCode = "071726"; // Código de verificación fijo
-        if (inputCode === actualCode) {
-            alert("Código verificado con éxito!");
-            setStep(3);
-        } else {
-            alert("Código incorrecto. Intenta nuevamente.");
+    const handleCodeSubmit = async () => {
+        try {
+            const inputCode = code.join("");
+            const response = await fetch('http://localhost:3000/api/auth/verify-code', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    email,
+                    code: inputCode 
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert('Código verificado correctamente');
+                setStep(3);
+            } else {
+                alert(data.message || 'Código incorrecto');
+            }
+        } catch (error) {
+            alert('Error de conexión');
+            console.error(error);
         }
     };
 
-    const handlePasswordSubmit = (newPassword, confirmPassword) => {
-        if (newPassword === confirmPassword) {
-            alert("Contraseña cambiada con éxito!");
-            navigate('/perfil');
-        } else {
-            alert("Las contraseñas no coinciden. Intenta nuevamente.");
+    const handlePasswordSubmit = async (newPassword, confirmPassword) => {
+        if (newPassword !== confirmPassword) {
+            alert('Las contraseñas no coinciden');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:3000/api/auth/change-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email,
+                    newPassword,
+                    code: code.join("")
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert('Contraseña actualizada exitosamente');
+                navigate('/iniciarSesion/loginCuenta');
+            } else {
+                alert(data.message || 'Error al cambiar la contraseña');
+            }
+        } catch (error) {
+            alert('Error de conexión');
+            console.error(error);
         }
     };
 

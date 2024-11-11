@@ -101,3 +101,27 @@ input[type="email"]:focus {
         font-size: 14px;
     }
 }
+
+.error-message {
+    color: #E60012;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.resend-btn {
+    background-color: #666;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.resend-btn:hover {
+    background-color: #555;
+}
