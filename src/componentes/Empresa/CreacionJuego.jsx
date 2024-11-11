@@ -70,7 +70,7 @@ function CreacionVideojuego() {
     }
 
     try {
-      const response = await fetch('${import.meta.env.VITE_API_URL}/api/business/games', {
+      const response = await fetch('http://localhost:3000/api/business/games', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`

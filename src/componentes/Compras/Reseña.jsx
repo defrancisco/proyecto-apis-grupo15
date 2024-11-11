@@ -30,7 +30,7 @@ function Reseña() {
 
     const handleReviewSubmit = async () => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/games/review`, {
+            const response = await fetch(`http://localhost:3000/api/games/review`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ function Reseña() {
                     <div className="game-info">
                         {gameData ? (
                             <>
-                                <img src={`${import.meta.env.VITE_API_URL}/api/games/${gameData.id}/image`} alt={gameData.name} />
+                                <img src={`http://localhost:3000/api/games/${gameData.id}/image`} alt={gameData.name} />
                                 <h5>{gameData.name}</h5>
                                 <p>{gameData.description}</p>
                             </>

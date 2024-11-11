@@ -30,7 +30,7 @@ function BusinessTab() {
     // Cargar datos del perfil al montar el componente
     const fetchProfileData = async () => {
       try {
-        const response = await fetch('${import.meta.env.VITE_API_URL}/api/users/profile/business', {
+        const response = await fetch('http://localhost:3000/api/users/profile/business', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
@@ -56,7 +56,7 @@ function BusinessTab() {
       try {
         const token = localStorage.getItem('token');
         
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/business/games`, {
+        const response = await fetch('http://localhost:3000/api/business/games', {
           method: 'GET',
           mode: 'cors',
           headers: {
@@ -85,7 +85,7 @@ function BusinessTab() {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        const response = await fetch('${import.meta.env.VITE_API_URL}/api/business/games/analytics', {
+        const response = await fetch('http://localhost:3000/api/business/games/analytics', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json'
@@ -130,7 +130,7 @@ function BusinessTab() {
   const confirmActionHandler = async () => {
     if (confirmAction.type === "eliminar") {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/business/games/${confirmAction.gameId}`, {
+        const response = await fetch(`http://localhost:3000/api/business/games/${confirmAction.gameId}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -156,7 +156,7 @@ function BusinessTab() {
 
   const handleUpdateProfile = async () => {
     try {
-      const response = await fetch('${import.meta.env.VITE_API_URL}/api/users/profile/business', {
+      const response = await fetch('http://localhost:3000/api/users/profile/business', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -218,7 +218,7 @@ function BusinessTab() {
         return;
       }
 
-      const response = await fetch('${import.meta.env.VITE_API_URL}/api/users/update-password', {
+      const response = await fetch('http://localhost:3000/api/users/update-password', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -252,7 +252,7 @@ function BusinessTab() {
   const handlePublishUnpublish = async (gameId, isPublished) => {
     try {
       const action = isPublished ? 'unpublish' : 'publish';
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/business/games/${gameId}/${action}`, {
+      const response = await fetch(`http://localhost:3000/api/business/games/${gameId}/${action}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -391,7 +391,7 @@ function BusinessTab() {
               {analytics.map(game => (
                 <div key={game.id} className="game-analysis">
                   <img 
-                    src={`${import.meta.env.VITE_API_URL}/api/games/${game.id}/image`} 
+                    src={`http://localhost:3000/api/games/${game.id}/image`} 
                     alt={game.name} 
                     style={{width: '100px', height: '100px', objectFit: 'cover'}}
                   />
@@ -440,7 +440,7 @@ function BusinessTab() {
                 <div key={game.id} className="game-item">
                   <div className="game-info">
                     <img 
-                      src={`${import.meta.env.VITE_API_URL}/api/games/${game.id}/image`} 
+                      src={`http://localhost:3000/api/games/${game.id}/image`} 
                       alt={game.name}
                       style={{width: '100px', height: '100px', objectFit: 'cover'}}
                     />

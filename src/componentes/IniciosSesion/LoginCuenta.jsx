@@ -23,7 +23,7 @@ export const LoginCuenta = () => {
 
     const handleEmailSubmit = async (email) => {
         try {
-            const response = await fetch('${import.meta.env.VITE_API_URL}/api/auth/recover-password', {
+            const response = await fetch('http://localhost:3000/api/auth/recover-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ export const LoginCuenta = () => {
 
     const handleResendCode = async () => {
         try {
-            const response = await fetch('${import.meta.env.VITE_API_URL}/api/auth/recover-password', {
+            const response = await fetch('http://localhost:3000/api/auth/recover-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -84,7 +84,7 @@ export const LoginCuenta = () => {
     const handleCodeSubmit = async () => {
         try {
             const inputCode = code.join("");
-            const response = await fetch('${import.meta.env.VITE_API_URL}/api/auth/verify-code', {
+            const response = await fetch('http://localhost:3000/api/auth/verify-code', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -116,7 +116,7 @@ export const LoginCuenta = () => {
         }
 
         try {
-            const response = await fetch('${import.meta.env.VITE_API_URL}/api/auth/change-password', {
+            const response = await fetch('http://localhost:3000/api/auth/change-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -188,7 +188,7 @@ export const LoginCuenta = () => {
         e.preventDefault();
         
         try {
-            const response = await fetch('${import.meta.env.VITE_API_URL}/api/auth/login', {
+            const response = await fetch('http://localhost:3000/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

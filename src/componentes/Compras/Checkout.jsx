@@ -20,7 +20,7 @@ function Checkout() {
   useEffect(() => {
     const fetchPaymentMethod = async () => {
       try {
-        const response = await fetch('${import.meta.env.VITE_API_URL}/api/users/payment-method', {
+        const response = await fetch('http://localhost:3000/api/users/payment-method', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
@@ -52,7 +52,7 @@ function Checkout() {
 
   const handlePurchase = async () => {
     try {
-      const response = await fetch('${import.meta.env.VITE_API_URL}/api/cart/checkout', {
+      const response = await fetch('http://localhost:3000/api/cart/checkout', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`

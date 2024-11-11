@@ -15,7 +15,7 @@ function Carrito() {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const response = await fetch('${import.meta.env.VITE_API_URL}/api/cart', {
+        const response = await fetch('http://localhost:3000/api/cart', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -55,7 +55,7 @@ function Carrito() {
               cartItems.map((item) => (
                 <Producto 
                   key={item.id} 
-                  image={`${import.meta.env.VITE_API_URL}/api/games/${item.Game.id}/image`} 
+                  image={`http://localhost:3000/api/games/${item.Game.id}/image`} 
                   title={item.Game?.name} 
                   price={item.Game?.price}
                   quantity={item.quantity} 
