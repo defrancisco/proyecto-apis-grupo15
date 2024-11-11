@@ -410,6 +410,12 @@ function BusinessTab() {
                         <span className="stat-label">Lista de deseos:</span>
                         <span className="stat-value">{game.wishlistCount}</span>
                       </div>
+                      <div className="stat-item">
+                        <span className="stat-label">Tasa de conversión:</span>
+                        <span className="stat-value">
+                          {game.views > 0 ? ((game.purchases / game.views) * 100).toFixed(2) : 0}%
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
