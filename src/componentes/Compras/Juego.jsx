@@ -77,7 +77,7 @@ function Juego() {
                 return;
             }
 
-            const response = await fetch('http://localhost:3000/api/cart', {
+            const response = await fetch('http://localhost:3000/api/cart/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

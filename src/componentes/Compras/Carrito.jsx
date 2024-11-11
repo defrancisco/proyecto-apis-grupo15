@@ -57,7 +57,8 @@ function Carrito() {
                   key={item.id} 
                   image={`http://localhost:3000/api/games/${item.Game.id}/image`} 
                   title={item.Game?.name} 
-                  price={item.Game?.price} 
+                  price={item.Game?.price}
+                  quantity={item.quantity} 
                 />
               ))
             ) : (

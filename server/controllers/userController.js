@@ -163,25 +163,34 @@ const updatePaymentMethod = async (req, res) => {
 
 const addToCartFromWishlist = async (req, res) => {
   try {
-    const { userId, gameId } = req.params;
+    const userId = req.user.userId;
+    const { gameId } = req.params;
 
-    //si el juego esta en la wishlist del usuario
+    // Verificar si el juego está en la wishlist
     const wishlistItem = await Wishlist.findOne({
       where: { userId, gameId }
     });
 
     if (!wishlistItem) {
-      return res.status(404).json({ message: 'Game not found in wishlist' });
+      return res.status(404).json({ message: 'Juego no encontrado en la lista de deseos' });
     }
 
-    //agregar el juego al carrito
+    // Obtener el juego y su precio
+    const game = await Game.findByPk(gameId);
+    if (!game) {
+      return res.status(404).json({ message: 'Juego no encontrado' });
+    }
+
+    // Agregar al carrito
     const [cartItem, created] = await Cart.findOrCreate({
       where: { userId, gameId },
-      defaults: { quantity: 1, subtotal: 0 }
+      defaults: { 
+        quantity: 1, 
+        subtotal: Number(game.price.toFixed(2))
+      }
     });
 
     if (!created) {
-      const game = await Game.findByPk(gameId);
       const newQuantity = cartItem.quantity + 1;
       const newSubtotal = Number((game.price * newQuantity).toFixed(2));
       await cartItem.update({ 
@@ -190,9 +199,16 @@ const addToCartFromWishlist = async (req, res) => {
       });
     }
 
-    res.json({ message: 'Game added to cart from wishlist' });
+    // Eliminar de la wishlist
+    await wishlistItem.destroy();
+
+    res.json({ message: 'Juego agregado al carrito exitosamente' });
   } catch (error) {
-    res.status(500).json({ message: 'Error adding game to cart from wishlist', error: error.message });
+    console.error('Error:', error);
+    res.status(500).json({ 
+      message: 'Error al agregar el juego al carrito desde la wishlist', 
+      error: error.message 
+    });
   }
 };
 

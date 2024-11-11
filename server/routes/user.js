@@ -19,7 +19,7 @@ router.get('/profile/business', authenticateToken, getBusinessProfile);
 router.post('/wishlist/:gameId', authenticateToken, addToWishlist);
 router.delete('/wishlist/:userId/:gameId', authenticateToken, removeFromWishlist);
 router.put('/payment-method', authenticateToken, updatePaymentMethod);
-router.post('/cart/from-wishlist/:userId/:gameId', authenticateToken, addToCartFromWishlist);
+router.post('/wishlist/:gameId/to-cart', authenticateToken, addToCartFromWishlist);
 router.put('/update-password', authenticateToken, updatePassword);
 router.get('/wishlist', authenticateToken, getWishlist);
 router.get('/payment-method', authenticateToken, getPaymentMethod);
