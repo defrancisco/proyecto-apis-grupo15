@@ -22,7 +22,7 @@ function ModificacionVideojuego() {
   useEffect(() => {
     const fetchGameData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/business/games/${id}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/business/games/${id}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
@@ -95,7 +95,7 @@ function ModificacionVideojuego() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/api/business/games/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/business/games/${id}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -123,7 +123,7 @@ function ModificacionVideojuego() {
         <div className="game-edit-layout">
           <div className="game-image-section">
             <img 
-              src={`http://localhost:3000/api/games/${id}/image`} 
+              src={`${import.meta.env.VITE_API_URL}/api/games/${id}/image`} 
               alt="Imagen del juego" 
               className="game-preview-image"
             />

@@ -17,7 +17,7 @@ function Juego() {
             setUserType(decodedToken.userType);
         }
 
-        fetch(`http://localhost:3000/api/games/${id}`)
+        fetch(`${import.meta.env.VITE_API_URL}/api/games/${id}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Game not found');
@@ -36,7 +36,7 @@ function Juego() {
                 setLoading(false);
             });
 
-        fetch(`http://localhost:3000/api/games/${id}/reviews`)
+        fetch(`${import.meta.env.VITE_API_URL}/api/games/${id}/reviews`)
             .then((response) => response.json())
             .then((data) => setReviews(data))
             .catch((error) => console.error('Error fetching reviews:', error));
@@ -50,7 +50,7 @@ function Juego() {
                 return;
             }
 
-            const response = await fetch(`http://localhost:3000/api/users/wishlist/${game.id}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/wishlist/${game.id}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -77,7 +77,7 @@ function Juego() {
                 return;
             }
 
-            const response = await fetch('http://localhost:3000/api/cart/add', {
+            const response = await fetch('${import.meta.env.VITE_API_URL}/api/cart/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ function Juego() {
                 
                 <div className="infojuego-content">
                     <div className="infojuego-image-section">
-                    <img src={`http://localhost:3000/api/games/${game.id}/image`} alt={game.name} />
+                    <img src={`${import.meta.env.VITE_API_URL}/api/games/${game.id}/image`} alt={game.name} />
                     </div>
                     <div className="infojuego-details-section">
                         <h2 className="game-title">{game.name}</h2>

@@ -33,7 +33,7 @@ const Catalogo = () => {
       if (filters.maxPrice !== null) queryParams.append('maxPrice', filters.maxPrice);
       if (filters.search.trim() !== '') queryParams.append('search', filters.search);
 
-      const response = await fetch(`http://localhost:3000/api/games?${queryParams}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/games?${queryParams}`);
       const data = await response.json();
       setGames(data);
     } catch (error) {
@@ -58,7 +58,7 @@ const Catalogo = () => {
 
   const handleGameClick = async (gameId, e) => {
     try {
-      await fetch(`http://localhost:3000/api/games/${gameId}/views`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/games/${gameId}/views`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -185,7 +185,7 @@ const Catalogo = () => {
                 >
                   <Videojuego
                     id={game.id}
-                    image={`http://localhost:3000/api/games/${game.id}/image`}
+                    image={`${import.meta.env.VITE_API_URL}/games/${game.id}/image`}
                     title={game.name}
                     price={game.price}
                   />
