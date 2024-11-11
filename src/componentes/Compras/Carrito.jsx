@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Producto from './Producto';
 import '../../styles/carritocompras.css';
 
 function Carrito() {
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [summary, setSummary] = useState({
     subtotal: 0,
@@ -41,6 +42,10 @@ function Carrito() {
     fetchCart();
   }, []);
 
+  const checkout = () => {
+    navigate('/carrito/checkout', { state: { summary } });
+  };
+
   return (
     <div>
       <div className="cart-page">
@@ -75,12 +80,7 @@ function Carrito() {
                 <strong>{summary.total.toFixed(2)}</strong>
               </li>
             </ul>
-            <button className="btn-transaction">
-              <Link to={{
-                pathname: "/carrito/checkout",
-                state: { cartItems, summary},
-              }}
-              >Continuar Transacción</Link>
+            <button className="btn-transaction" onClick={checkout}>Continuar Transacción
             </button>
           </div>
         </div>

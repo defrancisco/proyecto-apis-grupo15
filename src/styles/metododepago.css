@@ -1,15 +1,18 @@
 .payment-method {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
-    background-color: #f8f9fa;
+    background-color: #ffffff;
 }
 
 .content {
     display: flex;
-    justify-content: center;
-    gap: 2rem;
+    justify-content: space-between;
+    gap: 3rem;
+    max-width: 1000px;
     padding: 2rem;
+    width: 100%;
 }
 
 .payment-box, .summary {
@@ -18,18 +21,17 @@
 }
 
 .payment-box {
-    background-color: #ffffff;
+    background-color: #f2f2f2;
     padding: 2rem;
     border-radius: 10px;
-    border: 1px solid #e0e0e0; /* Cambia a un color más tenue */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añade sombra suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .payment-box h5 {
     margin-bottom: 20px;
     font-size: 1.5rem;
     color: #333;
-    text-align: center;
+    text-align: left;
 }
 
 .form-control {
@@ -39,7 +41,7 @@
     border: 1px solid #ced4da;
     border-radius: 5px;
     font-size: 1rem;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
 }
 
 .form-row {
@@ -51,12 +53,10 @@
     flex: 1;
 }
 
-
 .summary {
-    background-color: #ffffff;
+    background-color: #fdf7f7;
     padding: 2rem;
     border-radius: 10px;
-    border: 1px solid #e0e0e0; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
@@ -64,6 +64,7 @@
 .summary h5 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
+    color: #333;
 }
 
 .summary ul {
@@ -76,6 +77,8 @@
     display: flex;
     justify-content: space-between;
     padding: 0.5rem 0;
+    font-size: 1rem;
+    color: #333;
 }
 
 .total {
@@ -86,7 +89,7 @@
 .btn-transaction {
     width: 100%;
     margin-top: 1rem;
-    background-color: #dc3545;
+    background-color: #e60012;
     color: white;
     font-size: 1rem;
     border: none;
@@ -96,5 +99,13 @@
 }
 
 .btn-transaction:hover {
-    background-color: #c82333;
+    background-color: #cc0010;
+}
+
+.footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.875rem;
+    color: #666;
+    border-top: 1px solid #e0e0e0;
 }
