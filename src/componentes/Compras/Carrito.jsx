@@ -55,7 +55,7 @@ function Carrito() {
               cartItems.map((item) => (
                 <Producto 
                   key={item.id} 
-                  image={item.Game?.image} 
+                  image={`http://localhost:3000/api/games/${item.Game.id}/image`} 
                   title={item.Game?.name} 
                   price={item.Game?.price} 
                 />
