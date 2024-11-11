@@ -67,10 +67,6 @@ function Carrito() {
                 <span>{summary.subtotal.toFixed(2)}</span>
               </li>
               <li>
-                <span>Envío</span>
-                <span>{summary.shipping.toFixed(2)}</span>
-              </li>
-              <li>
                 <span>Impuesto</span>
                 <span>{summary.tax.toFixed(2)}</span>
               </li>
