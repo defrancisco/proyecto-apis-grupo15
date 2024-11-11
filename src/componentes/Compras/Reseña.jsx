@@ -30,19 +30,19 @@ function Reseña() {
 
     const handleReviewSubmit = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/reviews', {
+            const response = await fetch(`http://localhost:3000/api/games/review`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 },
-                body: JSON.stringify({ gameId: id, rating, content }),
+                body: JSON.stringify({ rating, content }),
             });
 
             if (response.ok) {
                 alert('Reseña enviada con éxito');
-                setRating(0); // Resetear la calificación
-                setContent(''); // Resetear el contenido
+                setRating(0);
+                setContent('');
             } else {
                 throw new Error('Error al enviar la reseña');
             }
@@ -56,7 +56,6 @@ function Reseña() {
         <div>
             <div className="review-page">
                 <div className="review-content">
-                    {/* Mostrar información del juego */}
                     <div className="game-info">
                         {gameData ? (
                             <>
@@ -68,7 +67,6 @@ function Reseña() {
                             <p></p>
                         )}
                     </div>
-                    {/* Formulario de reseña */}
                     <div className="review-box">
                         <h6>¿Qué te pareció el juego?</h6>
                         <div className="rating">

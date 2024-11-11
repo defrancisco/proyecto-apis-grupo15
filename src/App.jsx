@@ -58,11 +58,8 @@ const router = createBrowserRouter([
             { path: "catalogo", element: <Catalogo /> },
             { path: "juego/:id", element: <Juego />, },
             { path: "juego/:id/reseña", element: <Reseña /> },
-            { path: "carrito", element: <Carrito />,
-                children: [
-                    { path: "carrito/:checkout", element: <Checkout /> },
-                ]
-            },
+            { path: "carrito", element: <Carrito /> },
+            { path: "carrito/:checkout", element: <Checkout /> },
 
             // Iniciar Sesión
             { path: "iniciarSesion", element: <Login /> },

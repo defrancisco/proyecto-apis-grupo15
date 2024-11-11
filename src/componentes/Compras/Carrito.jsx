@@ -1,5 +1,5 @@
-import React, { useState, useEffect }from 'react';
-import {Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Producto from './Producto';
 import '../../styles/carritocompras.css';
 
@@ -7,44 +7,9 @@ function Carrito() {
   const [cartItems, setCartItems] = useState([]);
   const [summary, setSummary] = useState({
     subtotal: 0,
-    shipping: 0,
     tax: 0,
-    total: 0
+    total: 0,
   });
-
-  const handleRemoveFromCart = async (gameId) => {
-    try {
-      const response = await fetch(`http://localhost:3000/api/cart/${gameId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-
-      if (response.ok) {
-        // Actualizar el estado local eliminando el item
-        const updatedItems = cartItems.filter(item => item.gameId !== gameId);
-        setCartItems(updatedItems);
-        
-        // Recargar el carrito para actualizar el resumen
-        const cartResponse = await fetch('http://localhost:3000/api/cart', {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        });
-        
-        if (cartResponse.ok) {
-          const data = await cartResponse.json();
-          setSummary(data.summary);
-        }
-      } else {
-        throw new Error('Error al eliminar el juego del carrito');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert(error.message);
-    }
-  };
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -52,13 +17,19 @@ function Carrito() {
         const response = await fetch('http://localhost:3000/api/cart', {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          },
         });
         if (response.ok) {
           const data = await response.json();
-          setCartItems(data.items);
-          setSummary(data.summary);
+          
+          // Validar que los datos sean los esperados antes de actualizar el estado
+          if (data.items && Array.isArray(data.items) && data.summary) {
+            setCartItems(data.items);
+            setSummary(data.summary);
+          } else {
+            console.error("Estructura de datos inesperada:", data);
+          }
         } else {
           console.error('Error fetching cart:', response.statusText);
         }
@@ -79,16 +50,13 @@ function Carrito() {
               cartItems.map((item) => (
                 <Producto 
                   key={item.id} 
-                  image={`http://localhost:3000/api/games/${item.gameId}/image`}
-                  title={item.Game ? item.Game.name : 'Juego no encontrado'} 
-                  price={item.Game ? item.Game.price : 0} 
-                  quantity={item.quantity}
-                  subtotal={item.subtotal}
-                  onRemove={() => handleRemoveFromCart(item.gameId)}
+                  image={item.Game?.image} 
+                  title={item.Game?.name} 
+                  price={item.Game?.price} 
                 />
               ))
             ) : (
-              <p>No hay items en el carrito</p>
+              <p>No hay productos en el carrito.</p>
             )}
           </div>
           <div className="summary">
@@ -99,11 +67,11 @@ function Carrito() {
                 <span>{summary.subtotal.toFixed(2)}</span>
               </li>
               <li>
-                <span>Shipping</span>
+                <span>Envío</span>
                 <span>{summary.shipping.toFixed(2)}</span>
               </li>
               <li>
-                <span>Tax</span>
+                <span>Impuesto</span>
                 <span>{summary.tax.toFixed(2)}</span>
               </li>
               <li className="total">
@@ -111,8 +79,12 @@ function Carrito() {
                 <strong>{summary.total.toFixed(2)}</strong>
               </li>
             </ul>
-            <button className="btn-transaction" >
-              <Link to="/carrito/checkout">Continuar Transacción</Link>
+            <button className="btn-transaction">
+              <Link to={{
+                pathname: "/carrito/checkout",
+                state: { cartItems, summary},
+              }}
+              >Continuar Transacción</Link>
             </button>
           </div>
         </div>
@@ -120,6 +92,5 @@ function Carrito() {
     </div>
   );
 }
-
 
 export default Carrito;
